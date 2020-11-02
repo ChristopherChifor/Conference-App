@@ -5,6 +5,9 @@ import Entities.User;
 import java.util.HashMap;
 import java.util.List;
 
+/**
+ * @author Payam
+ */
 public class SocialManager {
 
     ScheduleManager scheduleManager;
