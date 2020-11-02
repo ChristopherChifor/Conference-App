@@ -1,3 +1,11 @@
+package UseCases;
+
+import Entities.Event;
+import Entities.Schedule;
+
+/**
+ * @author Haoming
+ */
 public class ScheduleManager {
     Schedule theSchedule; // should never be given out; its mutable
     AccountManager accounts;

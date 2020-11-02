@@ -1,3 +1,11 @@
+package UseCases;
+
+import Entities.Event;
+import Entities.Schedule;
+
+/**
+ * @author Chris
+ */
 public class ConferenceManager {
     ScheduleManager scheduleManager;
     AccountManager accountManager;
@@ -22,14 +30,5 @@ public class ConferenceManager {
         return null;
     }
 
-    /**
-     *
-     * @param speaker: username of speaker
-     * @return schedule of events where this user is speaker (empty if there are none/not speaker)
-     */
-    public Schedule getTalksOf(String speaker){
-        // TODO
-        return null;
-    }
 
 }

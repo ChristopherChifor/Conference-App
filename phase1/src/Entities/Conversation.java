@@ -1,6 +1,11 @@
+package Entities;
+
 import java.util.Deque;
 import java.util.List;
 
+/**
+ * @author Nikita
+ */
 public class Conversation {
     String userOne, userTwo;
     Deque<Message> messages;

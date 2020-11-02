@@ -1,9 +1,16 @@
+package UseCases;
+
+import Entities.Conversation;
+import Entities.Message;
+
 import java.util.ArrayList;
 import java.util.Deque;
 import java.util.HashMap;
 
-// TODO Disregard this class until further notice!!!!
 
+/**
+ * @author Alex
+ */
 public class MessageManager {
     HashMap<String, ArrayList<Conversation>> database;
     SocialManager socialManager;

@@ -1,5 +1,10 @@
+package Entities;
+
 import java.util.HashMap;
 
+/**
+ * @author Parssa
+ */
 public class Event {
     String name;
     User speaker = null;

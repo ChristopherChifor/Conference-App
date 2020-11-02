@@ -1,5 +1,12 @@
+package UseCases;
+
+import Entities.User;
+
 import java.util.HashMap;
 
+/**
+ * @author Paya
+ */
 public class AccountManager {
     private HashMap<String, User> users; // never share this
 
@@ -29,7 +36,7 @@ public class AccountManager {
     }
 
 
-    protected User getUser(String username) {
+    User getUser(String username) {
         // TODO
         //  returns the user with this username
         //  ideally accessible only to other usecases

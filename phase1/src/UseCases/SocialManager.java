@@ -1,3 +1,8 @@
+package UseCases;
+
+import Entities.User;
+
+import java.util.HashMap;
 import java.util.List;
 
 public class SocialManager {
@@ -5,8 +10,11 @@ public class SocialManager {
     ScheduleManager scheduleManager;
     AccountManager accountManager;
 
+    // key is the user's username, value is a list of usernames that are user's friend:
+    HashMap<String, List<String>> friendsDatabase;
+
     // adds friend to users friend list
-    public boolean addFriend(String username, User friendUsername){
+    public boolean addFriend(String username, User friendUsername) {
         // TODO
         return false;
     }
@@ -36,7 +44,7 @@ public class SocialManager {
     }
 
     // returns a list of usernames of the friends of this user
-    public List<String> getFriends(String username){
+    public List<String> getFriends(String username) {
         // TODO
         return null;
     }
