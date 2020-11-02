@@ -4,7 +4,7 @@ import Entities.Conversation;
 import Entities.Message;
 
 import java.util.ArrayList;
-import java.util.Deque;
+
 import java.util.HashMap;
 
 
@@ -29,7 +29,7 @@ public class MessageManager {
         return false;
     }
 
-    public Deque<String> getMessages(String user1, String user2) {
+    public ArrayList<String> getMessages(String user1, String user2) {
         // TODO
         // returns a deque of messages in the conversation between user 1 and user2
         // as a deque of formatted strings (perhaps "{username}: {messagebody}")

@@ -1,6 +1,6 @@
 package Entities;
 
-import java.util.Deque;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -8,7 +8,7 @@ import java.util.List;
  */
 public class Conversation {
     String userOne, userTwo;
-    Deque<Message> messages;
+    ArrayList<Message> messages;
 
     public void addMessage(Message msg) {
         // TODO
