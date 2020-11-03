@@ -28,4 +28,15 @@ public class ScheduleManager {
         //  return a schedule of events where username is speaker, if there are none, return empty.
         return null;
     }
+
+    public boolean eventExists(Event event) {
+        // TODO
+        //  returns true if event exists
+        return false;
+    }
+
+    public boolean eventHasHappened (Event event) {
+        // TODO
+        return false;
+    }
 }
