@@ -39,4 +39,9 @@ public class ScheduleManager {
         // TODO
         return false;
     }
+
+    public boolean eventFull(Event event) {
+        // TODO
+        return false;
+    }
 }
