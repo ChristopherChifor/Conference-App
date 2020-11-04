@@ -6,7 +6,7 @@ package Entities;
  * @author Parssa
  */
 public class ScheduleTime {
-    private int day, month, year, hour, minute;
+    private int day, month, year, hour, minute = 0;
 
 
     public ScheduleTime(int hour, int minute) {
