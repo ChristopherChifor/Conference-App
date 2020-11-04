@@ -31,6 +31,9 @@ public class Event {
 
     public boolean addAttendeeToEvent(String username, User user) {
         // TODO discuss with TA
+        if (attendees.containsKey(username)) {
+            return false;
+        }
         attendees.put(username, user);
         return true;
     }
