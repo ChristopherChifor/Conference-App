@@ -10,8 +10,17 @@ public class ConferenceManager {
     ScheduleManager scheduleManager;
     AccountManager accountManager;
 
+    public boolean canSignUpForEvent(String username, Event event){
+        return !(accountManager.getUser(username) == null || !scheduleManager.eventExists(event) ||
+                scheduleManager.eventHasHappened(event) || scheduleManager.eventFull(event)) ;
+    }
+
     public boolean signUpForEvent(String username, Event event) {
-        // TODO
+
+        if (canSignUpForEvent(username, event)){
+            // Todo
+            return true;
+        }
         return false;
     }
 
