@@ -20,6 +20,11 @@ public class Event {
         this.name = name;
     }
 
+    /**
+     *
+     * @param username: username of user
+     * @return true if user is removed from event
+     */
     public boolean removeAttendeeFromEvent(String username) {
         // TODO discuss with TA
         if (!attendees.containsKey(username)) {
@@ -29,6 +34,12 @@ public class Event {
         return true;
     }
 
+    /**
+     *
+     * @param username: username of user
+     * @param user: user
+     * @return true if username, user is added to attendees of this event
+     */
     public boolean addAttendeeToEvent(String username, User user) {
         // TODO discuss with TA
         if (attendees.containsKey(username)) {
