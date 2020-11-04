@@ -8,7 +8,7 @@ import java.util.HashMap;
 public class Event {
     String name;
     User speaker = null;
-    double duration = 1d;
+    int minutes = 60;
 
     HashMap<String, User> attendees = null;
 
