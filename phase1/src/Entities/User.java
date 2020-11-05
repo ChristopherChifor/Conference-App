@@ -1,7 +1,7 @@
 package Entities;
 
 /**
- * @author Alex and Parssa
+ * @author Alex and \Parssa
  */
 public class User {
     private String name;
@@ -33,5 +33,9 @@ public class User {
 
     public UserType getUserType() {
         return userType;
+    }
+
+    public void setUserType(UserType userType) {
+        this.userType = userType;
     }
 }
