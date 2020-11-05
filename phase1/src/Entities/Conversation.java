@@ -8,7 +8,7 @@ import java.util.List;
  */
 public class Conversation {
     private String userOne, userTwo;
-    private ArrayList<Message> messages = new ArrayList<>();
+    private ArrayList<Message> messages = new ArrayList<Message>();
 
     public Conversation(String userOne, String userTwo) {
         this.userOne = userOne;
@@ -16,12 +16,21 @@ public class Conversation {
     }
 
     public void addMessage(Message msg) {
-        // TODO
+        /**
+         * Add passed in message to pre-existing list of messages between the two users (setter)
+         *
+         * @param msg: message
+         */
+        messages.add(msg);
     }
 
-    public List<Message> getMessages() {
-        // TODO
-        throw new UnsupportedOperationException();
+    public ArrayList<Message> getMessages() {
+        /**
+         * Return a list containing messages between the two users (getter)
+         *
+         * @return an ArrayList messages, which contains all messages between users
+         */
+        return messages;
     }
 
     public String getUserOne() {
