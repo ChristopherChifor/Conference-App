@@ -42,8 +42,7 @@ public class ConferenceManager {
      * @return true if user is added to the event
      */
     public boolean signUpForEvent(String username, Event event) {
-        User thisUser = accountManager.getUser(username);
-        return event.addAttendeeToEvent(username, thisUser);
+        return event.addAttendeeToEvent(username);
     }
 
     /**

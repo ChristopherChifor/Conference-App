@@ -1,7 +1,7 @@
 package Entities;
 
 import java.util.ArrayList;
-import java.util.List;
+
 
 /**
  * @author Nikita
@@ -15,21 +15,23 @@ public class Conversation {
         this.userTwo = userTwo;
     }
 
+    /**
+     * Add passed in message to pre-existing list of messages between the two users (setter)
+     *
+     * @param msg: message
+     */
     public void addMessage(Message msg) {
-        /**
-         * Add passed in message to pre-existing list of messages between the two users (setter)
-         *
-         * @param msg: message
-         */
+
         messages.add(msg);
     }
 
+    /**
+     * Return a list containing messages between the two users (getter)
+     *
+     * @return an ArrayList messages, which contains all messages between users
+     */
     public ArrayList<Message> getMessages() {
-        /**
-         * Return a list containing messages between the two users (getter)
-         *
-         * @return an ArrayList messages, which contains all messages between users
-         */
+
         return messages;
     }
 

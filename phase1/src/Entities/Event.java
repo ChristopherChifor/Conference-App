@@ -1,6 +1,7 @@
 package Entities;
 
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Set;
 
 /**
@@ -11,7 +12,7 @@ public class Event {
     private User speaker = null;
     private int minutes = 60;
 
-    private HashMap<String, User> attendees = new HashMap<>();
+    private Set<String> attendees = new HashSet<String>();
 
     // Are these needed?
 //    Boolean atCapacity;
@@ -29,7 +30,7 @@ public class Event {
      */
     public boolean removeAttendeeFromEvent(String username) {
         // TODO discuss with TA
-        if (!attendees.containsKey(username)) {
+        if (!attendees.contains(username)) {
             return false;
         }
         attendees.remove(username);
@@ -39,15 +40,14 @@ public class Event {
     /**
      *
      * @param username: username of user
-     * @param user: user
      * @return true if username, user is added to attendees of this event
      */
-    public boolean addAttendeeToEvent(String username, User user) {
+    public boolean addAttendeeToEvent(String username) {
         // TODO discuss with TA
-        if (attendees.containsKey(username)) {
+        if (attendees.contains(username)) {
             return false;
         }
-        attendees.put(username, user);
+        attendees.add(username);
         return true;
     }
 
@@ -91,6 +91,6 @@ public class Event {
      * @return a set of attendees' usernames
      */
     public Set<String> getAttendees() {
-        return attendees.keySet();
+        return attendees;
     }
 }
