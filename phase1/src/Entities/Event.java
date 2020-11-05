@@ -40,10 +40,9 @@ public class Event {
     /**
      *
      * @param username: username of user
-     * @param user: user
      * @return true if username, user is added to attendees of this event
      */
-    public boolean addAttendeeToEvent(String username, User user) {
+    public boolean addAttendeeToEvent(String username) {
         // TODO discuss with TA
         if (attendees.contains(username)) {
             return false;
