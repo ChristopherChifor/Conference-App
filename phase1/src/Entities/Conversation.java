@@ -16,12 +16,24 @@ public class Conversation {
     }
 
     public void addMessage(Message msg) {
-        // TODO
+        /**
+         * Add passed in message to pre-existing list of messages between the two users
+         * @param msg: message
+         */
+        messages.add(msg);
     }
 
     public List<Message> getMessages() {
-        // TODO
-        throw new UnsupportedOperationException();
+        /**
+         * Return a list containing messages between the two users
+         * @return a new List containing the same elements as the ArrayList messages
+         */
+        if (!messages.isEmpty()){
+            ArrayList<Message> copy = new ArrayList<>();
+            for (Message msg : messages) copy.add(new Message(msg.getSender(), msg.getRecipient(), msg.getBody()));
+            return copy; //deep copy
+            //return new ArrayList<>(messages); //shallow copy
+        } else {throw new UnsupportedOperationException();}
     }
 
     public String getUserOne() {
