@@ -16,16 +16,24 @@ public class ScheduleManager {
     Schedule theSchedule; // should never be given out; its mutable
     AccountManager accounts;
 
-
+    /**
+     *  Adds a new event to the schedule at a certain time in a room
+     *
+     * @param room Room that the event is going inside
+     * @param event Event that is being added
+     * @param time The time that the event is taking place
+     * @return true if the event was successfully added
+     */
     public boolean addNewEvent(Room room, Event event, Time time) {
-        // TODO
-        //  Add new event to the schedule
         return theSchedule.addToSchedule(room, event, time);
     }
 
+    /**
+     *  Gets a schedule of all event's an attendee is enrolled in
+     * @param username Username of the attendee
+     * @return Schedule containing only event's the attendee is in
+     */
     protected Schedule getAttendeeEvents(String username) {
-        // TODO
-        //  return a schedule of events where this user is attendee
         HashMap<Time, HashMap<Room, Event>> schedule = theSchedule.getSchedule();
         Schedule attendeeSchedule = new Schedule();
         for (Map.Entry<Time, HashMap<Room, Event>> timeEntry : schedule.entrySet()) {
@@ -41,6 +49,11 @@ public class ScheduleManager {
         return attendeeSchedule;
     }
 
+    /**
+     *  Gets a schedule of all event's of a Speaker
+     * @param username Username of the speaker
+     * @return Schedule containing only event's a Speaker is speaking at
+     */
     protected Schedule getSpeakerEvents(String username) {
         // TODO
         //  return a schedule of events where username is speaker, if there are none, return empty.
@@ -62,6 +75,11 @@ public class ScheduleManager {
         return null;
     }
 
+    /**
+     *  Checks if an event exists
+     * @param event Event that is being checked
+     * @return true if event exists
+     */
     public boolean eventExists(Event event) {
         // TODO
         //  returns true if event exists
@@ -75,11 +93,21 @@ public class ScheduleManager {
         return false;
     }
 
+    /**
+     *  Checks if event has already happened
+     * @param event Event that is being checked
+     * @return true if event has already occurred
+     */
     public boolean eventHasHappened (Event event) {
-        // TODO
+        // TODO Discuss with TA
         return false;
     }
 
+    /**
+     *  Checks if an event is full
+     * @param event Event that is being checked
+     * @return true if the event is full
+     */
     public boolean eventFull(Event event) {
         return false;
     }
