@@ -21,6 +21,10 @@ public class SocialManager {
 
         Schedule attendeeSchedule = scheduleManager.getAttendeeEvents(username);
 
+        return isUserInSchedule(otherUsername, attendeeSchedule);
+    }
+
+    private boolean isUserInSchedule(String otherUsername, Schedule attendeeSchedule) {
         for (Time time: attendeeSchedule.getSchedule().keySet()) {
             for (Room room: attendeeSchedule.getSchedule().get(time).keySet()) {
                 if(attendeeSchedule.getSchedule().get(time).get(room).getAttendees().contains(otherUsername)) {
@@ -37,14 +41,6 @@ public class SocialManager {
 
         Schedule speakerSchedule = scheduleManager.getSpeakerEvents(speaker);
 
-        for (Time time: speakerSchedule.getSchedule().keySet()) {
-            for (Room room: speakerSchedule.getSchedule().get(time).keySet()) {
-                if (speakerSchedule.getSchedule().get(time).get(room).getAttendees().contains(attendee)) {
-                    return true;
-                }
-            }
-        }
-        
-        return false;
+        return isUserInSchedule(attendee, speakerSchedule);
     }
 }

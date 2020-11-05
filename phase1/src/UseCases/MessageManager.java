@@ -8,7 +8,6 @@ import java.util.ArrayList;
 
 import java.util.HashMap;
 
-
 /**
  * The use case class for messaging.
  * <p>
