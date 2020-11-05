@@ -59,8 +59,10 @@ public class ScheduleManager {
         //  return a schedule of events where username is speaker, if there are none, return empty.
         HashMap<Time, HashMap<Room, Event>> schedule = theSchedule.getSchedule();
         Schedule speakerSchedule = new Schedule();
+
         for (Map.Entry<Time, HashMap<Room, Event>> timeEntry : schedule.entrySet()) {
             Time time = timeEntry.getKey();
+
             for (Map.Entry<Room, Event> roomEntry : timeEntry.getValue().entrySet()) {
                 Room room = roomEntry.getKey();
                 Event event = roomEntry.getValue();
@@ -69,7 +71,7 @@ public class ScheduleManager {
                 }
             }
         }
-        if (! speakerSchedule.getSchedule().isEmpty()) {
+        if (!speakerSchedule.getSchedule().isEmpty()) {
             return speakerSchedule;
         }
         return null;

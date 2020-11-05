@@ -30,11 +30,7 @@ public class AccountManager {
     public boolean canCreateUser(String username) {
 
         // If the users HashMap contains a User value with the key, username, return false. If not, return true.
-        if (users.containsKey(username))
-        {
-            return false;
-        }
-        return true;
+        return !users.containsKey(username);
 
     }
 
