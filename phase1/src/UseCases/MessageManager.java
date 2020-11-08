@@ -3,35 +3,63 @@ package UseCases;
 import Entities.Conversation;
 import Entities.Message;
 import Entities.User;
+import Gateways.JsonDatabase;
 
 import java.util.ArrayList;
 
 import java.util.HashMap;
+import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 /**
  * The use case class for messaging.
- * <p>
+ * <br>
  * Maps usernames to lists of conversations. Conversations are mutable objects; user1 and user2 would share
  * the same conversation instance between them. Any two users can only have one conversations between them.
+ * <br>
+ * Conversations are stored in JsonDatabase, where each conversation is its own file in the format:
+ * conversation-username1-username2.json
  *
  * @author Alex
  */
 public class MessageManager {
-    private HashMap<String, ArrayList<Conversation>> database;
+    private final String ID_DELIMITER = "-";
+
+    private JsonDatabase<Conversation> jsonDatabase
+            = new JsonDatabase<>("conversation", Conversation.class);
+    private HashMap<String, List<String>> idCache = new HashMap<>();
+
     private SocialManager socialManager;
     private AccountManager accounts;
+
 
     /**
      * Constructor.
      *
-     * @param database      hashmap mapping usernames to lists of conversations
      * @param socialManager
      * @param accounts
      */
-    public MessageManager(HashMap<String, ArrayList<Conversation>> database, SocialManager socialManager, AccountManager accounts) {
-        this.database = database;
+    public MessageManager(SocialManager socialManager, AccountManager accounts) {
         this.socialManager = socialManager;
         this.accounts = accounts;
+        loadIdCache();
+    }
+
+
+    /**
+     * Loads idCache from jsonDatabase.
+     */
+    private void loadIdCache() {
+        List<String> ids = jsonDatabase.getIds();
+        for (String id : ids) {
+            int index = id.indexOf(ID_DELIMITER);
+            String u1 = id.substring(0, index);
+            String u2 = id.substring(index + 1);
+
+            (idCache.containsKey(u1) ? idCache.get(u1) : idCache.put(u1, new ArrayList<>())).add(id);
+            (idCache.containsKey(u2) ? idCache.get(u2) : idCache.put(u2, new ArrayList<>())).add(id);
+        }
     }
 
     /**
@@ -53,11 +81,14 @@ public class MessageManager {
 
         if (sender == null || recipient == null || message.getBody() == null) return false;
 
-        Conversation conversation = getConversation(sender, recipient);
+        Conversation convo = getConversation(sender, recipient);
 
-        conversation = conversation == null ? newConversation(sender, recipient) : conversation;
+        convo = (convo == null) ? newConversation(sender, recipient) : convo;
 
-        conversation.addMessage(message);
+        convo.addMessage(message);
+        jsonDatabase.write(convo,
+                String.format("%s-%s", convo.getUserOne(), convo.getUserTwo()));
+
         return true;
     }
 
@@ -108,36 +139,33 @@ public class MessageManager {
      *
      * @param user1
      * @param user2
-     * @return list of formatted strings; empty string if there is no conversation.
+     * @return list of formatted strings; empty list if there is no conversation.
      */
-    public ArrayList<String> getMessages(String user1, String user2) {
-        ArrayList<String> messages = new ArrayList<>();
+    public List<String> getMessages(String user1, String user2) {
         Conversation c = getConversation(user1, user2);
+        if (c == null) return new ArrayList<>(); // returns empty list
 
-        if (c == null) return messages; // returns empty list
+        return c.getMessages()
+                .stream()
+                .map(m -> String.format("[ %s ] %s", m.getSender(), m.getBody()))
+                .collect(Collectors.toList());
 
-        for (Message m : c.getMessages()) {
-            // an example of the format "[ alex ] hello world!"
-            messages.add(String.format("[ %s ] %s", m.getSender(), m.getBody()));
-        }
-
-        return messages;
     }
 
     /**
-     * Searches conversations of user1 to see if there is a conversation with user2.
+     * Searches conversations of user1 to see if there is a conversation with user2. Returns conversation
+     * if there is one.
      *
      * @param user1
      * @param user2
      * @return the conversation between user1 and user2; null if user1 or user2 DNE in db, or there's no conversation.
      */
     private Conversation getConversation(String user1, String user2) {
-        if (database.containsKey(user1) && database.containsKey(user2)) {
-            for (Conversation c : database.get(user1)) {
-                if (c.getUserOne() == user2 || c.getUserTwo() == user2) return c;
+        if (idCache.containsKey(user1) && idCache.containsKey(user2)) {
+            for (String id : idCache.get(user1)) {
+                if (id.contains(user2)) return jsonDatabase.read(id);
             }
         }
-
         return null;
     }
 
@@ -147,7 +175,8 @@ public class MessageManager {
      * <b>This should be used iff user1 and user2 don't have conversation (i.e., messaging for the
      * first time).</b>
      * <p>
-     * Both users share the same conversation object; it is mutable.
+     * Both users share the same conversation object; it is mutable. The conversation is stored in
+     * JsonDatabase.
      *
      * @param user1 user 1
      * @param user2 user 2
@@ -155,22 +184,25 @@ public class MessageManager {
      */
     private Conversation newConversation(String user1, String user2) {
         Conversation conversation = new Conversation(user1, user2);
+        String id = String.format("%s-%s", user1, user2);
 
-        (database.containsKey(user1) ? database.get(user1) : newList(user1)).add(conversation);
-        (database.containsKey(user2) ? database.get(user2) : newList(user2)).add(conversation);
+        (idCache.containsKey(user1) ? idCache.get(user1) : newList(user1)).add(id);
+        (idCache.containsKey(user2) ? idCache.get(user2) : newList(user2)).add(id);
+
+        jsonDatabase.write(conversation, id);
 
         return conversation;
     }
 
     /**
-     * Creates a new list for conversations for user and puts it in database.
+     * Creates a new list for conversation ids for user and puts it in idCache.
      *
      * @param user the user
      * @return the newly created list
      */
-    private ArrayList<Conversation> newList(String user) {
-        ArrayList<Conversation> list = new ArrayList<>();
-        database.put(user, list);
+    private List<String> newList(String user) {
+        List<String> list = new ArrayList<>();
+        idCache.put(user, list);
         return list;
     }
 
