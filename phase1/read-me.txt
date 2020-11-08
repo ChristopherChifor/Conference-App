@@ -1,0 +1,4 @@
+One of our classes, JsonDatabase.java, uses an external library (Google's gson) for serializing and deserializing
+into JSON. This will result in issues if not added to the path. To add the libary to path, in IntelliJ, go to
+File > Project Structure. Under Project Settings, enter Libraries. Press button to add new project library and select
+Java. A prompt will pop up to find the .jar file; it is located in group_0058/phase1/lib/
