@@ -9,7 +9,7 @@ import java.util.ArrayList;
 
 import java.util.HashMap;
 import java.util.List;
-import java.util.Optional;
+import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 /**
@@ -57,8 +57,8 @@ public class MessageManager {
             String u1 = id.substring(0, index);
             String u2 = id.substring(index + 1);
 
-            (idCache.containsKey(u1) ? idCache.get(u1) : idCache.put(u1, new ArrayList<>())).add(id);
-            (idCache.containsKey(u2) ? idCache.get(u2) : idCache.put(u2, new ArrayList<>())).add(id);
+            (idCache.containsKey(u1) ? idCache.get(u1) : newList(u1)).add(id);
+            (idCache.containsKey(u2) ? idCache.get(u2) : newList(u2)).add(id);
         }
     }
 
@@ -93,6 +93,18 @@ public class MessageManager {
     }
 
     /**
+     * Returns a list of all usernames this user can message.
+     *
+     * @param user
+     * @return list of usernames
+     */
+    public List<String> getContacts(String user) {
+        return accounts.getUsernames().stream()
+                .filter(s -> canMessage(user, s) && s != user)
+                .collect(Collectors.toList());
+    }
+
+    /**
      * Checks if sender can message recipient.
      * <p>
      * They can message iff:
@@ -108,26 +120,21 @@ public class MessageManager {
 
         if (sender == null || recipient == null) return false;
 
-        // todo decide to keep or delete logic below:
-//        switch (sender.getUserType()) {
-//            case ATTENDEE:
-//                return socialManager.isFriend(senderUsername, recipientUsername)
-//                        || socialManager.isAttendeeForSpeaker(recipientUsername, senderUsername)
-//                        || recipient.getUserType() == User.UserType.ORGANIZER
-//                        || socialManager.inEventTogether(senderUsername, recipientUsername);
-//
-//            case ORGANIZER:
-//                return true; // organizers can message everyone
-//
-//            case SPEAKER:
-//                return socialManager.isAttendeeForSpeaker(senderUsername, recipientUsername)
-//                        || socialManager.isFriend(senderUsername, recipientUsername) //because speakers are attendees too.
-//                        || socialManager.isAttendeeForSpeaker(recipientUsername, senderUsername)
-//                        || recipient.getUserType() == User.UserType.ORGANIZER
-//                        || socialManager.inEventTogether(senderUsername, recipientUsername);
-//        }
-
-        return true;
+        switch (sender.getUserType()) {
+            case ATTENDEE:
+                switch (recipient.getUserType()) {
+                    case ATTENDEE:
+                    case SPEAKER:
+                        return true;
+                    default:
+                        return hasMessaged(senderUsername, recipientUsername);
+                }
+            case SPEAKER:
+            case ORGANIZER:
+                return true;
+            default:
+                return hasMessaged(senderUsername, recipientUsername);
+        }
     }
 
 
@@ -148,6 +155,20 @@ public class MessageManager {
         return c.getMessages()
                 .stream()
                 .map(m -> String.format("[ %s ] %s", m.getSender(), m.getBody()))
+                .collect(Collectors.toList());
+
+    }
+
+    /**
+     * Returns of a list of usernames this person has messaged.
+     *
+     * @param user username
+     * @return list of usernames.
+     */
+    public List<String> getMyMessages(String user) {
+        return idCache.get(user).stream()
+                .flatMap(Pattern.compile("-")::splitAsStream)
+                .filter(s -> !s.equals(user))
                 .collect(Collectors.toList());
 
     }
@@ -204,6 +225,23 @@ public class MessageManager {
         List<String> list = new ArrayList<>();
         idCache.put(user, list);
         return list;
+    }
+
+    /**
+     * Checks if user1 and user2 had a conversation. Does not matter if users exists or not.
+     *
+     * @param user1
+     * @param user2
+     * @return true iff user1 and user2 have a conversation
+     */
+    private boolean hasMessaged(String user1, String user2) {
+        if (idCache.containsKey(user1)) {
+            for (String id : idCache.get(user1)) {
+                if (id.contains(user2)) return true;
+            }
+        }
+
+        return false;
     }
 
 }

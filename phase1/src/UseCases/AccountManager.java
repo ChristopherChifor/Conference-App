@@ -3,6 +3,7 @@ package UseCases;
 import Entities.User;
 
 import java.util.HashMap;
+import java.util.Set;
 
 /**
  * @author Paya
@@ -70,5 +71,13 @@ public class AccountManager {
             return users.get(username);
         }
         return null;
+    }
+
+    /**
+     * Gets the set of all usernames.
+     * @return set of all usernames.
+     */
+    public Set<String> getUsernames() {
+        return users.keySet();
     }
 }
