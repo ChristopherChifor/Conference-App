@@ -7,6 +7,8 @@ import Entities.User;
 import java.util.ArrayList;
 
 import java.util.HashMap;
+import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * The use case class for messaging.
@@ -65,7 +67,12 @@ public class MessageManager {
      * Checks if sender can message recipient.
      * <p>
      * They can message iff:
-     * - both users exist
+     * - both users exist, and
+     * - sender is speaker or organizer, or
+     * - sender is attendee and recipient attendy or speaker, or
+     * - sender is attendee and recipient is organizer if they messaged before
+     * - otherwise, true if they exist and have messaged before.
+     *
      *
      * @param senderUsername    username of sender
      * @param recipientUsername username of recipient
@@ -77,26 +84,50 @@ public class MessageManager {
 
         if (sender == null || recipient == null) return false;
 
-        // todo decide to keep or delete logic below:
-//        switch (sender.getUserType()) {
-//            case ATTENDEE:
-//                return socialManager.isFriend(senderUsername, recipientUsername)
-//                        || socialManager.isAttendeeForSpeaker(recipientUsername, senderUsername)
-//                        || recipient.getUserType() == User.UserType.ORGANIZER
-//                        || socialManager.inEventTogether(senderUsername, recipientUsername);
-//
-//            case ORGANIZER:
-//                return true; // organizers can message everyone
-//
-//            case SPEAKER:
-//                return socialManager.isAttendeeForSpeaker(senderUsername, recipientUsername)
-//                        || socialManager.isFriend(senderUsername, recipientUsername) //because speakers are attendees too.
-//                        || socialManager.isAttendeeForSpeaker(recipientUsername, senderUsername)
-//                        || recipient.getUserType() == User.UserType.ORGANIZER
-//                        || socialManager.inEventTogether(senderUsername, recipientUsername);
-//        }
+        switch (sender.getUserType()) {
+            case ATTENDEE:
+                switch (recipient.getUserType()) {
+                    case ATTENDEE:
+                    case SPEAKER:
+                        return true;
+                    default:
+                        return hasMessaged(senderUsername, recipientUsername);
+                }
+            case SPEAKER:
+            case ORGANIZER:
+                return true;
+            default:
+                return hasMessaged(senderUsername, recipientUsername);
+        }
+    }
 
-        return true;
+    /**
+     * Returns a list of all usernames this user can message.
+     *
+     * @param user
+     * @return list of usernames
+     */
+    public List<String> getContacts(String user) {
+        return accounts.getUsernames().stream()
+                .filter(s -> canMessage(user, s) && s != user)
+                .collect(Collectors.toList());
+    }
+
+    /**
+     * Checks if user1 and user2 had a conversation. Does not matter if users exists or not.
+     *
+     * @param user1
+     * @param user2
+     * @return true iff user1 and user2 have a conversation
+     */
+    private boolean hasMessaged(String user1, String user2) {
+        if (database.containsKey(user1)) {
+            for (Conversation c : database.get(user1)) {
+                if (c.getUserOne().equals(user2) || c.getUserTwo().equals(user2)) return true;
+            }
+        }
+
+        return false;
     }
 
 
@@ -172,6 +203,20 @@ public class MessageManager {
         ArrayList<Conversation> list = new ArrayList<>();
         database.put(user, list);
         return list;
+    }
+
+    /**
+     * Returns of a list of usernames this person has messaged.
+     *
+     * @param user username
+     * @return list of usernames; empty list if user not in database
+     */
+    public List<String> getMyInbox(String user) {
+        if (!database.containsKey(user)) return new ArrayList<>();
+        return database.get(user).stream()
+                .map(s -> (s.getUserOne().equals(user)?s.getUserTwo():s.getUserOne()))
+                .collect(Collectors.toList());
+
     }
 
 }

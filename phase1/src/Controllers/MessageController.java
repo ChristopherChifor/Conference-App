@@ -82,7 +82,7 @@ public class MessageController extends AbstractController {
      *  Get's this user's inbox and displays it out
      */
     private void getInbox() {
-        presenter.printList(messageManager.getMyMessages(username));
+        presenter.printList(messageManager.getMyInbox(username));
     }
 
     private void sendMessageMany(ArrayList<String> otherUsers) {
