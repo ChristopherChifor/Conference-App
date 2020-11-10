@@ -81,6 +81,21 @@ public class Presenter {
      * @param list the list to print out
      */
     public void printList(List<String> list) {
+        list.forEach(System.out::println);
+    }
 
+    /**
+     * Prints lines on screen.
+     * You can pass any sequence of strings, or an array of strings. e.g.:
+     *
+     *
+     * @param lines a sequence of strings OR an array of strings.
+     */
+    public void printLines(String... lines){
+        if (lines == null) return;
+
+        for (String line: lines){
+            System.out.println(line);
+        }
     }
 }
