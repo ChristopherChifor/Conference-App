@@ -1,6 +1,5 @@
 package Presenters;
 
-import Models.AbstractModel;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,7 +13,7 @@ import java.util.Scanner;
  */
 public class Presenter {
     private Scanner s = new Scanner(System.in);
-//    private List<String> commands;
+    //    private List<String> commands;
 //    private List<String> descriptions;
     private Map<String, String> commands;
 
@@ -47,22 +46,14 @@ public class Presenter {
         return s.nextLine();
     }
 
-    /**
-     * Takes param model and prints its content
-     *
-     * @param model model being printed
-     */
-    public void update(AbstractModel model) {
-        System.out.println(model.getContent());
-    }
 
     /**
      * Prints the list of acceptable CLI commands and their descriptions. Printed when help command is entered.
      */
     public void printCommandList() {
 
-        for (Map.Entry<String,String> command: commands.entrySet()
-             ) {
+        for (Map.Entry<String, String> command : commands.entrySet()
+        ) {
             System.out.printf("%s : %s", command.getKey(), command.getValue());
         }
     }
@@ -78,6 +69,7 @@ public class Presenter {
 
     /**
      * Prints a given list out for the user
+     *
      * @param list the list to print out
      */
     public void printList(List<String> list) {
@@ -88,13 +80,12 @@ public class Presenter {
      * Prints lines on screen.
      * You can pass any sequence of strings, or an array of strings. e.g.:
      *
-     *
      * @param lines a sequence of strings OR an array of strings.
      */
-    public void printLines(String... lines){
+    public void printLines(String... lines) {
         if (lines == null) return;
 
-        for (String line: lines){
+        for (String line : lines) {
             System.out.println(line);
         }
     }
