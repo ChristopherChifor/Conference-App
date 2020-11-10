@@ -41,4 +41,8 @@ public class ScheduleTime {
     public int getMinute() {
         return minute;
     }
+
+    public String getDateTime() { // YEAR : MONTH : DAY : HOUR : MINUTE
+        return String.format("%d:%d:%d:%d:%d", year, month, day, hour, minute);
+    }
 }

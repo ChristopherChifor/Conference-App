@@ -2,6 +2,7 @@ package Presenters;
 
 import Models.AbstractModel;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
@@ -9,22 +10,21 @@ import java.util.Scanner;
 /**
  * Abstract presenter class. WIP
  *
- * @author Alex
+ * @author Alex & Parssa
  */
 public class Presenter {
     private Scanner s = new Scanner(System.in);
-    private List<String> commands;
-    private List<String> descriptions;
+//    private List<String> commands;
+//    private List<String> descriptions;
+    private Map<String, String> commands;
 
     /**
      * Constructor for presenter.
      *
-     * @param commands list of accepted commands
-     * @param descriptions list of descriptions of accepted commands
+     * @param commands list of accepted commands map, with command descriptions as values
      */
-    public Presenter(List<String> commands, List<String> descriptions) {
+    public Presenter(Map<String, String> commands) {
         this.commands = commands;
-        this.descriptions = descriptions;
     }
 
     /**
@@ -60,8 +60,10 @@ public class Presenter {
      * Prints the list of acceptable CLI commands and their descriptions. Printed when help command is entered.
      */
     public void printCommandList() {
-        for (int i = 0; i < commands.size(); i++) {
-            System.out.printf("%s : %s", commands.get(i), descriptions.get(i));
+
+        for (Map.Entry<String,String> command: commands.entrySet()
+             ) {
+            System.out.printf("%s : %s", command.getKey(), command.getValue());
         }
     }
 
@@ -71,6 +73,14 @@ public class Presenter {
      * @return list of commands
      */
     public List<String> getCommands() {
-        return commands;
+        return new ArrayList<>(commands.keySet());
+    }
+
+    /**
+     * Prints a given list out for the user
+     * @param list the list to print out
+     */
+    public void printList(List<String> list) {
+
     }
 }
