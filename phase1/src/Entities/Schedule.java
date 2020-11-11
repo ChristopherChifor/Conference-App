@@ -1,26 +1,36 @@
 package Entities;
 
-import java.sql.Time;
 import java.util.HashMap;
 
 /**
  * @author Andrei
  */
 public class Schedule {
-    private HashMap<Time, HashMap<Room, Event>> schedule;
+    private HashMap<ScheduleTime, HashMap<String, String>> schedule;
 
-    public boolean addToSchedule(Room room, Event event, Time time) {
+    public boolean addToSchedule(Room room, Event event, ScheduleTime time) {
 
         if (schedule.get(time).containsKey(room)) return false;
         else {
-            HashMap<Room, Event> innerMap = new HashMap<Room, Event>();
+            HashMap<String, String> innerMap = new HashMap<>();
+            innerMap.put(room.getName(), event.getName());
             schedule.put(time, innerMap);
-            innerMap.put(room, event);
             return true;
         }
     }
 
-    public HashMap<Time, HashMap<Room, Event>> getSchedule() {
+    public boolean addToSchedule(String room, String event, ScheduleTime time) {
+
+        if (schedule.get(time).containsKey(room)) return false;
+        else {
+            HashMap<String, String> innerMap = new HashMap<>();
+            innerMap.put(room, event);
+            schedule.put(time, innerMap);
+            return true;
+        }
+    }
+
+    public HashMap<ScheduleTime, HashMap<String, String>> getSchedule() {
         return schedule;
     }
 }

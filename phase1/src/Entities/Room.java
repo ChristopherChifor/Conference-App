@@ -28,4 +28,9 @@ public class Room {
     public int getCapacity() {
         return capacity;
     }
+
+    public String getString() {
+        // TODO
+        return "";
+    }
 }

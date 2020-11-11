@@ -26,14 +26,14 @@ public class MessageController extends AbstractController {
     }
 
     @Override
-    protected void executeCommand(String input, Presenter presenter) {
+    protected void executeCommand(String input) {
         ArrayList<String> parsedCommand = parseCommand(input);
         switch (parsedCommand.get(0)) {
             case "/open":
-                if (parsedCommand.size() < 2) parseInput(input, presenter);
+                if (parsedCommand.size() < 2) parseInput(input);
                 openConversation(parsedCommand.get(1));
             case "/send":
-                if (parsedCommand.size() < 2) parseInput(input, presenter);
+                if (parsedCommand.size() < 2) parseInput(input);
                 sendMessage(parsedCommand.get(1), parsedCommand.get(2));
             case "/inbox": {
                 getInbox();
@@ -44,15 +44,20 @@ public class MessageController extends AbstractController {
     }
 
     @Override
-    protected void parseInput(String input, Presenter presenter) {
+    protected void parseInput(String input) {
 
     }
 
     @Override
-    protected void startUp(Presenter presenter) {
-
+    protected void startUp() {
+        String greeting = "--- MESSAGING MENU --- \n Hello " + username + ". \n Type /help for options";
+        presenter.printLines(greeting);
     }
 
+    /**
+     *  Definitions of commands they can do.
+     *  Further commands defined in subclasses.
+     */
     @Override
     protected void defineCommands() {
         commands.put("/open", "Opens a conversation.");
@@ -61,6 +66,10 @@ public class MessageController extends AbstractController {
     }
 
 
+    /**
+     * Opens a conversation with other user
+     * @param otherUser other user they are speaking to
+     */
     private void openConversation(String otherUser) {
         presenter.printList(messageManager.getMessages(username, otherUser));
 
@@ -68,7 +77,7 @@ public class MessageController extends AbstractController {
 
     /**
      *  Sends a message from this user to another user
-      * @param otherUser the user recieving this message
+     * @param otherUser the user recieving this message
      * @param messageBody the body of this message
      */
     private void sendMessage(String otherUser, String messageBody) {
@@ -79,13 +88,20 @@ public class MessageController extends AbstractController {
     }
 
     /**
-     *  Get's this user's inbox and displays it out
+     *  Get's this user's inbox and displays it.
      */
     private void getInbox() {
         presenter.printList(messageManager.getMyInbox(username));
     }
 
-    private void sendMessageMany(ArrayList<String> otherUsers) {
-        // TODO LEFT OFF HERE
+    /**
+     *  Sends to List of user's, only accessible by some users
+     * @param otherUsers List of user's to send to
+     * @param messageBody Body of message
+     */
+    protected void sendMessageMany(ArrayList<String> otherUsers, String messageBody) {
+        for (String other : otherUsers) {
+            sendMessage(other, messageBody);
+        }
     }
 }

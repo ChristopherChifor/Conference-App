@@ -2,6 +2,7 @@ package UseCases;
 
 import Entities.Room;
 import Entities.Schedule;
+import Entities.ScheduleTime;
 import Entities.User;
 
 import java.sql.Time;
@@ -25,9 +26,9 @@ public class SocialManager {
     }
 
     private boolean isUserInSchedule(String otherUsername, Schedule attendeeSchedule) {
-        for (Time time: attendeeSchedule.getSchedule().keySet()) {
-            for (Room room: attendeeSchedule.getSchedule().get(time).keySet()) {
-                if(attendeeSchedule.getSchedule().get(time).get(room).getAttendees().contains(otherUsername)) {
+        for (ScheduleTime time: attendeeSchedule.getSchedule().keySet()) {
+            for (String room: attendeeSchedule.getSchedule().get(time).keySet()) {
+                if(scheduleManager.getEvent(attendeeSchedule.getSchedule().get(time).get(room)).getAttendees().contains(otherUsername)) {
                     return true;
                 }
             }

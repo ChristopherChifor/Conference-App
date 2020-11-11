@@ -5,15 +5,15 @@ import Entities.Room;
 import Entities.Schedule;
 import Entities.ScheduleTime;
 
-import java.sql.Time;
 import java.util.HashMap;
 import java.util.Map;
 
 /**
- * @author Haoming
+ * @author Haoming & Parssa
  */
 public class ScheduleManager {
     Schedule theSchedule; // should never be given out; its mutable
+    HashMap<String, Event> events; // should never be given out; its mutable
     AccountManager accounts;
 
     /**
@@ -24,7 +24,7 @@ public class ScheduleManager {
      * @param time The time that the event is taking place
      * @return true if the event was successfully added
      */
-    public boolean addNewEvent(Room room, Event event, Time time) {
+    public boolean addNewEvent(Room room, Event event, ScheduleTime time) {
         return theSchedule.addToSchedule(room, event, time);
     }
 
@@ -34,16 +34,19 @@ public class ScheduleManager {
      * @return Schedule containing only event's the attendee is in
      */
     protected Schedule getAttendeeEvents(String username) {
-        HashMap<Time, HashMap<Room, Event>> schedule = theSchedule.getSchedule();
+        HashMap<ScheduleTime, HashMap<String, String>> schedule = theSchedule.getSchedule();
         Schedule attendeeSchedule = new Schedule();
-        for (Map.Entry<Time, HashMap<Room, Event>> timeEntry : schedule.entrySet()) {
-            Time time = timeEntry.getKey();
-            for (Map.Entry<Room, Event> roomEntry : timeEntry.getValue().entrySet()) {
-                Room room = roomEntry.getKey();
-                Event event = roomEntry.getValue();
-                if (event.getAttendees().contains(username)) {
-                    attendeeSchedule.addToSchedule(room, event, time);
+        for (Map.Entry<ScheduleTime, HashMap<String, String>> timeEntry : schedule.entrySet()) {
+            ScheduleTime time = timeEntry.getKey();
+            for (Map.Entry<String, String> roomEntry : timeEntry.getValue().entrySet()) {
+                String room = roomEntry.getKey();
+                String event = roomEntry.getValue();
+                if (event != null) {
+                    if (getEvent(event).getAttendees().contains(username)) {
+                        attendeeSchedule.addToSchedule(room, event, time);
+                    }
                 }
+
             }
         }
         return attendeeSchedule;
@@ -57,16 +60,16 @@ public class ScheduleManager {
     protected Schedule getSpeakerEvents(String username) {
         // TODO
         //  return a schedule of events where username is speaker, if there are none, return empty.
-        HashMap<Time, HashMap<Room, Event>> schedule = theSchedule.getSchedule();
+        HashMap<ScheduleTime, HashMap<String, String>> schedule = theSchedule.getSchedule();
         Schedule speakerSchedule = new Schedule();
 
-        for (Map.Entry<Time, HashMap<Room, Event>> timeEntry : schedule.entrySet()) {
-            Time time = timeEntry.getKey();
+        for (Map.Entry<ScheduleTime, HashMap<String, String>> timeEntry : schedule.entrySet()) {
+            ScheduleTime time = timeEntry.getKey();
 
-            for (Map.Entry<Room, Event> roomEntry : timeEntry.getValue().entrySet()) {
-                Room room = roomEntry.getKey();
-                Event event = roomEntry.getValue();
-                if (event.getSpeaker().getUsername().equals(username)) {
+            for (Map.Entry<String, String> roomEntry : timeEntry.getValue().entrySet()) {
+                String room = roomEntry.getKey();
+                String event = roomEntry.getValue();
+                if (getEvent(event).getSpeaker().getUsername().equals(username)) {
                     speakerSchedule.addToSchedule(room, event, time);
                 }
             }
@@ -83,16 +86,16 @@ public class ScheduleManager {
      * @return true if event exists
      */
     public boolean eventExists(Event event) {
-        // TODO
-        //  returns true if event exists
-        HashMap<Time, HashMap<Room, Event>> schedule = theSchedule.getSchedule();
-        for (Map.Entry<Time, HashMap<Room, Event>> timeEntry : schedule.entrySet()) {
-            Time time = timeEntry.getKey();
-            if (schedule.get(time).containsValue(event)) {
-                return true;
-            }
-        }
-        return false;
+        return events.containsValue(event);
+    }
+
+    /**
+     *  Checks if an event exists
+     * @param eventName Name of event that is being checked
+     * @return true if event exists
+     */
+    public boolean eventExists(String eventName) {
+        return events.containsKey(eventName);
     }
 
     /**
@@ -111,6 +114,22 @@ public class ScheduleManager {
      * @return true if the event is full
      */
     public boolean eventFull(Event event) {
+        // TODO
         return false;
+    }
+
+    /**
+     *  Checks if an event is full
+     * @param eventName Event that is being checked
+     * @return true if the event is full
+     */
+    public boolean eventFull(String eventName) {
+        // TODO
+        return false;
+    }
+
+
+    public Event getEvent(String eventName) {
+        return (events.containsKey(eventName)) ? events.get(eventName) : null;
     }
 }

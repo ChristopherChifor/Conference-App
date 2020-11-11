@@ -31,14 +31,13 @@ public abstract class AbstractController {
      */
     public final void enter(){
         Presenter presenter = new Presenter(commands);
-        startUp(presenter);
         String input;
         while(true){
             input = presenter.getInput();
             if (input.equals(EXIT_COMMAND)) break;
             else if (input.equals(HELP_COMMAND)) presenter.printCommandList();
-            else if (commands.containsKey(input)) executeCommand(input, presenter);
-            else parseInput(input, presenter);
+            else if (commands.containsKey(input)) executeCommand(input);
+            else parseInput(input);
         }
         presenter.close();
     }
@@ -49,22 +48,19 @@ public abstract class AbstractController {
      * This will never be a HELP or EXIT command
      *
      * @param command user-entered command
-     * @param presenter presenter for printing
      */
-    protected abstract void executeCommand(String command, Presenter presenter);
+    protected abstract void executeCommand(String command);
 
     /**
      * Parses user input (if input is not in commands list)
      * @param input user input
-     * @param presenter presenter for printing
      */
-    protected abstract void parseInput(String input, Presenter presenter);
+    protected abstract void parseInput(String input);
 
     /**
      * Method for starting up the controller, i.e., printing initial info onto screen
-     * @param presenter presenter for printing.
      */
-    protected abstract void startUp(Presenter presenter);
+    protected abstract void startUp();
 
     /**
      * Needs to be ran when instantiating controller. Populates commands list and description list.
