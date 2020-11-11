@@ -72,7 +72,6 @@ public class MessageController extends AbstractController {
      */
     private void openConversation(String otherUser) {
         presenter.printList(messageManager.getMessages(username, otherUser));
-
     }
 
     /**
@@ -81,8 +80,8 @@ public class MessageController extends AbstractController {
      * @param messageBody the body of this message
      */
     private void sendMessage(String otherUser, String messageBody) {
-        Message message = new Message(username, otherUser, messageBody);
         if (messageManager.canMessage(username, otherUser)) {
+            Message message = new Message(username, otherUser, messageBody);
             messageManager.sendMessage(message);
         }
     }

@@ -20,19 +20,16 @@ import java.util.stream.Collectors;
  */
 public class MessageManager {
     private HashMap<String, ArrayList<Conversation>> database;
-    private SocialManager socialManager;
     private AccountManager accounts;
 
     /**
      * Constructor.
      *
      * @param database      hashmap mapping usernames to lists of conversations
-     * @param socialManager
      * @param accounts
      */
-    public MessageManager(HashMap<String, ArrayList<Conversation>> database, SocialManager socialManager, AccountManager accounts) {
+    public MessageManager(HashMap<String, ArrayList<Conversation>> database, AccountManager accounts) {
         this.database = database;
-        this.socialManager = socialManager;
         this.accounts = accounts;
     }
 

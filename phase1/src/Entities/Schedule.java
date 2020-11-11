@@ -9,7 +9,6 @@ public class Schedule {
     private HashMap<ScheduleTime, HashMap<String, String>> schedule;
 
     public boolean addToSchedule(Room room, Event event, ScheduleTime time) {
-
         if (schedule.get(time).containsKey(room)) return false;
         else {
             HashMap<String, String> innerMap = new HashMap<>();

@@ -35,13 +35,10 @@ public class AccountManager {
 
     }
 
-    public boolean changeUserType(String username, User.UserType type)
-    {
-
+    public boolean changeUserType(String username, User.UserType type) {
         // If the users HashMap contains a User value with the key, username, set its UserType to type and return true.
         // If not, do not do anything and return false.
-        if (users.containsKey(username))
-        {
+        if (users.containsKey(username)) {
             users.get(username).setUserType(type);
             return true;
         }

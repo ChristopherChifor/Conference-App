@@ -2,7 +2,7 @@ package Controllers;
 
 import Presenters.Presenter;
 
-// TODO
+// TODO Chris
 public class OrganizerController extends AbstractController{
 
     protected OrganizerController(Presenter presenter) {
