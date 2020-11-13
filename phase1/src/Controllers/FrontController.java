@@ -1,5 +1,34 @@
 package Controllers;
 
-// TODO Payam: Message Slack before Implementation
-public class FrontController {
+import Presenters.Presenter;
+import UseCases.AccountManager;
+
+
+public class FrontController extends AbstractController{
+
+    private AccountManager accountManager;
+
+    protected FrontController(Presenter presenter) {
+        super(presenter);
+    }
+
+    @Override
+    protected void executeCommand(String command) {
+
+    }
+
+    @Override
+    protected void parseInput(String input) {
+
+    }
+
+    @Override
+    protected void startUp() {
+
+    }
+
+    @Override
+    protected void defineCommands() {
+
+    }
 }
