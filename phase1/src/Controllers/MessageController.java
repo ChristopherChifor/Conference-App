@@ -39,9 +39,8 @@ public class MessageController extends AbstractController {
                     parseInput(input);
                     sendMessage(parsedCommand.get(1), parsedCommand.get(2));
                 } else parseInput(input);
-            case "/inbox": {
+            case "/inbox":
                 getInbox();
-            }
             default:
                 break;
         }
