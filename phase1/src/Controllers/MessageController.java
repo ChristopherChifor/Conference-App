@@ -68,7 +68,6 @@ public class MessageController extends AbstractController {
         commands.put("/inbox", "Displays inbox of all conversations");
     }
 
-
     /**
      * Opens a conversation with other user
      * @param otherUser other user they are speaking to

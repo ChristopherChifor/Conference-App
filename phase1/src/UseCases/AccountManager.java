@@ -105,4 +105,14 @@ public class AccountManager {
     public Set<String> getUsernames() {
         return users.keySet();
     }
+
+    /**
+     * Checks if user exists in users dictionary.
+     *
+     * @param username username of user to check
+     * @return true if user exists
+     */
+    public boolean userExists(String username) {
+        return users.containsKey(username);
+    }
 }
