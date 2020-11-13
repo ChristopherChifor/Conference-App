@@ -30,11 +30,15 @@ public class MessageController extends AbstractController {
         ArrayList<String> parsedCommand = parseCommand(input);
         switch (parsedCommand.get(0)) {
             case "/open":
-                if (parsedCommand.size() < 2) parseInput(input);
-                openConversation(parsedCommand.get(1));
+                if (parsedCommand.size() < 2) {
+                    parseInput(input);
+                    openConversation(parsedCommand.get(1));
+                } else parseInput(input);
             case "/send":
-                if (parsedCommand.size() < 2) parseInput(input);
-                sendMessage(parsedCommand.get(1), parsedCommand.get(2));
+                if (parsedCommand.size() < 2) {
+                    parseInput(input);
+                    sendMessage(parsedCommand.get(1), parsedCommand.get(2));
+                } else parseInput(input);
             case "/inbox": {
                 getInbox();
             }
@@ -70,7 +74,7 @@ public class MessageController extends AbstractController {
      * Opens a conversation with other user
      * @param otherUser other user they are speaking to
      */
-    private void openConversation(String otherUser) {
+    void openConversation(String otherUser) {
         presenter.printList(messageManager.getMessages(username, otherUser));
     }
 
@@ -79,7 +83,7 @@ public class MessageController extends AbstractController {
      * @param otherUser the user recieving this message
      * @param messageBody the body of this message
      */
-    private void sendMessage(String otherUser, String messageBody) {
+    void sendMessage(String otherUser, String messageBody) {
         if (messageManager.canMessage(username, otherUser)) {
             Message message = new Message(username, otherUser, messageBody);
             messageManager.sendMessage(message);
@@ -89,7 +93,7 @@ public class MessageController extends AbstractController {
     /**
      *  Get's this user's inbox and displays it.
      */
-    private void getInbox() {
+    void getInbox() {
         presenter.printList(messageManager.getMyInbox(username));
     }
 
@@ -98,7 +102,7 @@ public class MessageController extends AbstractController {
      * @param otherUsers List of user's to send to
      * @param messageBody Body of message
      */
-    protected void sendMessageMany(ArrayList<String> otherUsers, String messageBody) {
+    void sendMessageMany(ArrayList<String> otherUsers, String messageBody) {
         for (String other : otherUsers) {
             sendMessage(other, messageBody);
         }
