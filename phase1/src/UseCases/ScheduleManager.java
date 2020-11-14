@@ -16,6 +16,9 @@ public class ScheduleManager {
     HashMap<String, Event> events; // should never be given out; its mutable
     HashMap<String, Room> rooms; // should never be given out; its mutable
 
+    public Schedule getTheSchedule() {
+        return theSchedule;
+    }
     /**
      *  Adds a new event to the schedule at a certain time in a room
      *
@@ -25,9 +28,6 @@ public class ScheduleManager {
      * @return true if the event was successfully added
      */
 
-    public Schedule getTheSchedule() {
-        return theSchedule;
-    }
     public boolean addNewEvent(Room room, Event event, ScheduleTime time) {
         return theSchedule.addToSchedule(room, event, time);
     }
