@@ -15,7 +15,6 @@ public class ScheduleManager {
     Schedule theSchedule; // should never be given out; its mutable
     HashMap<String, Event> events; // should never be given out; its mutable
     HashMap<String, Room> rooms; // should never be given out; its mutable
-    AccountManager accounts;
 
     /**
      *  Adds a new event to the schedule at a certain time in a room
