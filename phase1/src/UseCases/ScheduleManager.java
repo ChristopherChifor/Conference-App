@@ -24,6 +24,10 @@ public class ScheduleManager {
      * @param time The time that the event is taking place
      * @return true if the event was successfully added
      */
+
+    public Schedule getTheSchedule() {
+        return theSchedule;
+    }
     public boolean addNewEvent(Room room, Event event, ScheduleTime time) {
         return theSchedule.addToSchedule(room, event, time);
     }
