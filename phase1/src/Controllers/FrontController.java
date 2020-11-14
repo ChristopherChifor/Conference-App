@@ -13,6 +13,7 @@ import java.util.ArrayList;
 public class FrontController extends AbstractController {
 
     private AccountManager accountManager;
+    private String username = "";
 
     protected FrontController(Presenter presenter) {
         super(presenter);
@@ -63,6 +64,7 @@ public class FrontController extends AbstractController {
                 presenter.printLines("Username or password incorrect");
             } else {
                 presenter.printLines("Log in successful");
+                username = accountManager.authenticateUser(username, password);
                 // TODO: send to MainController
             }
         }
@@ -80,5 +82,9 @@ public class FrontController extends AbstractController {
         } else {
             presenter.printLines("The username " + username + " already exists.");
         }
+    }
+
+    public String getUsername() {
+        return username;
     }
 }
