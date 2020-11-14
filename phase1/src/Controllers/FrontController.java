@@ -15,8 +15,9 @@ public class FrontController extends AbstractController {
     private AccountManager accountManager;
     private String username = "";
 
-    public FrontController(Presenter presenter) {
+    public FrontController(Presenter presenter, AccountManager accountManager) {
         super(presenter);
+        this.accountManager = accountManager;
     }
 
     @Override
@@ -52,7 +53,8 @@ public class FrontController extends AbstractController {
     }
 
     /**
-     *  Logs in the user
+     * Logs in the user
+     *
      * @param username Username of the user
      * @param password Password of the user
      */
@@ -65,13 +67,14 @@ public class FrontController extends AbstractController {
             } else {
                 presenter.printLines("Log in successful");
                 username = accountManager.authenticateUser(username, password);
-                // TODO: send to MainController
+                this.username = username;
             }
         }
     }
 
     /**
-     *  Signs up a new user, by default as an Attendee
+     * Signs up a new user, by default as an Attendee
+     *
      * @param name
      * @param username
      * @param password
