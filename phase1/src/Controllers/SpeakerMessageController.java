@@ -3,7 +3,7 @@ package Controllers;
 import Presenters.Presenter;
 import UseCases.MessageManager;
 
-// TODO Parssa
+// TODO Nikita
 public class SpeakerMessageController extends MessageController {
     public SpeakerMessageController(MessageManager messageManager, String username, Presenter presenter) {
         super(messageManager, username, presenter);

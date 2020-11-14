@@ -30,19 +30,15 @@ public class MessageController extends AbstractController {
         ArrayList<String> parsedCommand = parseCommand(input);
         switch (parsedCommand.get(0)) {
             case "/open":
-                if (parsedCommand.size() < 2) {
-                    parseInput(input);
-                    openConversation(parsedCommand.get(1));
-                } else parseInput(input);
+                if (parsedCommand.size() < 2) parseInput(input);
+                else openConversation(parsedCommand.get(1));
+
             case "/send":
-                if (parsedCommand.size() < 2) {
-                    parseInput(input);
-                    sendMessage(parsedCommand.get(1), parsedCommand.get(2));
-                } else parseInput(input);
+                if (parsedCommand.size() < 2) parseInput(input);
+                    else sendMessage(parsedCommand.get(1), parsedCommand.get(2));
+
             case "/inbox":
                 getInbox();
-            default:
-                break;
         }
     }
 
