@@ -33,9 +33,11 @@ public class SpeakerMessageController extends MessageController {
 
             case "/sendtoevent(s)":
                 if (parsedCommand.size() < 2) parseInput(input);
-                ArrayList<String> eventList = new ArrayList(parsedCommand.subList(1,
-                        parsedCommand.size()-2));
-                sendMessageMany(eventList, parsedCommand.get(2));
+                else {
+                    ArrayList<String> eventList = new ArrayList(parsedCommand.subList(1, parsedCommand.size()-2));
+                    sendToAttendees(eventList, parsedCommand.get(parsedCommand.size() -1));
+                }
+
         }
     }
 
@@ -45,6 +47,11 @@ public class SpeakerMessageController extends MessageController {
         commands.put("/sendtoevent(s)", "Send message to all attendees in talk(s).");
     }
 
+    /**
+     * Sends message to attendees in events
+     * @param events events that each list of attendees is being messaged
+     * @param messageBody body of message
+     */
     protected void sendToAttendees(ArrayList<String> events, String messageBody){
           for(String event : events){
               ArrayList<String> attendees = scheduleManager.getEventAttendees(event);
