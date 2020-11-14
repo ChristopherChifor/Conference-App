@@ -16,6 +16,12 @@ public class ScheduleManager {
     HashMap<String, Event> events; // should never be given out; its mutable
     HashMap<String, Room> rooms; // should never be given out; its mutable
 
+    public ScheduleManager() {
+        theSchedule = new Schedule();
+        events = new HashMap<>();
+        rooms = new HashMap<>();
+    }
+
     public Schedule getTheSchedule() {
         return theSchedule;
     }

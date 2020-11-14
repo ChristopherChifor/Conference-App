@@ -10,6 +10,10 @@ public class SocialManager {
 
     ScheduleManager scheduleManager;
 
+    public SocialManager(ScheduleManager scheduleManager) {
+        this.scheduleManager = scheduleManager;
+    }
+
     // returns true if two usernames share an event in common
     public boolean isInEventTogether(String username, String otherUsername) {
 
