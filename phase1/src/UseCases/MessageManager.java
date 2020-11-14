@@ -25,11 +25,10 @@ public class MessageManager {
     /**
      * Constructor.
      *
-     * @param database      hashmap mapping usernames to lists of conversations
      * @param accounts
      */
-    public MessageManager(HashMap<String, ArrayList<Conversation>> database, AccountManager accounts) {
-        this.database = database;
+    public MessageManager(AccountManager accounts) {
+        this.database = new HashMap<>();
         this.accounts = accounts;
     }
 

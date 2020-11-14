@@ -12,6 +12,9 @@ import java.util.Set;
 public class AccountManager {
     private HashMap<String, User> users; // never share this
 
+    public AccountManager() {
+        users = new HashMap<>();
+    }
 
     /**
      * Create a user with a name, username, password, and user type (Attendee, Organizer, Speaker) if the username
