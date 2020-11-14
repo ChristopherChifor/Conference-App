@@ -2,7 +2,6 @@ package UseCases;
 
 import Entities.Event;
 import Entities.Schedule;
-import Entities.User;
 
 /**
  * Use-case class for signing users up for events and cancelling their enrollment in events.

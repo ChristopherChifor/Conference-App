@@ -24,32 +24,11 @@ public class FrontController extends AbstractController {
         switch (parsedCommand.get(0)) {
             case "/login":
                 if (parsedCommand.size() < 3) parseInput(command);
-                else {
-                    if (!accountManager.userExists(parsedCommand.get(1))) {
-                        presenter.printLines("User with username " + parsedCommand.get(1) + " does not exist");
-                    } else {
-                        if (accountManager.authenticateUser(parsedCommand.get(1), parsedCommand.get(2)) == null) {
-                            presenter.printLines("Username or password incorrect");
-                        } else {
-                            presenter.printLines("Log in successful");
-                            // TODO: send to MainController
-                        }
-                    }
-                }
+                else login(parsedCommand.get(1), parsedCommand.get(2));
+
             case "/signup":
                 if (parsedCommand.size() < 4) parseInput(command);
-                else {
-                    String name = parsedCommand.get(1), username = parsedCommand.get(2),
-                            password = parsedCommand.get(3);
-                    if (accountManager.canCreateUser(parsedCommand.get(2))) {
-                        accountManager.createUser(name, username, password, User.UserType.ATTENDEE);
-                    } else {
-                        presenter.printLines("The username " + username + " already exists.");
-                    }
-                }
-
-            case "/exit":
-                // TODO: Exit
+                else signUp(parsedCommand.get(1), parsedCommand.get(2), parsedCommand.get(3));
         }
     }
 
@@ -69,5 +48,37 @@ public class FrontController extends AbstractController {
         commands.put("/login", "Login as an existing user");
         commands.put("/signup", "Sign up as a new user");
         commands.put("/exit", "Exit the program");
+    }
+
+    /**
+     *  Logs in the user
+     * @param username Username of the user
+     * @param password Password of the user
+     */
+    void login(String username, String password) {
+        if (!accountManager.userExists(username)) {
+            presenter.printLines("User with username " + username + " does not exist");
+        } else {
+            if (accountManager.authenticateUser(username, password) == null) {
+                presenter.printLines("Username or password incorrect");
+            } else {
+                presenter.printLines("Log in successful");
+                // TODO: send to MainController
+            }
+        }
+    }
+
+    /**
+     *  Signs up a new user, by default as an Attendee
+     * @param name
+     * @param username
+     * @param password
+     */
+    void signUp(String name, String username, String password) {
+        if (accountManager.canCreateUser(username)) {
+            accountManager.createUser(name, username, password, User.UserType.ATTENDEE);
+        } else {
+            presenter.printLines("The username " + username + " already exists.");
+        }
     }
 }
