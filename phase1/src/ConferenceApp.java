@@ -1,3 +1,4 @@
+import Entities.User;
 import Presenters.Presenter;
 import UseCases.*;
 
@@ -23,7 +24,14 @@ public class ConferenceApp implements Serializable {
         conferenceManager = new ConferenceManager(scheduleManager, accountManager);
         socialManager = new SocialManager(scheduleManager);
 
+        // the organizer to create organizers
+        accountManager.createUser("admin","admin","admin", User.UserType.ORGANIZER);
+
         // todo commands is null!
-        presenter = new Presenter(null);
+        presenter = new Presenter();
+    }
+
+    public void launch(){
+
     }
 }

@@ -15,9 +15,6 @@ public abstract class AbstractController {
     protected final String HELP_COMMAND = "/help";
     protected final String EXIT_COMMAND = "/exit";
     protected final Presenter presenter;
-    // these need to be defined by extending class:
-//    protected List<String> commands = new ArrayList<>();
-//    protected List<String> descriptions = new ArrayList<>();
 
     protected Map<String, String> commands = new TreeMap<>();
 

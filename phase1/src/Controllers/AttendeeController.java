@@ -1,6 +1,5 @@
 package Controllers;
 
-import Entities.Event;
 import Entities.ScheduleTime;
 import Presenters.Presenter;
 import UseCases.ConferenceManager;
@@ -11,7 +10,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * @author Haoming
+ * @author Haoming & Parssa
  */
 public class AttendeeController extends AbstractController {
 
@@ -71,7 +70,7 @@ public class AttendeeController extends AbstractController {
      */
     void cancelEnrolment(String eventName) {
         if (scheduleManager.eventExists(eventName)) {
-            conferenceManager.cancelEnrolment(username, scheduleManager.getEvent(eventName));
+            conferenceManager.cancelEnrolment(username, eventName);
         }
     }
 
