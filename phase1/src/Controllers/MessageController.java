@@ -34,8 +34,8 @@ public class MessageController extends AbstractController {
                 else openConversation(parsedCommand.get(1));
 
             case "/send":
-                if (parsedCommand.size() < 2) parseInput(input);
-                    else sendMessage(parsedCommand.get(1), parsedCommand.get(2));
+                if (parsedCommand.size() < 3) parseInput(input);
+                else sendMessage(parsedCommand.get(1), parsedCommand.get(2));
 
             case "/inbox":
                 getInbox();
