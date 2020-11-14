@@ -31,20 +31,24 @@ public class SpeakerMessageController extends MessageController {
             case "/inbox":
                 getInbox();
 
-            case "/sendtoattendees":
+            case "/sendtoevent(s)":
+                if (parsedCommand.size() < 2) parseInput(input);
+                ArrayList<String> eventList = new ArrayList(parsedCommand.subList(1,
+                        parsedCommand.size()-2));
+                sendMessageMany(eventList, parsedCommand.get(2));
         }
     }
 
     @Override
     protected void defineCommands() {
         super.defineCommands();
-        commands.put("/sendtoattendees", "Send message to all attendees in talk(s).");
+        commands.put("/sendtoevent(s)", "Send message to all attendees in talk(s).");
     }
 
     protected void sendToAttendees(ArrayList<String> events, String messageBody){
           for(String event : events){
               ArrayList<String> attendees = scheduleManager.getEventAttendees(event);
-              super.sendMessageMany(attendees, messageBody);
+              sendMessageMany(attendees, messageBody);
           }
     }
 }
