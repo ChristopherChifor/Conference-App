@@ -5,6 +5,7 @@ import Entities.Room;
 import Entities.Schedule;
 import Entities.ScheduleTime;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -153,5 +154,17 @@ public class ScheduleManager {
 
     public Room getRoom(String roomName) {
         return (rooms.containsKey(roomName)) ? rooms.get(roomName) : null;
+    }
+
+    public ArrayList<String> getEventAttendees(String eventName) {
+        ArrayList<String> attendees = new ArrayList<>();
+
+        if (eventExists(eventName)) {
+            for (String e : getEvent(eventName).getAttendees()) {
+                attendees.add(e);
+            }
+        }
+
+        return attendees;
     }
 }
