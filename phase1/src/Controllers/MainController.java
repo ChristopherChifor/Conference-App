@@ -14,6 +14,11 @@ public class MainController extends AbstractController {
     private ScheduleManager scheduleManager;
     private SocialManager socialManager;
 
+    private AttendeeController attendeeController;
+    private MessageController messageController;
+    private OrganizerController organizerController;
+    private SpeakerController speakerController;
+
     public MainController(String username, Presenter presenter, AccountManager accountManager, ConferenceManager conferenceManager, MessageManager messageManager, ScheduleManager scheduleManager, SocialManager socialManager) {
         super(presenter);
         this.accountManager = accountManager;
@@ -23,6 +28,17 @@ public class MainController extends AbstractController {
         this.socialManager = socialManager;
 
         this.username = username;
+
+        switch(this.accountManager.getUserType(username)){
+            case ATTENDEE:
+                messageController = new AttendeeMessageController(messageManager, username, presenter);
+            case SPEAKER:
+                messageController = new SpeakerMessageController(messageManager, username, presenter, scheduleManager);
+            case ORGANIZER:
+                messageController = new OrganizerMessageController(messageManager, username, presenter);
+        }
+
+
     }
 
     @Override
