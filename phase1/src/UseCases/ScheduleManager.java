@@ -14,6 +14,7 @@ import java.util.Map;
 public class ScheduleManager {
     Schedule theSchedule; // should never be given out; its mutable
     HashMap<String, Event> events; // should never be given out; its mutable
+    HashMap<String, Room> rooms; // should never be given out; its mutable
     AccountManager accounts;
 
     /**
@@ -129,7 +130,25 @@ public class ScheduleManager {
     }
 
 
+    public boolean createEvent(String eventName) {
+        if (getEvent(eventName) != null) return false;
+        Event event = new Event(eventName);
+        events.put(eventName, event);
+        return true;
+    }
+
+    public boolean createRoom(String roomName) {
+        if (getRoom(roomName) != null) return false;
+        Room room = new Room(roomName);
+        rooms.put(roomName, room);
+        return true;
+    }
+
     public Event getEvent(String eventName) {
         return (events.containsKey(eventName)) ? events.get(eventName) : null;
+    }
+
+    public Room getRoom(String roomName) {
+        return (rooms.containsKey(roomName)) ? rooms.get(roomName) : null;
     }
 }
