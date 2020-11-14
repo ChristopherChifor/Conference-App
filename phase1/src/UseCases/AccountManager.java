@@ -102,6 +102,16 @@ public class AccountManager {
     }
 
     /**
+     * Getter for user type.
+     * @param username username
+     * @return User.UserType of the user; null if user DNE.
+     */
+    public User.UserType getUserType(String username) {
+        User user = getUser(username);
+        return user == null ? null: user.getUserType();
+    }
+
+    /**
      * Gets the set of all usernames.
      * @return set of all usernames.
      */
