@@ -5,7 +5,7 @@ import Entities.Schedule;
 /**
  * Use-case class for signing users up for events and cancelling their enrollment in events.
  *
- * @author Chris
+ * @author Christopher
  */
 public class ConferenceManager {
     ScheduleManager scheduleManager;
