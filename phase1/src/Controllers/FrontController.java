@@ -15,7 +15,7 @@ public class FrontController extends AbstractController {
     private AccountManager accountManager;
     private String username = "";
 
-    protected FrontController(Presenter presenter) {
+    public FrontController(Presenter presenter) {
         super(presenter);
     }
 
