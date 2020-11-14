@@ -167,6 +167,7 @@ public class ScheduleManager {
     }
 
     public Event getEvent(String eventName) {
+
         return (events.containsKey(eventName)) ? events.get(eventName) : null;
     }
 
@@ -184,5 +185,11 @@ public class ScheduleManager {
         }
 
         return attendees;
+    }
+
+
+    public boolean assignSpeaker(String speaker, String room) {
+        // TODO
+        return false;
     }
 }

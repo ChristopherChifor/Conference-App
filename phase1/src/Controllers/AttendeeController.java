@@ -13,8 +13,6 @@ import java.util.Map;
  * @author Haoming & Parssa
  */
 public class AttendeeController extends AbstractController {
-
-
     private ConferenceManager conferenceManager;
     private ScheduleManager scheduleManager;
     private final String username;
