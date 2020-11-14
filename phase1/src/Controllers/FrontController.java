@@ -23,24 +23,31 @@ public class FrontController extends AbstractController {
         ArrayList<String> parsedCommand = parseCommand(command);
         switch (parsedCommand.get(0)) {
             case "/login":
-                if (!accountManager.userExists(parsedCommand.get(1))) {
-                    presenter.printLines("User with username " + parsedCommand.get(1) + " does not exist");
-                } else {
-                    if (accountManager.authenticateUser(parsedCommand.get(1), parsedCommand.get(2)) == null) {
-                        presenter.printLines("Username or password incorrect");
+                if (parsedCommand.size() < 3) parseInput(command);
+                else {
+                    if (!accountManager.userExists(parsedCommand.get(1))) {
+                        presenter.printLines("User with username " + parsedCommand.get(1) + " does not exist");
                     } else {
-                        presenter.printLines("Log in successful");
-                        // TODO: send to MainController
+                        if (accountManager.authenticateUser(parsedCommand.get(1), parsedCommand.get(2)) == null) {
+                            presenter.printLines("Username or password incorrect");
+                        } else {
+                            presenter.printLines("Log in successful");
+                            // TODO: send to MainController
+                        }
                     }
                 }
             case "/signup":
-                String name = parsedCommand.get(1), username = parsedCommand.get(2),
-                        password = parsedCommand.get(3);
-                if (accountManager.canCreateUser(parsedCommand.get(2))) {
-                    accountManager.createUser(name, username, password, User.UserType.ATTENDEE);
-                } else {
-                    presenter.printLines("The username " + username + " already exists.");
+                if (parsedCommand.size() < 4) parseInput(command);
+                else {
+                    String name = parsedCommand.get(1), username = parsedCommand.get(2),
+                            password = parsedCommand.get(3);
+                    if (accountManager.canCreateUser(parsedCommand.get(2))) {
+                        accountManager.createUser(name, username, password, User.UserType.ATTENDEE);
+                    } else {
+                        presenter.printLines("The username " + username + " already exists.");
+                    }
                 }
+
             case "/exit":
                 // TODO: Exit
         }
