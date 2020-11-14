@@ -188,7 +188,8 @@ public class ScheduleManager {
     }
 
 
-    public boolean assignSpeaker(String speaker, String room) {
+    public boolean assignSpeaker(String speaker, String room, String time) {
+
         // TODO
         return false;
     }

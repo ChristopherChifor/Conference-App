@@ -7,11 +7,12 @@ package Entities;
  */
 public class ScheduleTime {
     private int day, month, year, hour, minute = 0;
-
+    private String referenceString;
 
     public ScheduleTime(int hour, int minute) {
         this.hour = hour;
         this.minute = minute;
+        setReferenceString(hour, minute);
     }
 
     public ScheduleTime(int day, int month, int year, int hour, int minute) {
@@ -20,6 +21,15 @@ public class ScheduleTime {
         this.year = year;
         this.hour = hour;
         this.minute = minute;
+        setReferenceString(hour, minute);
+    }
+
+    private void setReferenceString(Integer hour, Integer minute) {
+        referenceString = hour.toString() + ":" + minute.toString();
+    }
+
+    public String getReferenceString() {
+        return referenceString;
     }
 
     public int getDay() {
