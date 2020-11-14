@@ -30,12 +30,12 @@ public class AttendeeController extends AbstractController {
             case "/mainSchedule":
                 if (parsedCommand.size() < 2) {
                     parseInput(command);
-                    presenter.printLines(scheduleManager.getTheSchedule());
+//                    presenter.printLines(scheduleManager.getTheSchedule());
                 } else parseInput(command);
             case "/mySchedule":
                 if (parsedCommand.size() < 2) {
                     parseInput(command);
-                    presenter.printLines(conferenceManager.enrolledEvents(username));
+//                    presenter.printLines(conferenceManager.enrolledEvents(username));
                 } else parseInput(command);
             case "/signUpEvent":
                 if (parsedCommand.size() < 2) {
@@ -65,7 +65,7 @@ public class AttendeeController extends AbstractController {
     protected void startUp() {
         String startUpMessage = "--- Attendee Account Menu --- \n Hello " + username + ". \n View the Schedule Below \n Type /help for options";
         presenter.printLines(startUpMessage);
-        presenter.printLines(scheduleManager.getTheSchedule());
+//        presenter.printLines(scheduleManager.getTheSchedule());
     }
 
     @Override
