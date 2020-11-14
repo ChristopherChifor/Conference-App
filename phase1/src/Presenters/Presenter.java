@@ -15,16 +15,16 @@ public class Presenter {
     private Scanner s = new Scanner(System.in);
     //    private List<String> commands;
 //    private List<String> descriptions;
-    private Map<String, String> commands;
+//    private Map<String, String> commands;
 
-    /**
-     * Constructor for presenter.
-     *
-     * @param commands list of accepted commands map, with command descriptions as values
-     */
-    public Presenter(Map<String, String> commands) {
-        this.commands = commands;
-    }
+//    /**
+//     * Constructor for presenter.
+//     */
+//    public Presenter() {
+//        // @param commands list of accepted commands map, with command descriptions as values
+//        // param -> Map<String, String> commands
+//        // this.commands = commands;
+//    }
 
     /**
      * Closes the presenter. Pls run this when you don't need this presenter anymore.
@@ -46,25 +46,15 @@ public class Presenter {
         return s.nextLine();
     }
 
-
     /**
      * Prints the list of acceptable CLI commands and their descriptions. Printed when help command is entered.
+     *
+     * @param commands The commands passed in through AbstractController
      */
-    public void printCommandList() {
-
-        for (Map.Entry<String, String> command : commands.entrySet()
-        ) {
+    public void printCommandList(Map<String, String> commands) {
+        for (Map.Entry<String, String> command : commands.entrySet()) {
             System.out.printf("%s : %s", command.getKey(), command.getValue());
         }
-    }
-
-    /**
-     * Getter for commands
-     *
-     * @return list of commands
-     */
-    public List<String> getCommands() {
-        return new ArrayList<>(commands.keySet());
     }
 
     /**

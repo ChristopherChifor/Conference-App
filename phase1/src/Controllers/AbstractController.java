@@ -30,12 +30,12 @@ public abstract class AbstractController {
      * Starts a loop for controller.
      */
     public final void enter(){
-        Presenter presenter = new Presenter(commands);
+        Presenter presenter = new Presenter();
         String input;
         while(true){
             input = presenter.getInput();
             if (input.equals(EXIT_COMMAND)) break;
-            else if (input.equals(HELP_COMMAND)) presenter.printCommandList();
+            else if (input.equals(HELP_COMMAND)) presenter.printCommandList(commands);
             else if (commands.containsKey(input)) executeCommand(input);
             else parseInput(input);
         }
