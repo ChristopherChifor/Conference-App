@@ -70,7 +70,7 @@ public class AttendeeController extends AbstractController {
      */
     void cancelEnrolment(String eventName) {
         if (scheduleManager.eventExists(eventName)) {
-            conferenceManager.cancelEnrolment(username, scheduleManager.getEvent(eventName));
+            conferenceManager.cancelEnrolment(username, eventName);
         }
     }
 
