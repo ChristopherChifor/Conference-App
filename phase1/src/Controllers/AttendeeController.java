@@ -1,13 +1,18 @@
 package Controllers;
 
 import Entities.Event;
+import Entities.ScheduleTime;
 import Presenters.Presenter;
 import UseCases.ConferenceManager;
 import UseCases.ScheduleManager;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
-// TODO Haoming
+/**
+ * @author Haoming
+ */
 public class AttendeeController extends AbstractController {
 
 
@@ -28,31 +33,15 @@ public class AttendeeController extends AbstractController {
         ArrayList<String> parsedCommand = parseCommand(command);
         switch (parsedCommand.get(0)) {
             case "/mainSchedule":
-                if (parsedCommand.size() < 2) {
-                    parseInput(command);
-//                    presenter.printLines(scheduleManager.getTheSchedule());
-                } else parseInput(command);
+                mainSchedule();
             case "/mySchedule":
-                if (parsedCommand.size() < 2) {
-                    parseInput(command);
-//                    presenter.printLines(conferenceManager.enrolledEvents(username));
-                } else parseInput(command);
+                mySchedule();
             case "/signUpEvent":
-                if (parsedCommand.size() < 2) {
-                    parseInput(command);
-                    Event event = scheduleManager.getEvent(parsedCommand.get(1));
-                    if (conferenceManager.canSignUpForEvent(username, event)) {
-                        conferenceManager.signUpForEvent(username, event);
-                    }
-                } else parseInput(command);
+                if (parsedCommand.size() < 2) parseInput(command);
+                else signUpEvent(parsedCommand.get(1));
             case "/cancel":
-                if (parsedCommand.size() < 2) {
-                    parseInput(command);
-                    Event event = scheduleManager.getEvent(parsedCommand.get(1));
-                    conferenceManager.cancelEnrolment(username, event);
-                } else parseInput(command);
-            default:
-                break;
+                if (parsedCommand.size() < 2) parseInput(command);
+                else cancelEnrolment(parsedCommand.get(1));
         }
     }
 
@@ -63,9 +52,8 @@ public class AttendeeController extends AbstractController {
 
     @Override
     protected void startUp() {
-        String startUpMessage = "--- Attendee Account Menu --- \n Hello " + username + ". \n View the Schedule Below \n Type /help for options";
+        String startUpMessage = "--- Attendee Account Menu --- \n Hello " + username + ". \n Type /help for options";
         presenter.printLines(startUpMessage);
-//        presenter.printLines(scheduleManager.getTheSchedule());
     }
 
     @Override
@@ -74,5 +62,59 @@ public class AttendeeController extends AbstractController {
         commands.put("/mySchedule", "View the schedule events that you're signed up for");
         commands.put("/signUpEvent", "Sign up for an event");
         commands.put("/cancel", "Cancel your enrolment in an event");
+    }
+
+
+    /**
+     * Cancels enrolment of current user from event
+     * @param eventName name of event
+     */
+    void cancelEnrolment(String eventName) {
+        if (scheduleManager.eventExists(eventName)) {
+            conferenceManager.cancelEnrolment(username, scheduleManager.getEvent(eventName));
+        }
+    }
+
+    /**
+     * Prints the main schedule
+     */
+    void mainSchedule() {
+        printSchedule(scheduleManager.getTheSchedule());
+    }
+
+    /**
+     * Prints the attendee's schedule
+     */
+    void mySchedule() {
+        printSchedule(conferenceManager.enrolledEvents(username).getSchedule());
+    }
+
+    /**
+     *  Signs up attendee for event
+     * @param eventName name of the event
+     */
+    void signUpEvent(String eventName) {
+        if (conferenceManager.canSignUpForEvent(username, eventName)) {
+            conferenceManager.signUpForEvent(username, eventName);
+        }
+    }
+
+    /**
+     *  Prints a schedule as follows:
+     *      At: TIME
+     *      (for each event at time)
+     *      EVENT in room: ROOM
+     */
+    void printSchedule(HashMap<ScheduleTime, HashMap<String, String>> schedule) {
+        for (Map.Entry<ScheduleTime, HashMap<String, String>> entry : schedule.entrySet()) {
+            String dateTime ="At: " +entry.getKey().getDateTime();
+            presenter.printLines(dateTime);
+
+            for (Map.Entry<String, String> event : entry.getValue().entrySet()) {
+                String eventInfo = event.getValue() + " in room: " + event.getKey();
+                presenter.printLines(eventInfo);
+            }
+        }
+        presenter.printLines();
     }
 }

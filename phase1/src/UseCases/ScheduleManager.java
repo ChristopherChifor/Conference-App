@@ -23,8 +23,8 @@ public class ScheduleManager {
         rooms = new HashMap<>();
     }
 
-    public Schedule getTheSchedule() {
-        return theSchedule;
+    public HashMap<ScheduleTime, HashMap<String, String>> getTheSchedule() {
+        return theSchedule.getSchedule();
     }
     /**
      *  Adds a new event to the schedule at a certain time in a room
@@ -117,6 +117,18 @@ public class ScheduleManager {
     public boolean eventHasHappened (Event event) {
         // TODO Discuss with TA
         return false;
+    }
+
+    /**
+     *  Checks if event has already happened
+     * @param eventName Event that is being checked
+     * @return true if event has already occurred
+     */
+    public boolean eventHasHappened (String eventName) {
+        // TODO Discuss with TA
+        if (eventExists(eventName)) {
+            return true;
+        } else return false;
     }
 
     /**

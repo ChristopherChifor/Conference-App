@@ -35,6 +35,22 @@ public class ConferenceManager {
     }
 
     /**
+     * Method for checking if user can sign up for an event.
+     *
+     * @param username the user being checked.
+     * @param eventName the name of event.
+     * @return true iff
+     * 1) attendee exists
+     * 2) event exists
+     * 3) event has not occurred
+     * 4) the event is not full
+     */
+    public boolean canSignUpForEvent(String username, String eventName) {
+        return !(accountManager.getUser(username) == null || !scheduleManager.eventExists(eventName) ||
+                scheduleManager.eventHasHappened(eventName) || scheduleManager.eventFull(eventName));
+    }
+
+    /**
      * Signs up user for event.
      *
      * @param event:    the event the user will sign up for
@@ -46,6 +62,19 @@ public class ConferenceManager {
     }
 
     /**
+     * Signs up user for event.
+     *
+     * @param eventName:    the event the user will sign up for
+     * @param username: username of the user
+     * @return true if user is added to the event
+     */
+    public boolean signUpForEvent(String username, String eventName) {
+        if (scheduleManager.eventExists(eventName)) {
+            return scheduleManager.getEvent(eventName).addAttendeeToEvent(username);
+        } else return false;
+    }
+
+    /**
      * Cancels this user's enrollment to event.
      *
      * @param event:    the event the user cancels enrollment to
@@ -54,6 +83,20 @@ public class ConferenceManager {
      */
     public boolean cancelEnrolment(String username, Event event) {
         return event.removeAttendeeFromEvent(username);
+    }
+
+
+    /**
+     * Cancels this user's enrollment to event.
+     *
+     * @param eventName: the name of the event the user cancels enrollment to
+     * @param username: username of the user
+     * @return true if user removed from event
+     */
+    public boolean cancelEnrolment(String username, String eventName) {
+        if (scheduleManager.eventExists(eventName)) {
+            return scheduleManager.getEvent(eventName).removeAttendeeFromEvent(username);
+        } else return false;
     }
 
     /**
