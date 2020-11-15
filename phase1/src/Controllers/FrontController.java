@@ -64,7 +64,7 @@ public class FrontController extends AbstractController {
                 presenter.printLines("Log in successful");
                 username = accountManager.authenticateUser(username, password);
                 this.username = username;
-                mainController.setUsername(username);
+                mainController.mainControllerBuilder(username);
                 mainController.enter();
             }
         }

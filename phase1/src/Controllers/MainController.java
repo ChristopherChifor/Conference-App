@@ -1,6 +1,6 @@
 package Controllers;
 
-import Entities.User;
+import Entities.User.UserType;
 import Presenters.Presenter;
 import UseCases.*;
 
@@ -10,8 +10,8 @@ import UseCases.*;
 public class MainController extends AbstractController {
     private static final String MOTD = "At least it's better than 2020!"; // a cheeky message
 
-    private String username;
-    private User.UserType type;
+    private String username = "";
+    private UserType type;
 
     private AccountManager accountManager;
     private ConferenceManager conferenceManager;
@@ -19,31 +19,44 @@ public class MainController extends AbstractController {
     private ScheduleManager scheduleManager;
     private SocialManager socialManager;
 
-    private AttendeeController attendeeController;
-    private MessageController messageController;
-    private OrganizerController organizerController;
-    private SpeakerController speakerController;
+    private AttendeeController attendeeController = null;
+    private MessageController messageController = null;
+    private OrganizerController organizerController = null;
+    private SpeakerController speakerController = null;
 
-    public MainController(String username, Presenter presenter, AccountManager accountManager, ConferenceManager conferenceManager, MessageManager messageManager, ScheduleManager scheduleManager, SocialManager socialManager) {
-        super(presenter);
-        this.accountManager = accountManager;
-        this.conferenceManager = conferenceManager;
-        this.messageManager = messageManager;
-        this.scheduleManager = scheduleManager;
-        this.socialManager = socialManager;
+    //    public MainController(String username, Presenter presenter, AccountManager accountManager, ConferenceManager conferenceManager, MessageManager messageManager, ScheduleManager scheduleManager, SocialManager socialManager) {
+//        super(presenter);
+//        this.accountManager = accountManager;
+//        this.conferenceManager = conferenceManager;
+//        this.messageManager = messageManager;
+//        this.scheduleManager = scheduleManager;
+//        this.socialManager = socialManager;
+//
+//        this.username = username;
+//        this.type = accountManager.getUserType(username);
+//
+//        switch(this.type) {
+//            case ATTENDEE:
+//                messageController = new AttendeeMessageController(messageManager, username, presenter);
+//            case SPEAKER:
+//                messageController = new SpeakerMessageController(messageManager, username, presenter, scheduleManager);
+//            case ORGANIZER:
+//                messageController = new OrganizerMessageController(messageManager, username, presenter);
+//        }
+//    }
 
-        this.username = username;
-        this.type = accountManager.getUserType(username);
-
-        switch(this.type) {
-            case ATTENDEE:
-                messageController = new AttendeeMessageController(messageManager, username, presenter);
-            case SPEAKER:
-                messageController = new SpeakerMessageController(messageManager, username, presenter, scheduleManager);
-            case ORGANIZER:
-                messageController = new OrganizerMessageController(messageManager, username, presenter);
-        }
-    }
+    /**
+     * Constructor for main controller. Calls super.
+     *
+     * YOU NEED TO RUN mainControllerBuilder() BEFORE ENTERING MAIN CONTROLLER.
+     *
+     * @param presenter the presenter
+     * @param accountManager account manager
+     * @param conferenceManager conference manager
+     * @param messageManager message manager
+     * @param scheduleManager schedule manager
+     * @param socialManager social manager
+     */
     public MainController(Presenter presenter, AccountManager accountManager, ConferenceManager conferenceManager, MessageManager messageManager, ScheduleManager scheduleManager, SocialManager socialManager) {
         super(presenter);
         this.accountManager = accountManager;
@@ -53,18 +66,37 @@ public class MainController extends AbstractController {
         this.socialManager = socialManager;
     }
 
-    public void setUsername(String username) {
+    /**
+     * Builder method for MainController that generates other controllers from the entered username.
+     * This method can and should only be ran once if you try to run it multiple times, the attempts
+     * after the first one will do nothing.
+     *
+     * @param username the users username.
+     */
+    public void mainControllerBuilder(String username) {
+        if(!this.username.equals("")) return;
+
         this.username = username;
         this.type = accountManager.getUserType(username);
 
-        switch(this.type) {
+        switch (this.type) {
             case ATTENDEE:
                 messageController = new AttendeeMessageController(messageManager, username, presenter);
+                break;
             case SPEAKER:
                 messageController = new SpeakerMessageController(messageManager, username, presenter, scheduleManager);
+                break;
             case ORGANIZER:
                 messageController = new OrganizerMessageController(messageManager, username, presenter);
+                break;
+            default:
+                throw new IllegalArgumentException();
         }
+
+        attendeeController = new AttendeeController(conferenceManager, scheduleManager, username, presenter);
+        organizerController = type == UserType.ORGANIZER ? new OrganizerController(presenter, accountManager, scheduleManager) : null;
+        speakerController = type == UserType.SPEAKER ? new SpeakerController(scheduleManager, username, presenter) : null;
+
     }
 
     @Override
