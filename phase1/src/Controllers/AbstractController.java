@@ -33,6 +33,7 @@ public abstract class AbstractController {
         String input;
         while(true){
             input = presenter.getInput();
+
             if (input.equals(EXIT_COMMAND)) break;
             else if (input.equals(HELP_COMMAND)) presenter.printCommandList(commands);
             else if (commands.containsKey(parseCommand(input).get(0))) executeCommand(input);
@@ -115,6 +116,8 @@ public abstract class AbstractController {
             }
             currIndex++;
         }
+
+        if (cleanInput.size() == 0) cleanInput.add(""); // if the user hits enter with no input
         return cleanInput;
     }
 
