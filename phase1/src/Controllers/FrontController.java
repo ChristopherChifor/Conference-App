@@ -25,6 +25,7 @@ public class FrontController extends AbstractController {
         ArrayList<String> parsedCommand = parseCommand(command);
         switch (parsedCommand.get(0)) {
             case "/login":
+                System.out.println("Made it here");
                 if (parsedCommand.size() < 3) parseInput(command);
                 else login(parsedCommand.get(1), parsedCommand.get(2));
 
@@ -32,11 +33,6 @@ public class FrontController extends AbstractController {
                 if (parsedCommand.size() < 4) parseInput(command);
                 else signUp(parsedCommand.get(1), parsedCommand.get(2), parsedCommand.get(3));
         }
-    }
-
-    @Override
-    protected void parseInput(String input) {
-        // TODO: No parseInput money at the moment
     }
 
     @Override

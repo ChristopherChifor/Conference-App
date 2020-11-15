@@ -53,7 +53,9 @@ public abstract class AbstractController {
      * Parses user input (if input is not in commands list)
      * @param input user input
      */
-    protected abstract void parseInput(String input);
+    protected void parseInput(String input) {
+        presenter.printLines("Invalid command, typed:" + input+ ". Write /help for options.");
+    }
 
     /**
      * Method for starting up the controller, i.e., printing initial info onto screen
@@ -80,6 +82,7 @@ public abstract class AbstractController {
         char[] charArray = input.toCharArray();
         boolean inQuotes = false;
         String currInput = "";
+        int currIndex = 0;
         for (char c : charArray) {
             if (inQuotes) {
                 if (c == (char)34) {  // (char)34 is " in ASCII
@@ -91,18 +94,22 @@ public abstract class AbstractController {
                     currInput += c;
                 }
             } else {
-                switch(c) {
-                    case (char)34: { // (char)34 is " in ASCII
-                        inQuotes = true;
-                    }
-                    case (char)32: { // (char)32 is SPACE in ASCII
-                        cleanInput.add(currInput);
-                        currInput = "";
-                    } default: {
-                        currInput += c;
+                if (currIndex == charArray.length - 1) cleanInput.add(currInput);
+                else {
+                    switch(c) {
+                        case (char)34: { // (char)34 is " in ASCII
+                            inQuotes = true;
+                        }
+                        case (char)32: { // (char)32 is SPACE in ASCII
+                            cleanInput.add(currInput);
+                            currInput = "";
+                        } default: {
+                            currInput += c;
+                        }
                     }
                 }
             }
+            currIndex++;
         }
         return cleanInput;
     }

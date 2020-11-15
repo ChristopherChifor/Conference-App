@@ -43,11 +43,6 @@ public class MessageController extends AbstractController {
     }
 
     @Override
-    protected void parseInput(String input) {
-
-    }
-
-    @Override
     protected void startUp() {
         String greeting = "--- MESSAGING MENU --- \n Hello " + username + ". \n Type /help for options";
         presenter.printLines(greeting);

@@ -43,11 +43,6 @@ public class AttendeeController extends AbstractController {
     }
 
     @Override
-    protected void parseInput(String input) {
-
-    }
-
-    @Override
     protected void startUp() {
         String startUpMessage = "--- Attendee Account Menu --- \n Hello " + username + ". \n Type /help for options";
         presenter.printLines(startUpMessage);

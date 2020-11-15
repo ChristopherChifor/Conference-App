@@ -71,7 +71,10 @@ public class Presenter {
      * @param lines a sequence of strings OR an array of strings.
      */
     public void printLines(String... lines) {
-        if (lines == null) return;
+        if (lines == null) {
+            System.out.println("Nothing to print");
+            return;
+        }
 
         for (String line : lines) {
             System.out.println(line);

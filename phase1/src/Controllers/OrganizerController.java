@@ -86,12 +86,6 @@ public class OrganizerController extends AbstractController{
         scheduleManager.createEvent(eventName);
     }
 
-
-    @Override
-    protected void parseInput(String input) {
-
-    }
-
     @Override
     protected void startUp() {
         String startUpMessage = "--- Organizer Menu --- \n Hello. \n Type help for options";
