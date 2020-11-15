@@ -13,11 +13,13 @@ import java.util.ArrayList;
 public class FrontController extends AbstractController {
 
     private AccountManager accountManager;
+    private MainController mainController;
     private String username = "";
 
-    public FrontController(Presenter presenter, AccountManager accountManager) {
+    public FrontController(Presenter presenter, AccountManager accountManager, MainController mainController) {
         super(presenter);
         this.accountManager = accountManager;
+        this.mainController = mainController;
     }
 
     @Override
@@ -62,6 +64,8 @@ public class FrontController extends AbstractController {
                 presenter.printLines("Log in successful");
                 username = accountManager.authenticateUser(username, password);
                 this.username = username;
+                mainController.setUsername(username);
+                mainController.enter();
             }
         }
     }

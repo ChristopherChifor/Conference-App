@@ -35,7 +35,7 @@ public class MainController extends AbstractController {
         this.username = username;
         this.type = accountManager.getUserType(username);
 
-        switch(this.type){
+        switch(this.type) {
             case ATTENDEE:
                 messageController = new AttendeeMessageController(messageManager, username, presenter);
             case SPEAKER:
@@ -43,8 +43,28 @@ public class MainController extends AbstractController {
             case ORGANIZER:
                 messageController = new OrganizerMessageController(messageManager, username, presenter);
         }
+    }
+    public MainController(Presenter presenter, AccountManager accountManager, ConferenceManager conferenceManager, MessageManager messageManager, ScheduleManager scheduleManager, SocialManager socialManager) {
+        super(presenter);
+        this.accountManager = accountManager;
+        this.conferenceManager = conferenceManager;
+        this.messageManager = messageManager;
+        this.scheduleManager = scheduleManager;
+        this.socialManager = socialManager;
+    }
 
+    public void setUsername(String username) {
+        this.username = username;
+        this.type = accountManager.getUserType(username);
 
+        switch(this.type) {
+            case ATTENDEE:
+                messageController = new AttendeeMessageController(messageManager, username, presenter);
+            case SPEAKER:
+                messageController = new SpeakerMessageController(messageManager, username, presenter, scheduleManager);
+            case ORGANIZER:
+                messageController = new OrganizerMessageController(messageManager, username, presenter);
+        }
     }
 
     @Override

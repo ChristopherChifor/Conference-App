@@ -27,6 +27,7 @@ public abstract class AbstractController {
      * Starts a loop for controller.
      */
     public final void enter(){
+        System.out.println("Running enter...");
         Presenter presenter = new Presenter();
         startUp();
         String input;
