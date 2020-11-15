@@ -28,6 +28,7 @@ public abstract class AbstractController {
      */
     public final void enter(){
         Presenter presenter = new Presenter();
+        startUp();
         String input;
         while(true){
             input = presenter.getInput();
