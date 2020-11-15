@@ -27,8 +27,7 @@ public abstract class AbstractController {
      * Starts a loop for controller.
      */
     public final void enter(){
-        System.out.println("Running enter...");
-        Presenter presenter = new Presenter();
+//        Presenter presenter = new Presenter();
         startUp();
         String input;
         while(true){
@@ -39,7 +38,7 @@ public abstract class AbstractController {
             else if (commands.containsKey(parseCommand(input).get(0))) executeCommand(input);
             else parseInput(input);
         }
-        presenter.close();
+//        presenter.close();
     }
 
     /**

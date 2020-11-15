@@ -4,6 +4,8 @@ import Entities.User.UserType;
 import Presenters.Presenter;
 import UseCases.*;
 
+import java.util.ArrayList;
+
 /**
  * @author Alex
  */
@@ -24,26 +26,7 @@ public class MainController extends AbstractController {
     private OrganizerController organizerController = null;
     private SpeakerController speakerController = null;
 
-    //    public MainController(String username, Presenter presenter, AccountManager accountManager, ConferenceManager conferenceManager, MessageManager messageManager, ScheduleManager scheduleManager, SocialManager socialManager) {
-//        super(presenter);
-//        this.accountManager = accountManager;
-//        this.conferenceManager = conferenceManager;
-//        this.messageManager = messageManager;
-//        this.scheduleManager = scheduleManager;
-//        this.socialManager = socialManager;
-//
-//        this.username = username;
-//        this.type = accountManager.getUserType(username);
-//
-//        switch(this.type) {
-//            case ATTENDEE:
-//                messageController = new AttendeeMessageController(messageManager, username, presenter);
-//            case SPEAKER:
-//                messageController = new SpeakerMessageController(messageManager, username, presenter, scheduleManager);
-//            case ORGANIZER:
-//                messageController = new OrganizerMessageController(messageManager, username, presenter);
-//        }
-//    }
+    private AbstractController userController;
 
     /**
      * Constructor for main controller. Calls super.
@@ -66,6 +49,38 @@ public class MainController extends AbstractController {
         this.socialManager = socialManager;
     }
 
+//    /**
+//     * Builder method for MainController that generates other controllers from the entered username.
+//     * This method can and should only be ran once if you try to run it multiple times, the attempts
+//     * after the first one will do nothing.
+//     *
+//     * @param username the users username.
+//     */
+//    public void mainControllerBuilder(String username) {
+//        if(!this.username.equals("")) return;
+//
+//        this.username = username;
+//        this.type = accountManager.getUserType(username);
+//
+//        switch (this.type) {
+//            case ATTENDEE:
+//                messageController = new AttendeeMessageController(messageManager, username, presenter);
+//                break;
+//            case SPEAKER:
+//                messageController = new SpeakerMessageController(messageManager, username, presenter, scheduleManager);
+//                break;
+//            case ORGANIZER:
+//                messageController = new OrganizerMessageController(messageManager, username, presenter);
+//                break;
+//            default:
+//                throw new IllegalArgumentException();
+//        }
+//
+//        attendeeController = new AttendeeController(conferenceManager, scheduleManager, username, presenter);
+//        organizerController = type == UserType.ORGANIZER ? new OrganizerController(presenter, accountManager, scheduleManager) : null;
+//        speakerController = type == UserType.SPEAKER ? new SpeakerController(scheduleManager, username, presenter) : null;
+//
+//    }
     /**
      * Builder method for MainController that generates other controllers from the entered username.
      * This method can and should only be ran once if you try to run it multiple times, the attempts
@@ -81,27 +96,28 @@ public class MainController extends AbstractController {
 
         switch (this.type) {
             case ATTENDEE:
+                userController = new AttendeeController(conferenceManager, scheduleManager, username, presenter);
                 messageController = new AttendeeMessageController(messageManager, username, presenter);
                 break;
             case SPEAKER:
+                userController = new SpeakerController(scheduleManager, username, presenter);
                 messageController = new SpeakerMessageController(messageManager, username, presenter, scheduleManager);
                 break;
             case ORGANIZER:
+                userController = new OrganizerController(presenter, accountManager, scheduleManager);
                 messageController = new OrganizerMessageController(messageManager, username, presenter);
                 break;
             default:
                 throw new IllegalArgumentException();
         }
 
-        attendeeController = new AttendeeController(conferenceManager, scheduleManager, username, presenter);
-        organizerController = type == UserType.ORGANIZER ? new OrganizerController(presenter, accountManager, scheduleManager) : null;
-        speakerController = type == UserType.SPEAKER ? new SpeakerController(scheduleManager, username, presenter) : null;
-
+        commands = userController.commands;
+        commands.put("/message", "Goes to messaging menu");
     }
 
     @Override
     protected void executeCommand(String command) {
-
+        userController.executeCommand(command);
     }
 
     @Override
