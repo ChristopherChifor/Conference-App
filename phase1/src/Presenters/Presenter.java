@@ -30,6 +30,13 @@ public class Presenter {
     public void close() {
         s.close();
 
+        clearScreen();
+    }
+
+    /**
+     * Clears the screen of previous output. Works only when running in standalone console.
+     */
+    public void clearScreen(){
         // clears screen
         System.out.print("\033[H\033[2J");
         System.out.flush();

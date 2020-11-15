@@ -26,21 +26,27 @@ public class OrganizerController extends AbstractController{
     @Override
     protected void executeCommand(String command) {
         ArrayList<String> parsedCommand = parseCommand(command);
-
+        System.out.println("entered execute command");
+        presenter.printLines("this command execute very nice");
         switch (parsedCommand.get(0)){
             case "/createRoom":
-                if (parsedCommand.size() < 2) parseInput(command);
+                if (parsedCommand.size() < 2) {parseInput(command);
+                presenter.printLines("This ran");
+                    System.out.println("This ran part2");}
                 else createRoom(parsedCommand.get(1));
 
             case "/createSpeaker":
+                presenter.printLines("Big Bad");
                 if (parsedCommand.size() < 4) parseInput(command);
                 else createSpeaker(parsedCommand.get(1), parsedCommand.get(2), parsedCommand.get(3));
 
             case "/assignToRoom":
+                presenter.printLines("Big Bad");
                 if (parsedCommand.size() < 4) parseInput(command);
                 else assignToRoom(parsedCommand.get(1), parsedCommand.get(2), parsedCommand.get(3));
 
             case "/createEvent":
+                presenter.printLines("Big Bad");
                 if (parsedCommand.size() < 2) parseInput(command);
                 else createEvent(parsedCommand.get(1));
         }

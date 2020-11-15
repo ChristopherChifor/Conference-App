@@ -111,13 +111,23 @@ public class MainController extends AbstractController {
                 throw new IllegalArgumentException();
         }
 
-        commands = userController.commands;
-        commands.put("/message", "Goes to messaging menu");
     }
 
     @Override
     protected void executeCommand(String command) {
-        userController.executeCommand(command);
+        presenter.printLines("Aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
+        if("/events".equals(command)){
+            presenter.clearScreen();
+            userController.enter();
+            welcomeBack();
+        } else if ("/message".equals(command)){
+            presenter.clearScreen();
+            messageController.enter();
+            welcomeBack();
+        } else{
+            presenter.printLines(String.format("You have entered an invalid command \"%f\"", command),
+                    "Type \"/help\" for a list of commands. ");
+        }
     }
 
     @Override
@@ -127,8 +137,17 @@ public class MainController extends AbstractController {
                 "Type \"/help\" for a list of commands.");
     }
 
+    private void welcomeBack(){
+        // clears screen
+        presenter.clearScreen();
+        presenter.printLines(" --- MAIN MENU --- ");
+    }
+
     @Override
     protected void defineCommands() {
+        commands.put("/exit","Saves and Exits the Program. ");
+        commands.put("/events", "Enters events menu. ");
+        commands.put("/message", "Enters messaging menu. ");
 
     }
 }

@@ -28,6 +28,7 @@ public abstract class AbstractController {
      */
     public final void enter(){
 //        Presenter presenter = new Presenter();
+        presenter.clearScreen();
         startUp();
         String input;
         while(true){
