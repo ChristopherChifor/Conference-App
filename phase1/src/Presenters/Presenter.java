@@ -51,7 +51,7 @@ public class Presenter {
      */
     public void printCommandList(Map<String, String> commands) {
         for (Map.Entry<String, String> command : commands.entrySet()) {
-            System.out.printf("%s : %s", command.getKey(), command.getValue());
+            System.out.printf("%s : %s%n", command.getKey(), command.getValue());
         }
     }
 
