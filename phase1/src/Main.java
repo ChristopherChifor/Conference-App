@@ -49,7 +49,10 @@ public class Main {
      */
     private static void toFile(ConferenceApp app) {
         try {
-            if (!file.exists()) file.createNewFile();
+            if (!file.exists()) {
+                file.getParentFile().mkdirs();
+                file.createNewFile();
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }
