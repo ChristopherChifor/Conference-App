@@ -34,7 +34,7 @@ public abstract class AbstractController {
             input = presenter.getInput();
             if (input.equals(EXIT_COMMAND)) break;
             else if (input.equals(HELP_COMMAND)) presenter.printCommandList(commands);
-            else if (commands.containsKey(input)) executeCommand(input);
+            else if (commands.containsKey(parseCommand(input).get(0))) executeCommand(input);
             else parseInput(input);
         }
         presenter.close();
@@ -94,17 +94,20 @@ public abstract class AbstractController {
                     currInput += c;
                 }
             } else {
-                if (currIndex == charArray.length - 1) cleanInput.add(currInput);
+                if (currIndex == charArray.length-1) {
+                    currInput += c;
+                    cleanInput.add(currInput);
+                }
                 else {
                     switch(c) {
                         case (char)34: { // (char)34 is " in ASCII
                             inQuotes = true;
                         }
                         case (char)32: { // (char)32 is SPACE in ASCII
-                            cleanInput.add(currInput);
+                            if (currInput != "") cleanInput.add(currInput);
                             currInput = "";
                         } default: {
-                            currInput += c;
+                            if (c != (char)32 && c != (char)34) currInput += c;
                         }
                     }
                 }

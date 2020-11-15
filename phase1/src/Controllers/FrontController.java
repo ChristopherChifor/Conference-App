@@ -25,7 +25,6 @@ public class FrontController extends AbstractController {
         ArrayList<String> parsedCommand = parseCommand(command);
         switch (parsedCommand.get(0)) {
             case "/login":
-                System.out.println("Made it here");
                 if (parsedCommand.size() < 3) parseInput(command);
                 else login(parsedCommand.get(1), parsedCommand.get(2));
 
@@ -43,9 +42,8 @@ public class FrontController extends AbstractController {
 
     @Override
     protected void defineCommands() {
-        commands.put("/login", "Login as an existing user");
-        commands.put("/signup", "Sign up as a new user");
-        commands.put("/exit", "Exit the program");
+        commands.put("/login", "Login as an existing user, /login USERNAME PASSWORD");
+        commands.put("/signup", "Sign up as a new user, /signup NAME USERNAME PASSWORD");
     }
 
     /**
@@ -78,6 +76,7 @@ public class FrontController extends AbstractController {
     void signUp(String name, String username, String password) {
         if (accountManager.canCreateUser(username)) {
             accountManager.createUser(name, username, password, User.UserType.ATTENDEE);
+            presenter.printLines("Succesfully created new user: \nNAME: " + name + "\nUSERNAME: " + username + "\nPASSWORD: "+ password);
         } else {
             presenter.printLines("The username " + username + " already exists.");
         }
