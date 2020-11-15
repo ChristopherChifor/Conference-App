@@ -40,7 +40,7 @@ public class SpeakerController extends AbstractController {
 
     @Override
     protected void startUp() {
-        String startUpMessage = "--- Speaker Account Menu --- \n Hello " + username + ". \n Type help for options";
+        String startUpMessage = "--- Speaker Account Menu --- \n Hello " + username + ". \n Type /help for options";
         presenter.printLines(startUpMessage);
     }
 

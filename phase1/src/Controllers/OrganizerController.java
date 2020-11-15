@@ -13,8 +13,8 @@ import java.util.ArrayList;
  */
 public class OrganizerController extends AbstractController{
 
-    private AccountManager accountManager;
-    private ScheduleManager scheduleManager;
+    private final AccountManager accountManager;
+    private final ScheduleManager scheduleManager;
 
     protected OrganizerController(Presenter presenter, AccountManager accountManager, ScheduleManager scheduleManager) {
         super(presenter);
@@ -37,16 +37,13 @@ public class OrganizerController extends AbstractController{
                 else createSpeaker(parsedCommand.get(1), parsedCommand.get(2), parsedCommand.get(3));
 
             case "/assignToRoom":
-                if (parsedCommand.size() < 3) parseInput(command);
-                else assignToRoom(parsedCommand.get(1), parsedCommand.get(2));
+                if (parsedCommand.size() < 4) parseInput(command);
+                else assignToRoom(parsedCommand.get(1), parsedCommand.get(2), parsedCommand.get(3));
 
             case "/createEvent":
-                if (parsedCommand.size() < 4) parseInput(command);
+                if (parsedCommand.size() < 2) parseInput(command);
                 else createEvent(parsedCommand.get(1));
-
-
         }
-
     }
 
     /**
@@ -59,9 +56,9 @@ public class OrganizerController extends AbstractController{
 
     /**
      * Creates a speaker
-     * @param name other user they are speaking to
-     * @param username
-     * @param password
+     * @param name Name of the speaker
+     * @param username Username of speaker
+     * @param password Password of speaker
      */
     protected void createSpeaker(String name, String username, String password) {
         if (accountManager.canCreateUser(username)) {
@@ -72,22 +69,21 @@ public class OrganizerController extends AbstractController{
     }
 
     /**
-     * Creates a speaker
-     * @param roomName other user they are speaking to
-     * @param time
+     * Assigns a speaker to a room
+     * @param speaker Speaker name
+     * @param roomName Name of the room
+     * @param time Time of the talk
      */
-    protected void assignToRoom(String roomName, String time){
-        scheduleManager.assignSpeaker(roomName, time);
+    protected void assignToRoom(String speaker, String roomName, String time){
+        scheduleManager.assignSpeaker(speaker,roomName, time);
     }
 
     /**
-     * Creates a speaker
-     * @param name other user they are speaking to
-     * @param username
-     * @param password
+     * Creates an event
+     * @param eventName Name of the event
      */
     protected void createEvent(String eventName){
-
+        scheduleManager.createEvent(eventName);
     }
 
 
@@ -98,6 +94,8 @@ public class OrganizerController extends AbstractController{
 
     @Override
     protected void startUp() {
+        String startUpMessage = "--- Organizer Menu --- \n Hello. \n Type help for options";
+        presenter.printLines(startUpMessage);
 
     }
 
