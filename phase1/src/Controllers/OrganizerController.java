@@ -51,6 +51,7 @@ public class OrganizerController extends AbstractController{
      * @param roomName other user they are speaking to
      */
     protected void createRoom(String roomName){
+        presenter.printLines("Succesfully created new room: " + roomName);
         scheduleManager.createRoom(roomName);
     }
 
@@ -63,6 +64,7 @@ public class OrganizerController extends AbstractController{
     protected void createSpeaker(String name, String username, String password) {
         if (accountManager.canCreateUser(username)) {
             accountManager.createUser(name, username, password, User.UserType.SPEAKER);
+            presenter.printLines("Succesfully created new speaker " + name);
         } else {
             presenter.printLines("The username " + username + " already exists.");
         }
@@ -75,6 +77,7 @@ public class OrganizerController extends AbstractController{
      * @param time Time of the talk
      */
     protected void assignToRoom(String speaker, String roomName, String time){
+        presenter.printLines("Assigned "+ speaker +" to room "+roomName + " at " + time);
         scheduleManager.assignSpeaker(speaker,roomName, time);
     }
 
