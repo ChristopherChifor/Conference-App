@@ -19,31 +19,31 @@ public class MessageController extends AbstractController {
     private final String username;
 
 
-    public MessageController(MessageManager messageManager, String username, Presenter presenter) {
-        super(presenter);
+    public MessageController(MessageManager messageManager, String username) {
+        super();
         this.messageManager = messageManager;
         this.username = username;
     }
 
     @Override
-    protected void executeCommand(String input) {
+    protected void executeCommand(String input, Presenter presenter) {
         ArrayList<String> parsedCommand = parseCommand(input);
         switch (parsedCommand.get(0)) {
             case "/open":
-                if (parsedCommand.size() < 2) parseInput(input);
-                else openConversation(parsedCommand.get(1));
+                if (parsedCommand.size() < 2) parseInput(input, presenter);
+                else openConversation(parsedCommand.get(1), presenter);
 
             case "/send":
-                if (parsedCommand.size() < 3) parseInput(input);
+                if (parsedCommand.size() < 3) parseInput(input,presenter);
                 else sendMessage(parsedCommand.get(1), parsedCommand.get(2));
 
             case "/inbox":
-                getInbox();
+                getInbox(presenter);
         }
     }
 
     @Override
-    protected void startUp() {
+    protected void startUp(Presenter presenter) {
         String greeting = "--- MESSAGING MENU --- \n Hello " + username + ". \n Type /help for options";
         presenter.printLines(greeting);
     }
@@ -63,7 +63,7 @@ public class MessageController extends AbstractController {
      * Opens a conversation with other user
      * @param otherUser other user they are speaking to
      */
-    void openConversation(String otherUser) {
+    void openConversation(String otherUser, Presenter presenter) {
         presenter.printList(messageManager.getMessages(username, otherUser));
     }
 
@@ -82,7 +82,7 @@ public class MessageController extends AbstractController {
     /**
      *  Get's this user's inbox and displays it.
      */
-    void getInbox() {
+    void getInbox(Presenter presenter) {
         presenter.printList(messageManager.getMyInbox(username));
     }
 

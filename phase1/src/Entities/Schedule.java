@@ -1,11 +1,12 @@
 package Entities;
 
+import java.io.Serializable;
 import java.util.HashMap;
 
 /**
  * @author Andrei
  */
-public class Schedule {
+public class Schedule implements Serializable {
     private HashMap<ScheduleTime, HashMap<String, String>> schedule;
 
     public boolean addToSchedule(Room room, Event event, ScheduleTime time) {

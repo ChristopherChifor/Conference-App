@@ -1,9 +1,11 @@
 package Entities;
 
+import java.io.Serializable;
+
 /**
  * @author Parssa
  */
-public class Room {
+public class Room implements Serializable {
     private static int nextId = 0;
 
     private int id;

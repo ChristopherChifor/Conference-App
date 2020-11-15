@@ -3,10 +3,12 @@ package UseCases;
 import Entities.Schedule;
 import Entities.ScheduleTime;
 
+import java.io.Serializable;
+
 /**
  * @author Payam
  */
-public class SocialManager {
+public class SocialManager implements Serializable {
 
     ScheduleManager scheduleManager;
 

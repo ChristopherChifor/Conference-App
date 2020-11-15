@@ -16,28 +16,28 @@ public class FrontController extends AbstractController {
     private MainController mainController;
     private String username = "";
 
-    public FrontController(Presenter presenter, AccountManager accountManager, MainController mainController) {
-        super(presenter);
+    public FrontController(AccountManager accountManager, MainController mainController) {
+        super();
         this.accountManager = accountManager;
         this.mainController = mainController;
     }
 
     @Override
-    protected void executeCommand(String command) {
+    protected void executeCommand(String command,Presenter presenter) {
         ArrayList<String> parsedCommand = parseCommand(command);
         switch (parsedCommand.get(0)) {
             case "/login":
-                if (parsedCommand.size() < 3) parseInput(command);
-                else login(parsedCommand.get(1), parsedCommand.get(2));
+                if (parsedCommand.size() < 3) parseInput(command, presenter);
+                else login(parsedCommand.get(1), parsedCommand.get(2), presenter);
 
             case "/signup":
-                if (parsedCommand.size() < 4) parseInput(command);
-                else signUp(parsedCommand.get(1), parsedCommand.get(2), parsedCommand.get(3));
+                if (parsedCommand.size() < 4) parseInput(command, presenter);
+                else signUp(parsedCommand.get(1), parsedCommand.get(2), parsedCommand.get(3), presenter);
         }
     }
 
     @Override
-    protected void startUp() {
+    protected void startUp(Presenter presenter) {
         String startUpMessage = "--- CONFERENCE APP --- \nType /help for options";
         presenter.printLines(startUpMessage);
     }
@@ -54,7 +54,7 @@ public class FrontController extends AbstractController {
      * @param username Username of the user
      * @param password Password of the user
      */
-    void login(String username, String password) {
+    void login(String username, String password, Presenter presenter) {
         if (!accountManager.userExists(username)) {
             presenter.printLines("User with username " + username + " does not exist");
         } else {
@@ -65,7 +65,7 @@ public class FrontController extends AbstractController {
                 username = accountManager.authenticateUser(username, password);
                 this.username = username;
                 mainController.mainControllerBuilder(username);
-                mainController.enter();
+                mainController.enter(presenter);
             }
         }
     }
@@ -77,7 +77,7 @@ public class FrontController extends AbstractController {
      * @param username
      * @param password
      */
-    void signUp(String name, String username, String password) {
+    void signUp(String name, String username, String password,Presenter presenter) {
         if (accountManager.canCreateUser(username)) {
             accountManager.createUser(name, username, password, User.UserType.ATTENDEE);
             presenter.printLines("Succesfully created new user: \nNAME: " + name + "\nUSERNAME: " + username + "\nPASSWORD: "+ password);

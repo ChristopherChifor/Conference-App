@@ -2,6 +2,7 @@ package UseCases;
 
 import Entities.User;
 
+import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Set;
 
@@ -9,7 +10,7 @@ import java.util.Set;
  * The use case class for creating and authenticating users.
  * @author Paya
  */
-public class AccountManager {
+public class AccountManager implements Serializable {
     private HashMap<String, User> users; // never share this
 
     public AccountManager() {

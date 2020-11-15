@@ -1,12 +1,13 @@
 package Entities;
 
+import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
 /**
  * @author Parssa
  */
-public class Event {
+public class Event  implements Serializable {
     private String name;
     private User speaker = null;
     private int minutes = 60;

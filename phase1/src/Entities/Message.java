@@ -1,9 +1,11 @@
 package Entities;
 
+import java.io.Serializable;
+
 /**
  * @author Alex
  */
-public class Message {
+public class Message implements Serializable {
     private String sender, recipient;
     private String body;
 

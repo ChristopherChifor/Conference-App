@@ -1,11 +1,13 @@
 package Entities;
 
+import java.io.Serializable;
+
 /**
  * This class is Immutable
  *
  * @author Parssa
  */
-public class ScheduleTime {
+public class ScheduleTime implements Serializable {
     private int day, month, year, hour, minute = 0;
     private String referenceString;
 

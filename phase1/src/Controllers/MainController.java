@@ -33,15 +33,14 @@ public class MainController extends AbstractController {
      *
      * YOU NEED TO RUN mainControllerBuilder() BEFORE ENTERING MAIN CONTROLLER.
      *
-     * @param presenter the presenter
      * @param accountManager account manager
      * @param conferenceManager conference manager
      * @param messageManager message manager
      * @param scheduleManager schedule manager
      * @param socialManager social manager
      */
-    public MainController(Presenter presenter, AccountManager accountManager, ConferenceManager conferenceManager, MessageManager messageManager, ScheduleManager scheduleManager, SocialManager socialManager) {
-        super(presenter);
+    public MainController(AccountManager accountManager, ConferenceManager conferenceManager, MessageManager messageManager, ScheduleManager scheduleManager, SocialManager socialManager) {
+        super();
         this.accountManager = accountManager;
         this.conferenceManager = conferenceManager;
         this.messageManager = messageManager;
@@ -96,16 +95,16 @@ public class MainController extends AbstractController {
 
         switch (this.type) {
             case ATTENDEE:
-                userController = new AttendeeController(conferenceManager, scheduleManager, username, presenter);
-                messageController = new AttendeeMessageController(messageManager, username, presenter);
+                userController = new AttendeeController(conferenceManager, scheduleManager, username);
+                messageController = new AttendeeMessageController(messageManager, username);
                 break;
             case SPEAKER:
-                userController = new SpeakerController(scheduleManager, username, presenter);
-                messageController = new SpeakerMessageController(messageManager, username, presenter, scheduleManager);
+                userController = new SpeakerController(scheduleManager, username);
+                messageController = new SpeakerMessageController(messageManager, username, scheduleManager);
                 break;
             case ORGANIZER:
-                userController = new OrganizerController(presenter, accountManager, scheduleManager);
-                messageController = new OrganizerMessageController(messageManager, username, presenter);
+                userController = new OrganizerController(accountManager, scheduleManager);
+                messageController = new OrganizerMessageController(messageManager, username);
                 break;
             default:
                 throw new IllegalArgumentException();
@@ -114,15 +113,15 @@ public class MainController extends AbstractController {
     }
 
     @Override
-    protected void executeCommand(String command) {
+    protected void executeCommand(String command, Presenter presenter) {
         if("/events".equals(command)){
             presenter.clearScreen();
-            userController.enter();
-            welcomeBack();
+            userController.enter(presenter);
+            welcomeBack(presenter);
         } else if ("/message".equals(command)){
             presenter.clearScreen();
-            messageController.enter();
-            welcomeBack();
+            messageController.enter(presenter);
+            welcomeBack(presenter);
         } else{
             presenter.printLines(String.format("You have entered an invalid command \"%f\"", command),
                     "Type \"/help\" for a list of commands. ");
@@ -130,13 +129,13 @@ public class MainController extends AbstractController {
     }
 
     @Override
-    protected void startUp() {
+    protected void startUp(Presenter presenter) {
         presenter.printLines(String.format("Welcome to ConferenceApp! \"%s\"", MOTD),
                 "It looks like you are a(n) " + type + ". If this is incorrect, please contact the administrator.",
                 "Type \"/help\" for a list of commands.");
     }
 
-    private void welcomeBack(){
+    private void welcomeBack(Presenter presenter){
         // clears screen
         presenter.clearScreen();
         presenter.printLines(" --- MAIN MENU --- ");

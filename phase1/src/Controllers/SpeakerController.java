@@ -18,14 +18,14 @@ public class SpeakerController extends AbstractController {
     private ScheduleManager scheduleManager;
     private final String username;
 
-    protected SpeakerController(ScheduleManager scheduleManager, String username, Presenter presenter) {
-        super(presenter);
+    protected SpeakerController(ScheduleManager scheduleManager, String username) {
+        super();
         this.scheduleManager = scheduleManager;
         this.username = username;
     }
 
     @Override
-    protected void executeCommand(String command) {
+    protected void executeCommand(String command, Presenter presenter) {
         ArrayList<String> parsedCommand = parseCommand(command);
         switch (parsedCommand.get(0)) {
             case"/viewMyTalks":
@@ -34,7 +34,7 @@ public class SpeakerController extends AbstractController {
     }
 
     @Override
-    protected void startUp() {
+    protected void startUp(Presenter presenter) {
         String startUpMessage = "--- Speaker Account Menu --- \n Hello " + username + ". \n Type /help for options";
         presenter.printLines(startUpMessage);
     }
@@ -59,7 +59,7 @@ public class SpeakerController extends AbstractController {
      *      (for each event at time)
      *      EVENT in room: ROOM
      */
-    void printSchedule(HashMap<ScheduleTime, HashMap<String, String>> schedule) {
+    void printSchedule(HashMap<ScheduleTime, HashMap<String, String>> schedule, Presenter presenter) {
         for (Map.Entry<ScheduleTime, HashMap<String, String>> entry : schedule.entrySet()) {
             String dateTime ="At: " +entry.getKey().getDateTime();
             presenter.printLines(dateTime);

@@ -2,12 +2,14 @@ package UseCases;
 
 import Entities.Schedule;
 
+import java.io.Serializable;
+
 /**
  * Use-case class for signing users up for events and cancelling their enrollment in events.
  *
  * @author Christopher
  */
-public class ConferenceManager {
+public class ConferenceManager implements Serializable {
     ScheduleManager scheduleManager;
     AccountManager accountManager;
 

@@ -18,32 +18,32 @@ public class AttendeeController extends AbstractController {
     private final String username;
 
 
-    public AttendeeController(ConferenceManager conferenceManager, ScheduleManager scheduleManager, String username, Presenter presenter) {
-        super(presenter);
+    public AttendeeController(ConferenceManager conferenceManager, ScheduleManager scheduleManager, String username) {
+        super();
         this.conferenceManager = conferenceManager;
         this.scheduleManager = scheduleManager;
         this.username = username;
     }
 
     @Override
-    protected void executeCommand(String command) {
+    protected void executeCommand(String command, Presenter presenter) {
         ArrayList<String> parsedCommand = parseCommand(command);
         switch (parsedCommand.get(0)) {
             case "/mainSchedule":
-                mainSchedule();
+                mainSchedule(presenter);
             case "/mySchedule":
-                mySchedule();
+                mySchedule(presenter);
             case "/signUpEvent":
-                if (parsedCommand.size() < 2) parseInput(command);
+                if (parsedCommand.size() < 2) parseInput(command, presenter);
                 else signUpEvent(parsedCommand.get(1));
             case "/cancel":
-                if (parsedCommand.size() < 2) parseInput(command);
+                if (parsedCommand.size() < 2) parseInput(command, presenter);
                 else cancelEnrolment(parsedCommand.get(1));
         }
     }
 
     @Override
-    protected void startUp() {
+    protected void startUp(Presenter presenter) {
         String startUpMessage = "--- Attendee Account Menu --- \n Hello " + username + ". \n Type /help for options";
         presenter.printLines(startUpMessage);
     }
@@ -70,15 +70,15 @@ public class AttendeeController extends AbstractController {
     /**
      * Prints the main schedule
      */
-    void mainSchedule() {
-        printSchedule(scheduleManager.getTheSchedule());
+    void mainSchedule(Presenter presenter) {
+        printSchedule(scheduleManager.getTheSchedule(),presenter);
     }
 
     /**
      * Prints the attendee's schedule
      */
-    void mySchedule() {
-        printSchedule(conferenceManager.enrolledEvents(username).getSchedule());
+    void mySchedule(Presenter presenter) {
+        printSchedule(conferenceManager.enrolledEvents(username).getSchedule(), presenter);
     }
 
     /**
@@ -97,7 +97,7 @@ public class AttendeeController extends AbstractController {
      *      (for each event at time)
      *      EVENT in room: ROOM
      */
-    void printSchedule(HashMap<ScheduleTime, HashMap<String, String>> schedule) {
+    void printSchedule(HashMap<ScheduleTime, HashMap<String, String>> schedule, Presenter presenter) {
         for (Map.Entry<ScheduleTime, HashMap<String, String>> entry : schedule.entrySet()) {
             String dateTime ="At: " +entry.getKey().getDateTime();
             presenter.printLines(dateTime);

@@ -10,29 +10,29 @@ import java.util.ArrayList;
 public class SpeakerMessageController extends MessageController {
     ScheduleManager scheduleManager;
 
-    public SpeakerMessageController(MessageManager messageManager, String username, Presenter presenter,
+    public SpeakerMessageController(MessageManager messageManager, String username,
                                     ScheduleManager scheduleManager) {
-        super(messageManager, username, presenter);
+        super(messageManager, username);
         this.scheduleManager = scheduleManager;
     }
 
     @Override
-    protected void executeCommand(String input) {
+    protected void executeCommand(String input, Presenter presenter) {
         ArrayList<String> parsedCommand = parseCommand(input);
         switch (parsedCommand.get(0)) {
             case "/open":
-                if (parsedCommand.size() < 2) parseInput(input);
-                else openConversation(parsedCommand.get(1));
+                if (parsedCommand.size() < 2) parseInput(input,presenter);
+                else openConversation(parsedCommand.get(1),presenter);
 
             case "/send":
-                if (parsedCommand.size() < 3) parseInput(input);
+                if (parsedCommand.size() < 3) parseInput(input,presenter);
                 else sendMessage(parsedCommand.get(1), parsedCommand.get(2));
 
             case "/inbox":
-                getInbox();
+                getInbox(presenter);
 
             case "/sendtoevent(s)":
-                if (parsedCommand.size() < 2) parseInput(input);
+                if (parsedCommand.size() < 2) parseInput(input,presenter);
                 else {
                     ArrayList<String> eventList = new ArrayList(parsedCommand.subList(1, parsedCommand.size()-2));
                     sendToAttendees(eventList, parsedCommand.get(parsedCommand.size() -1));

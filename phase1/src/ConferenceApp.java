@@ -13,8 +13,6 @@ public class ConferenceApp implements Serializable {
     private ScheduleManager scheduleManager;
     private SocialManager socialManager;
 
-    private Presenter presenter;
-
     /**
      * Constructor for creating an empty ConferenceApp
      */
@@ -29,32 +27,17 @@ public class ConferenceApp implements Serializable {
         // the organizer to create organizers
         accountManager.createUser("admin", "admin", "admin", User.UserType.ORGANIZER);
 
-        presenter = new Presenter();
     }
-
-//    public void launch() {
-//        // let user sign in or create account
-//        FrontController front = new FrontController(presenter, accountManager);
-//        front.enter();
-//
-//        // username of the user after authentication
-//        String username = front.getUsername();
-//
-//        // launching main controller for the user
-//        MainController main = new MainController(username,
-//                presenter, accountManager, conferenceManager,
-//                messageManager, scheduleManager, socialManager);
-//        main.enter();
-//    }
 
     public void launch() {
         // launching main controller for the user
         MainController main = new MainController(
-                presenter, accountManager, conferenceManager,
+                accountManager, conferenceManager,
                 messageManager, scheduleManager, socialManager);
 
+        Presenter presenter = new Presenter();
         // let user sign in or create account
-        FrontController front = new FrontController(presenter, accountManager, main);
-        front.enter();
+        FrontController front = new FrontController(accountManager, main);
+        front.enter(presenter);
     }
 }

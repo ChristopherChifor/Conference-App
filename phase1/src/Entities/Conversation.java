@@ -1,12 +1,13 @@
 package Entities;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 
 /**
  * @author Nikita
  */
-public class Conversation {
+public class Conversation implements Serializable {
     private String userOne, userTwo;
     private ArrayList<Message> messages = new ArrayList<Message>();
 

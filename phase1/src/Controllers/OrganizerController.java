@@ -16,33 +16,33 @@ public class OrganizerController extends AbstractController{
     private final AccountManager accountManager;
     private final ScheduleManager scheduleManager;
 
-    protected OrganizerController(Presenter presenter, AccountManager accountManager, ScheduleManager scheduleManager) {
-        super(presenter);
+    protected OrganizerController(AccountManager accountManager, ScheduleManager scheduleManager) {
+        super();
         this.accountManager = accountManager;
         this.scheduleManager = scheduleManager;
 
     }
 
     @Override
-    protected void executeCommand(String command) {
+    protected void executeCommand(String command,Presenter presenter) {
         ArrayList<String> parsedCommand = parseCommand(command);
         String rawCommand = parsedCommand.get(0);
         switch (rawCommand) {
             case "/createRoom":
-                if (parsedCommand.size() < 2) parseInput(command);
-                else createRoom(parsedCommand.get(1));
+                if (parsedCommand.size() < 2) parseInput(command, presenter);
+                else createRoom(parsedCommand.get(1), presenter);
                 break;
             case "/createSpeaker":
-                if (parsedCommand.size() < 4) parseInput(command);
-                else createSpeaker(parsedCommand.get(1), parsedCommand.get(2), parsedCommand.get(3));
+                if (parsedCommand.size() < 4) parseInput(command,presenter);
+                else createSpeaker(parsedCommand.get(1), parsedCommand.get(2), parsedCommand.get(3), presenter);
                 break;
             case "/assignToRoom":
-                if (parsedCommand.size() < 4) parseInput(command);
-                else assignToRoom(parsedCommand.get(1), parsedCommand.get(2), parsedCommand.get(3));
+                if (parsedCommand.size() < 4) parseInput(command, presenter);
+                else assignToRoom(parsedCommand.get(1), parsedCommand.get(2), parsedCommand.get(3), presenter);
                 break;
             case "/createEvent":
-                if (parsedCommand.size() < 2) parseInput(command);
-                else createEvent(parsedCommand.get(1));
+                if (parsedCommand.size() < 2) parseInput(command, presenter);
+                else createEvent(parsedCommand.get(1), presenter);
                 break;
         }
     }
@@ -51,7 +51,7 @@ public class OrganizerController extends AbstractController{
      * Creates a room where a speaker is able to give a talk
      * @param roomName other user they are speaking to
      */
-    protected void createRoom(String roomName){
+    protected void createRoom(String roomName, Presenter presenter){
         presenter.printLines("Succesfully created new room: " + roomName);
         scheduleManager.createRoom(roomName);
     }
@@ -62,7 +62,7 @@ public class OrganizerController extends AbstractController{
      * @param username Username of speaker
      * @param password Password of speaker
      */
-    protected void createSpeaker(String name, String username, String password) {
+    protected void createSpeaker(String name, String username, String password, Presenter presenter) {
         if (accountManager.canCreateUser(username)) {
             accountManager.createUser(name, username, password, User.UserType.SPEAKER);
             presenter.printLines("Succesfully created new speaker " + name);
@@ -77,7 +77,7 @@ public class OrganizerController extends AbstractController{
      * @param roomName Name of the room
      * @param time Time of the talk
      */
-    protected void assignToRoom(String speaker, String roomName, String time){
+    protected void assignToRoom(String speaker, String roomName, String time, Presenter presenter){
         presenter.printLines("Assigned "+ speaker +" to room "+roomName + " at " + time);
         scheduleManager.assignSpeaker(speaker,roomName, time);
     }
@@ -86,13 +86,13 @@ public class OrganizerController extends AbstractController{
      * Creates an event
      * @param eventName Name of the event
      */
-    protected void createEvent(String eventName){
+    protected void createEvent(String eventName, Presenter presenter){
         presenter.printLines("Succesfully created new event: " + eventName);
         scheduleManager.createEvent(eventName);
     }
 
     @Override
-    protected void startUp() {
+    protected void startUp(Presenter presenter) {
         String startUpMessage = "--- Organizer Menu --- \n Hello. \n Type help for options";
         presenter.printLines(startUpMessage);
 

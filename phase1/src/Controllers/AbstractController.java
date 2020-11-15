@@ -2,6 +2,7 @@ package Controllers;
 
 import Presenters.Presenter;
 
+import java.io.Serializable;
 import java.util.*;
 
 /**
@@ -11,35 +12,32 @@ import java.util.*;
  *
  * @author Alex & Parssa
  */
-public abstract class AbstractController {
+public abstract class AbstractController implements Serializable {
     protected final String HELP_COMMAND = "/help";
     protected final String EXIT_COMMAND = "/exit";
-    protected final Presenter presenter;
+    // protected final Presenter presenter;
 
     protected Map<String, String> commands = new TreeMap<>();
 
-    protected AbstractController(Presenter presenter) {
+    protected AbstractController() {
         defineCommands();
-        this.presenter = presenter;
     }
 
     /**
      * Starts a loop for controller.
      */
-    public final void enter(){
-//        Presenter presenter = new Presenter();
+    public final void enter(Presenter presenter){
         presenter.clearScreen();
-        startUp();
+        startUp(presenter);
         String input;
         while(true){
             input = presenter.getInput();
 
             if (input.equals(EXIT_COMMAND)) break;
             else if (input.equals(HELP_COMMAND)) presenter.printCommandList(commands);
-            else if (commands.containsKey(parseCommand(input).get(0))) executeCommand(input);
-            else parseInput(input);
+            else if (commands.containsKey(parseCommand(input).get(0))) executeCommand(input, presenter);
+            else parseInput(input, presenter);
         }
-//        presenter.close();
     }
 
     /**
@@ -49,20 +47,20 @@ public abstract class AbstractController {
      *
      * @param command user-entered command
      */
-    protected abstract void executeCommand(String command);
+    protected abstract void executeCommand(String command,Presenter presenter);
 
     /**
      * Parses user input (if input is not in commands list)
      * @param input user input
      */
-    protected void parseInput(String input) {
+    protected void parseInput(String input, Presenter presenter) {
         presenter.printLines("Invalid command, typed:" + input+ ". Write /help for options.");
     }
 
     /**
      * Method for starting up the controller, i.e., printing initial info onto screen
      */
-    protected abstract void startUp();
+    protected abstract void startUp(Presenter presenter);
 
     /**
      * Needs to be ran when instantiating controller. Populates commands list and description list.

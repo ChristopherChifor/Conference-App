@@ -1,5 +1,6 @@
 package Presenters;
 
+import java.io.Serializable;
 import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
@@ -9,7 +10,7 @@ import java.util.Scanner;
  *
  * @author Alex & Parssa
  */
-public class Presenter {
+public class Presenter implements Serializable {
     private Scanner s = new Scanner(System.in);
     //    private List<String> commands;
 //    private List<String> descriptions;

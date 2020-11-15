@@ -5,6 +5,7 @@ import Entities.Room;
 import Entities.Schedule;
 import Entities.ScheduleTime;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -12,7 +13,7 @@ import java.util.Map;
 /**
  * @author Haoming & Parssa
  */
-public class ScheduleManager {
+public class ScheduleManager implements Serializable {
     Schedule theSchedule; // should never be given out; its mutable
     HashMap<String, Event> events; // should never be given out; its mutable
     HashMap<String, Room> rooms; // should never be given out; its mutable

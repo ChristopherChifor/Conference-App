@@ -4,6 +4,7 @@ import Entities.Conversation;
 import Entities.Message;
 import Entities.User;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 import java.util.HashMap;
@@ -18,7 +19,7 @@ import java.util.stream.Collectors;
  *
  * @author Alex
  */
-public class MessageManager {
+public class MessageManager implements Serializable {
     private HashMap<String, ArrayList<Conversation>> database;
     private AccountManager accounts;
 
@@ -27,7 +28,7 @@ public class MessageManager {
      *
      * @param accounts
      */
-    public MessageManager(AccountManager accounts) {
+    public MessageManager(AccountManager accounts){
         this.database = new HashMap<>();
         this.accounts = accounts;
     }
