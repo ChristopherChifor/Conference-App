@@ -115,7 +115,6 @@ public class MainController extends AbstractController {
 
     @Override
     protected void executeCommand(String command) {
-        presenter.printLines("Aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
         if("/events".equals(command)){
             presenter.clearScreen();
             userController.enter();

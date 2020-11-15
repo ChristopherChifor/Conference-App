@@ -26,29 +26,24 @@ public class OrganizerController extends AbstractController{
     @Override
     protected void executeCommand(String command) {
         ArrayList<String> parsedCommand = parseCommand(command);
-        System.out.println("entered execute command");
-        presenter.printLines("this command execute very nice");
-        switch (parsedCommand.get(0)){
+        String rawCommand = parsedCommand.get(0);
+        switch (rawCommand) {
             case "/createRoom":
-                if (parsedCommand.size() < 2) {parseInput(command);
-                presenter.printLines("This ran");
-                    System.out.println("This ran part2");}
+                if (parsedCommand.size() < 2) parseInput(command);
                 else createRoom(parsedCommand.get(1));
-
+                break;
             case "/createSpeaker":
-                presenter.printLines("Big Bad");
                 if (parsedCommand.size() < 4) parseInput(command);
                 else createSpeaker(parsedCommand.get(1), parsedCommand.get(2), parsedCommand.get(3));
-
+                break;
             case "/assignToRoom":
-                presenter.printLines("Big Bad");
                 if (parsedCommand.size() < 4) parseInput(command);
                 else assignToRoom(parsedCommand.get(1), parsedCommand.get(2), parsedCommand.get(3));
-
+                break;
             case "/createEvent":
-                presenter.printLines("Big Bad");
                 if (parsedCommand.size() < 2) parseInput(command);
                 else createEvent(parsedCommand.get(1));
+                break;
         }
     }
 
@@ -92,6 +87,7 @@ public class OrganizerController extends AbstractController{
      * @param eventName Name of the event
      */
     protected void createEvent(String eventName){
+        presenter.printLines("Succesfully created new event: " + eventName);
         scheduleManager.createEvent(eventName);
     }
 
@@ -107,10 +103,10 @@ public class OrganizerController extends AbstractController{
      */
     @Override
     protected void defineCommands() {
-        commands.put("/createRoom", "Creates a new room");
-        commands.put("/createSpeaker", "Creates a speaker account");
-        commands.put("/assignToRoom", "Assigns a speaker to a room");
-        commands.put("/createEvent", "Creates an event");
+        commands.put("/createRoom", "Creates a new room, /createRoom ROOM_NAME");
+        commands.put("/createSpeaker", "Creates a speaker account, /createSpeaker NAME USERNAME PASSWORD");
+        commands.put("/assignToRoom", "Assigns a speaker to a room at a given time, /assignToRoom SPEAKER_USERNAME ROOM_NAME HH:MM");
+        commands.put("/createEvent", "Creates an event, /createEvent EVENT_NAME");
 
     }
 }
