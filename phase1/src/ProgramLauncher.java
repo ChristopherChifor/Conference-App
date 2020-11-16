@@ -5,7 +5,7 @@ import java.io.*;
  *
  * @author Alex
  */
-public class Main {
+public class ProgramLauncher {
     private static final String SAVE_DIR = "phase1/save/app.ser";
     private static File file = new File(SAVE_DIR);
 

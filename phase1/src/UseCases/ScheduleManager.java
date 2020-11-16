@@ -27,6 +27,19 @@ public class ScheduleManager implements Serializable {
     public HashMap<ScheduleTime, HashMap<String, String>> getTheSchedule() {
         return theSchedule.getSchedule();
     }
+
+//    /**
+//     *  Adds a new event to the schedule at a certain time in a room
+//     *
+//     * @param room Room that the event is going inside
+//     * @param event Event that is being added
+//     * @param time The time that the event is taking place
+//     * @return true if the event was successfully added
+//     */
+//    public boolean addNewEvent(Room room, Event event, ScheduleTime time) {
+//        return theSchedule.addToSchedule(room, event, time);
+//    }
+
     /**
      *  Adds a new event to the schedule at a certain time in a room
      *
@@ -35,7 +48,6 @@ public class ScheduleManager implements Serializable {
      * @param time The time that the event is taking place
      * @return true if the event was successfully added
      */
-
     public boolean addNewEvent(Room room, Event event, ScheduleTime time) {
         return theSchedule.addToSchedule(room, event, time);
     }
@@ -194,4 +206,5 @@ public class ScheduleManager implements Serializable {
         // TODO
         return false;
     }
+
 }
