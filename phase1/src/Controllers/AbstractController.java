@@ -12,7 +12,7 @@ import java.util.*;
  *
  * @author Alex & Parssa
  */
-public abstract class AbstractController implements Serializable {
+public abstract class AbstractController {
     protected final String HELP_COMMAND = "/help";
     protected final String EXIT_COMMAND = "/exit";
     // protected final Presenter presenter;
