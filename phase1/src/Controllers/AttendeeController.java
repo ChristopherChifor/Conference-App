@@ -10,6 +10,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
+ * A user specific controller for facilitating actions performed by attendees.
+ *
  * @author Haoming & Parssa
  */
 public class AttendeeController extends AbstractController {
@@ -18,6 +20,13 @@ public class AttendeeController extends AbstractController {
     private final String username;
 
 
+    /**
+     * Constructor.
+     *
+     * @param conferenceManager conference manager
+     * @param scheduleManager schedule manager
+     * @param username user's username
+     */
     public AttendeeController(ConferenceManager conferenceManager, ScheduleManager scheduleManager, String username) {
         super();
         this.conferenceManager = conferenceManager;
@@ -25,6 +34,12 @@ public class AttendeeController extends AbstractController {
         this.username = username;
     }
 
+    /**
+     * @see Controllers.AbstractController
+     *
+     * @param command user-entered command
+     * @param presenter presenter used for UI
+     */
     @Override
     protected void executeCommand(String command, Presenter presenter) {
         ArrayList<String> parsedCommand = parseCommand(command);
@@ -46,12 +61,20 @@ public class AttendeeController extends AbstractController {
         }
     }
 
+    /**
+     * @see Controllers.AbstractController
+     *
+     * @param presenter presenter used for UI.
+     */
     @Override
     protected void startUp(Presenter presenter) {
         String startUpMessage = "--- Attendee Account Menu --- \n Hello " + username + ". \n Type /help for options";
         presenter.printLines(startUpMessage);
     }
 
+    /**
+     * @see Controllers.AbstractController
+     */
     @Override
     protected void defineCommands() {
         commands.put("/mainSchedule", "View the entire schedule");
@@ -62,8 +85,8 @@ public class AttendeeController extends AbstractController {
 
 
     /**
-     * Cancels enrolment of current user from event
-     * @param eventName name of event
+     * Cancels enrolment of current user from event.
+     * @param eventName name of event.
      */
     void cancelEnrolment(String eventName) {
         if (scheduleManager.eventExists(eventName)) {
@@ -72,14 +95,16 @@ public class AttendeeController extends AbstractController {
     }
 
     /**
-     * Prints the main schedule
+     * Prints the main schedule.
+     * @param presenter used for UI.
      */
     void mainSchedule(Presenter presenter) {
         printSchedule(scheduleManager.getTheSchedule(),presenter);
     }
 
     /**
-     * Prints the attendee's schedule
+     * Prints the attendee's schedule.
+     * @param presenter used for UI.
      */
     void mySchedule(Presenter presenter) {
         printSchedule(conferenceManager.enrolledEvents(username).getSchedule(), presenter);
@@ -100,6 +125,8 @@ public class AttendeeController extends AbstractController {
      *      At: TIME
      *      (for each event at time)
      *      EVENT in room: ROOM
+     * @param schedule schedule being printed
+     * @param presenter for UI.
      */
     void printSchedule(HashMap<ScheduleTime, HashMap<String, String>> schedule, Presenter presenter) {
         for (Map.Entry<ScheduleTime, HashMap<String, String>> entry : schedule.entrySet()) {

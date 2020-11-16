@@ -6,7 +6,8 @@ import UseCases.MessageManager;
 import java.util.ArrayList;
 
 /**
- * Controller for Handling messaging for organizers.
+ * Messaging controller for facilitating the messaging capabilities of organizers.
+ * @see Controllers.MessageController
  * @author Paya
  */
 public class OrganizerMessageController extends MessageController{
@@ -15,7 +16,7 @@ public class OrganizerMessageController extends MessageController{
     }
 
     /**
-     *  Definitions of commands an organizer can do.
+     * @see Controllers.AbstractController
      */
     @Override
     protected void defineCommands() {
@@ -26,7 +27,7 @@ public class OrganizerMessageController extends MessageController{
     }
 
     /**
-     * Execute a command based on the String input
+     * @see Controllers.AbstractController
      * @param input the input(String) containing information such as the command, the users, and the message body.
      */
     @Override

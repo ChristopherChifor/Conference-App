@@ -6,6 +6,11 @@ import UseCases.ScheduleManager;
 
 import java.util.ArrayList;
 
+/**
+ * The messaging controller for facilitating the messaging capabilities of speakrers.
+ * @see Controllers.MessageController
+ * @author Parssa
+ */
 public class SpeakerMessageController extends MessageController {
     ScheduleManager scheduleManager;
 
@@ -16,8 +21,9 @@ public class SpeakerMessageController extends MessageController {
     }
 
     /**
-     * Execute a command based on the String input
+     * @see Controllers.AbstractController
      * @param input the input(String) containing information such as the command, the users, and the message body.
+     * @param presenter for UI
      */
     @Override
     protected void executeCommand(String input, Presenter presenter) {
@@ -48,7 +54,7 @@ public class SpeakerMessageController extends MessageController {
     }
 
     /**
-     *  Definitions of commands a speaker can do.
+     * @see Controllers.AbstractController
      */
     @Override
     protected void defineCommands() {

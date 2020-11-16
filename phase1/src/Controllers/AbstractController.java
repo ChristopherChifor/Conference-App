@@ -2,29 +2,30 @@ package Controllers;
 
 import Presenters.Presenter;
 
-import java.io.Serializable;
 import java.util.*;
 
 /**
  * Abstract Controller class. Not user specific.
- *
- * WIP
  *
  * @author Alex & Parssa
  */
 public abstract class AbstractController {
     protected final String HELP_COMMAND = "/help";
     protected final String EXIT_COMMAND = "/exit";
-    // protected final Presenter presenter;
 
     protected Map<String, String> commands = new TreeMap<>();
 
+    /**
+     * Constructor. Calls defineCommands()
+     */
     protected AbstractController() {
         defineCommands();
     }
 
     /**
-     * Starts a loop for controller.
+     * Enters a loop. Like entering the page of this controller
+     *
+     * @param presenter the presenter used for UI.
      */
     public final void enter(Presenter presenter){
         presenter.clearScreen();
@@ -46,19 +47,24 @@ public abstract class AbstractController {
      * This will never be a HELP or EXIT command
      *
      * @param command user-entered command
+     * @param presenter presenter used for UI
      */
     protected abstract void executeCommand(String command,Presenter presenter);
 
     /**
-     * Parses user input (if input is not in commands list)
+     * Parses user input (if input is not in commands list).
+     * By default prints invalid command and shows what user typed.
+     *
      * @param input user input
+     * @param presenter presenter used for UI
      */
     protected void parseInput(String input, Presenter presenter) {
         presenter.printLines("Invalid command, typed:" + input+ ". Write /help for options.");
     }
 
     /**
-     * Method for starting up the controller, i.e., printing initial info onto screen
+     * Method for starting up the controller, i.e., printing initial info onto screen.
+     * @param presenter presenter used for UI
      */
     protected abstract void startUp(Presenter presenter);
 
@@ -73,10 +79,9 @@ public abstract class AbstractController {
      *  [1-inf] individual paramaters, separated by spaces, and sections in quotations
      *          count as an indivdiual parameter
      * @param input
-     * @return
+     * @return the input broken down into a list of paramenters.
      */
     protected ArrayList<String> parseCommand(String input) {
-
         ArrayList<String> cleanInput = new ArrayList<>();
 
         char[] charArray = input.toCharArray();

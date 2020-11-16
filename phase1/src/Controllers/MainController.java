@@ -4,8 +4,6 @@ import Entities.User.UserType;
 import Presenters.Presenter;
 import UseCases.*;
 
-import java.util.ArrayList;
-
 /**
  * @author Alex
  */
@@ -48,38 +46,7 @@ public class MainController extends AbstractController {
         this.socialManager = socialManager;
     }
 
-//    /**
-//     * Builder method for MainController that generates other controllers from the entered username.
-//     * This method can and should only be ran once if you try to run it multiple times, the attempts
-//     * after the first one will do nothing.
-//     *
-//     * @param username the users username.
-//     */
-//    public void mainControllerBuilder(String username) {
-//        if(!this.username.equals("")) return;
-//
-//        this.username = username;
-//        this.type = accountManager.getUserType(username);
-//
-//        switch (this.type) {
-//            case ATTENDEE:
-//                messageController = new AttendeeMessageController(messageManager, username, presenter);
-//                break;
-//            case SPEAKER:
-//                messageController = new SpeakerMessageController(messageManager, username, presenter, scheduleManager);
-//                break;
-//            case ORGANIZER:
-//                messageController = new OrganizerMessageController(messageManager, username, presenter);
-//                break;
-//            default:
-//                throw new IllegalArgumentException();
-//        }
-//
-//        attendeeController = new AttendeeController(conferenceManager, scheduleManager, username, presenter);
-//        organizerController = type == UserType.ORGANIZER ? new OrganizerController(presenter, accountManager, scheduleManager) : null;
-//        speakerController = type == UserType.SPEAKER ? new SpeakerController(scheduleManager, username, presenter) : null;
-//
-//    }
+
     /**
      * Builder method for MainController that generates other controllers from the entered username.
      * This method can and should only be ran once if you try to run it multiple times, the attempts
@@ -112,6 +79,11 @@ public class MainController extends AbstractController {
 
     }
 
+    /**
+     * @see Controllers.AbstractController
+     * @param command user-entered command
+     * @param presenter presenter used for UI
+     */
     @Override
     protected void executeCommand(String command, Presenter presenter) {
         if("/events".equals(command)){
@@ -128,6 +100,10 @@ public class MainController extends AbstractController {
         }
     }
 
+    /**
+     * @see Controllers.AbstractController
+     * @param presenter presenter used for UI
+     */
     @Override
     protected void startUp(Presenter presenter) {
         presenter.printLines(String.format("Welcome to ConferenceApp! \"%s\"", MOTD),

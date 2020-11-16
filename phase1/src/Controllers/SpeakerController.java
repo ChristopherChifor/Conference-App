@@ -11,19 +11,30 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
+ * User-specific controller for facilitating functions that can be performed by speakers.
+ *
  * @author Andrei
  */
 public class SpeakerController extends AbstractController {
-
     private ScheduleManager scheduleManager;
     private final String username;
 
-    protected SpeakerController(ScheduleManager scheduleManager, String username) {
+    /**
+     * Constructor
+     * @param scheduleManager schedule manager
+     * @param username username
+     */
+    public SpeakerController(ScheduleManager scheduleManager, String username) {
         super();
         this.scheduleManager = scheduleManager;
         this.username = username;
     }
 
+    /**
+     * @see Controllers.AbstractController
+     * @param command user-entered command
+     * @param presenter presenter used for UI
+     */
     @Override
     protected void executeCommand(String command, Presenter presenter) {
         ArrayList<String> parsedCommand = parseCommand(command);
@@ -33,6 +44,10 @@ public class SpeakerController extends AbstractController {
         }
     }
 
+    /**
+     * @see Controllers.AbstractController
+     * @param presenter presenter used for UI
+     */
     @Override
     protected void startUp(Presenter presenter) {
         String startUpMessage = "--- Speaker Account Menu --- \n Hello " + username + ". \n Type /help for options";

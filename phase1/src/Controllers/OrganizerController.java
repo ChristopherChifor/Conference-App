@@ -9,6 +9,8 @@ import UseCases.ScheduleManager;
 import java.util.ArrayList;
 
 /**
+ * Controller for facilitating the functions that can be carried out by organizing (i.e., organizing).
+ *
  * @author Christopher
  */
 public class OrganizerController extends AbstractController{
@@ -16,13 +18,22 @@ public class OrganizerController extends AbstractController{
     private final AccountManager accountManager;
     private final ScheduleManager scheduleManager;
 
-    protected OrganizerController(AccountManager accountManager, ScheduleManager scheduleManager) {
+    /**
+     * Constructor
+     * @param accountManager accountmanager
+     * @param scheduleManager schedule manager
+     */
+    public OrganizerController(AccountManager accountManager, ScheduleManager scheduleManager) {
         super();
         this.accountManager = accountManager;
         this.scheduleManager = scheduleManager;
-
     }
 
+    /**
+     * @see Controllers.AbstractController
+     * @param command user-entered command
+     * @param presenter presenter used for UI
+     */
     @Override
     protected void executeCommand(String command,Presenter presenter) {
         ArrayList<String> parsedCommand = parseCommand(command);
@@ -91,6 +102,10 @@ public class OrganizerController extends AbstractController{
         scheduleManager.createEvent(eventName);
     }
 
+    /**
+     * @see Controllers.AbstractController
+     * @param presenter presenter used for UI
+     */
     @Override
     protected void startUp(Presenter presenter) {
         String startUpMessage = "--- Organizer Menu --- \n Hello. \n Type help for options";
@@ -99,7 +114,7 @@ public class OrganizerController extends AbstractController{
     }
 
     /**
-     *  Definitions of commands they can do.
+     *  @see Controllers.AbstractController
      */
     @Override
     protected void defineCommands() {

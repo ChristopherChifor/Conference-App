@@ -9,22 +9,29 @@ import java.util.ArrayList;
 /**
  *  Controller for Handling messaging. User specific.
  *
- *  WIP: Need to make subclasses of AttendeeMessage
- *
  *  @author Parssa
  */
 public class MessageController extends AbstractController {
-
     private MessageManager messageManager;
     private final String username;
 
 
+    /**
+     * Constructor
+     * @param messageManager message manager
+     * @param username username
+     */
     public MessageController(MessageManager messageManager, String username) {
         super();
         this.messageManager = messageManager;
         this.username = username;
     }
 
+    /**
+     * @see Controllers.AbstractController
+     * @param input
+     * @param presenter presenter used for UI
+     */
     @Override
     protected void executeCommand(String input, Presenter presenter) {
         ArrayList<String> parsedCommand = parseCommand(input);
@@ -45,6 +52,10 @@ public class MessageController extends AbstractController {
         }
     }
 
+    /**
+     * @see Controllers.AbstractController
+     * @param presenter presenter used for UI
+     */
     @Override
     protected void startUp(Presenter presenter) {
         String greeting = "--- MESSAGING MENU --- \n Hello " + username + ". \n Type /help for options";
@@ -52,8 +63,7 @@ public class MessageController extends AbstractController {
     }
 
     /**
-     *  Definitions of commands they can do.
-     *  Further commands defined in subclasses.
+     *  @see Controllers.AbstractController
      */
     @Override
     protected void defineCommands() {
