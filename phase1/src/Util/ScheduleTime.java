@@ -1,4 +1,4 @@
-package Entities;
+package Util;
 
 import java.io.Serializable;
 
@@ -30,7 +30,8 @@ public class ScheduleTime implements Serializable {
         referenceString = hour.toString() + ":" + minute.toString();
     }
 
-    public String getReferenceString() {
+    @Override
+    public String toString() {
         return referenceString;
     }
 

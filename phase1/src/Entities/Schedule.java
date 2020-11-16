@@ -3,6 +3,7 @@ package Entities;
 import java.io.Serializable;
 import java.util.HashMap;
 
+import Util.ScheduleTime;
 /**
  * @author Andrei
  */

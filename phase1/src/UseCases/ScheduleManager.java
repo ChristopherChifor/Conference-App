@@ -3,7 +3,7 @@ package UseCases;
 import Entities.Event;
 import Entities.Room;
 import Entities.Schedule;
-import Entities.ScheduleTime;
+import Util.ScheduleTime;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -40,17 +40,17 @@ public class ScheduleManager implements Serializable {
 //        return theSchedule.addToSchedule(room, event, time);
 //    }
 
-    /**
-     *  Adds a new event to the schedule at a certain time in a room
-     *
-     * @param room Room that the event is going inside
-     * @param event Event that is being added
-     * @param time The time that the event is taking place
-     * @return true if the event was successfully added
-     */
-    public boolean addNewEvent(Room room, Event event, ScheduleTime time) {
-        return theSchedule.addToSchedule(room, event, time);
-    }
+//    /**
+//     *  Adds a new event to the schedule at a certain time in a room
+//     *
+//     * @param room Room that the event is going inside
+//     * @param event Event that is being added
+//     * @param time The time that the event is taking place
+//     * @return true if the event was successfully added
+//     */
+//    public boolean addNewEvent(Room room, Event event, String time) {
+//        return theSchedule.addToSchedule(room, event, time);
+//    }
 
     /**
      *  Gets a schedule of all event's an attendee is enrolled in
@@ -206,5 +206,4 @@ public class ScheduleManager implements Serializable {
         // TODO
         return false;
     }
-
 }

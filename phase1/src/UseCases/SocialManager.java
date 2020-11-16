@@ -1,7 +1,7 @@
 package UseCases;
 
 import Entities.Schedule;
-import Entities.ScheduleTime;
+import Util.ScheduleTime;
 
 import java.io.Serializable;
 
