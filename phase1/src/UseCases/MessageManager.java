@@ -28,7 +28,7 @@ public class MessageManager implements Serializable {
      *
      * @param accounts
      */
-    public MessageManager(AccountManager accounts){
+    public MessageManager(AccountManager accounts) {
         this.database = new HashMap<>();
         this.accounts = accounts;
     }
@@ -69,7 +69,6 @@ public class MessageManager implements Serializable {
      * - sender is attendee and recipient attendy or speaker, or
      * - sender is attendee and recipient is organizer if they messaged before
      * - otherwise, true if they exist and have messaged before.
-     *
      *
      * @param senderUsername    username of sender
      * @param recipientUsername username of recipient
@@ -211,7 +210,7 @@ public class MessageManager implements Serializable {
     public List<String> getMyInbox(String user) {
         if (!database.containsKey(user)) return new ArrayList<>();
         return database.get(user).stream()
-                .map(s -> (s.getUserOne().equals(user)?s.getUserTwo():s.getUserOne()))
+                .map(s -> (s.getUserOne().equals(user) ? s.getUserTwo() : s.getUserOne()))
                 .collect(Collectors.toList());
 
     }

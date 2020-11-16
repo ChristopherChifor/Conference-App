@@ -6,31 +6,18 @@ import java.util.Map;
 import java.util.Scanner;
 
 /**
- * Abstract presenter class. WIP
+ * Presenter for UI. Encapsulates System.out and Scanner functionalities.
  *
  * @author Alex & Parssa
  */
 public class Presenter implements Serializable {
     private Scanner s = new Scanner(System.in);
-    //    private List<String> commands;
-//    private List<String> descriptions;
-//    private Map<String, String> commands;
-
-//    /**
-//     * Constructor for presenter.
-//     */
-//    public Presenter() {
-//        // @param commands list of accepted commands map, with command descriptions as values
-//        // param -> Map<String, String> commands
-//        // this.commands = commands;
-//    }
 
     /**
      * Closes the presenter. Pls run this when you don't need this presenter anymore.
      */
     public void close() {
         s.close();
-
         clearScreen();
     }
 
@@ -68,7 +55,7 @@ public class Presenter implements Serializable {
      *
      * @param list the list to print out
      */
-    public void printList(List<String> list) {
+    public void printLines(List<String> list) {
         list.forEach(System.out::println);
     }
 

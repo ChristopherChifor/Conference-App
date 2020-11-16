@@ -1,7 +1,7 @@
 import java.io.*;
 
 /**
- * Launches the program.
+ * Launches the ConferenceApp program.
  *
  * @author Alex
  */

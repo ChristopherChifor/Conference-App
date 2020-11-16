@@ -28,24 +28,13 @@ public class ScheduleManager implements Serializable {
         return theSchedule.getSchedule();
     }
 
-//    /**
-//     *  Adds a new event to the schedule at a certain time in a room
-//     *
-//     * @param room Room that the event is going inside
-//     * @param event Event that is being added
-//     * @param time The time that the event is taking place
-//     * @return true if the event was successfully added
-//     */
-//    public boolean addNewEvent(Room room, Event event, ScheduleTime time) {
-//        return theSchedule.addToSchedule(room, event, time);
-//    }
 
     /**
-     *  Adds a new event to the schedule at a certain time in a room
+     * Adds a new event to the schedule at a certain time in a room
      *
-     * @param room Room that the event is going inside
+     * @param room  Room that the event is going inside
      * @param event Event that is being added
-     * @param time The time that the event is taking place
+     * @param time  The time that the event is taking place
      * @return true if the event was successfully added
      */
     public boolean addNewEvent(Room room, Event event, ScheduleTime time) {
@@ -53,7 +42,8 @@ public class ScheduleManager implements Serializable {
     }
 
     /**
-     *  Gets a schedule of all event's an attendee is enrolled in
+     * Gets a schedule of all event's an attendee is enrolled in
+     *
      * @param username Username of the attendee
      * @return Schedule containing only event's the attendee is in
      */
@@ -77,7 +67,8 @@ public class ScheduleManager implements Serializable {
     }
 
     /**
-     *  Gets a schedule of all event's of a Speaker
+     * Gets a schedule of all event's of a Speaker
+     *
      * @param username Username of the speaker
      * @return Schedule containing only event's a Speaker is speaking at
      */
@@ -105,7 +96,8 @@ public class ScheduleManager implements Serializable {
     }
 
     /**
-     *  Checks if an event exists
+     * Checks if an event exists
+     *
      * @param event Event that is being checked
      * @return true if event exists
      */
@@ -114,7 +106,8 @@ public class ScheduleManager implements Serializable {
     }
 
     /**
-     *  Checks if an event exists
+     * Checks if an event exists
+     *
      * @param eventName Name of event that is being checked
      * @return true if event exists
      */
@@ -123,21 +116,23 @@ public class ScheduleManager implements Serializable {
     }
 
     /**
-     *  Checks if event has already happened
+     * Checks if event has already happened
+     *
      * @param event Event that is being checked
      * @return true if event has already occurred
      */
-    public boolean eventHasHappened (Event event) {
+    public boolean eventHasHappened(Event event) {
         // TODO Discuss with TA
         return false;
     }
 
     /**
-     *  Checks if event has already happened
+     * Checks if event has already happened
+     *
      * @param eventName Event that is being checked
      * @return true if event has already occurred
      */
-    public boolean eventHasHappened (String eventName) {
+    public boolean eventHasHappened(String eventName) {
         // TODO Discuss with TA
         if (eventExists(eventName)) {
             return true;
@@ -145,7 +140,8 @@ public class ScheduleManager implements Serializable {
     }
 
     /**
-     *  Checks if an event is full
+     * Checks if an event is full
+     *
      * @param event Event that is being checked
      * @return true if the event is full
      */
@@ -155,7 +151,8 @@ public class ScheduleManager implements Serializable {
     }
 
     /**
-     *  Checks if an event is full
+     * Checks if an event is full
+     *
      * @param eventName Event that is being checked
      * @return true if the event is full
      */

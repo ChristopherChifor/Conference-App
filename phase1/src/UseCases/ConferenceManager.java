@@ -21,7 +21,7 @@ public class ConferenceManager implements Serializable {
     /**
      * Method for checking if user can sign up for an event.
      *
-     * @param username the user being checked.
+     * @param username  the user being checked.
      * @param eventName the name of event.
      * @return true iff
      * 1) attendee exists
@@ -37,8 +37,8 @@ public class ConferenceManager implements Serializable {
     /**
      * Signs up user for event.
      *
-     * @param eventName:    the event the user will sign up for
-     * @param username: username of the user
+     * @param eventName: the event the user will sign up for
+     * @param username:  username of the user
      * @return true if user is added to the event
      */
     public boolean signUpForEvent(String username, String eventName) {
@@ -51,7 +51,7 @@ public class ConferenceManager implements Serializable {
      * Cancels this user's enrollment to event.
      *
      * @param eventName: the name of the event the user cancels enrollment to
-     * @param username: username of the user
+     * @param username:  username of the user
      * @return true if user removed from event
      */
     public boolean cancelEnrolment(String username, String eventName) {

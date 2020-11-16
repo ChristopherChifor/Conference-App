@@ -6,6 +6,9 @@ import UseCases.*;
 
 import java.io.Serializable;
 
+/**
+ * The class of the instance of our Conference management app.
+ */
 public class ConferenceApp implements Serializable {
     private AccountManager accountManager;
     private ConferenceManager conferenceManager;
@@ -29,6 +32,9 @@ public class ConferenceApp implements Serializable {
 
     }
 
+    /**
+     * Launches the ConferenceApp.
+     */
     public void launch() {
         // launching main controller for the user
         MainController main = new MainController(
@@ -39,5 +45,7 @@ public class ConferenceApp implements Serializable {
         // let user sign in or create account
         FrontController front = new FrontController(accountManager, main);
         front.enter(presenter);
+
+        presenter.close();
     }
 }

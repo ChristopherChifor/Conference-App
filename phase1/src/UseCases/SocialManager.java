@@ -28,14 +28,14 @@ public class SocialManager implements Serializable {
     /**
      * Method for checking if a user is in a given schedule
      *
-     * @param username Username of the user
+     * @param username         Username of the user
      * @param attendeeSchedule The schedule to be checked
      * @return true iff user is in attendeeSchedule
      */
     private boolean isUserInSchedule(String username, Schedule attendeeSchedule) {
-        for (ScheduleTime time: attendeeSchedule.getSchedule().keySet()) {
-            for (String room: attendeeSchedule.getSchedule().get(time).keySet()) {
-                if(scheduleManager.getEvent(attendeeSchedule.getSchedule().get(time).get(room)).getAttendees().contains(username)) {
+        for (ScheduleTime time : attendeeSchedule.getSchedule().keySet()) {
+            for (String room : attendeeSchedule.getSchedule().get(time).keySet()) {
+                if (scheduleManager.getEvent(attendeeSchedule.getSchedule().get(time).get(room)).getAttendees().contains(username)) {
                     return true;
                 }
             }

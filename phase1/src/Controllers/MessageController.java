@@ -77,7 +77,7 @@ public class MessageController extends AbstractController {
      * @param otherUser other user they are speaking to
      */
     void openConversation(String otherUser, Presenter presenter) {
-        presenter.printList(messageManager.getMessages(username, otherUser));
+        presenter.printLines(messageManager.getMessages(username, otherUser));
     }
 
     /**
@@ -96,7 +96,7 @@ public class MessageController extends AbstractController {
      *  Get's this user's inbox and displays it.
      */
     void getInbox(Presenter presenter) {
-        presenter.printList(messageManager.getMyInbox(username));
+        presenter.printLines(messageManager.getMyInbox(username));
     }
 
     /**
