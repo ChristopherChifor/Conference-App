@@ -28,29 +28,17 @@ public class ScheduleManager implements Serializable {
         return theSchedule.getSchedule();
     }
 
-//    /**
-//     *  Adds a new event to the schedule at a certain time in a room
-//     *
-//     * @param room Room that the event is going inside
-//     * @param event Event that is being added
-//     * @param time The time that the event is taking place
-//     * @return true if the event was successfully added
-//     */
-//    public boolean addNewEvent(Room room, Event event, ScheduleTime time) {
-//        return theSchedule.addToSchedule(room, event, time);
-//    }
-
-//    /**
-//     *  Adds a new event to the schedule at a certain time in a room
-//     *
-//     * @param room Room that the event is going inside
-//     * @param event Event that is being added
-//     * @param time The time that the event is taking place
-//     * @return true if the event was successfully added
-//     */
-//    public boolean addNewEvent(Room room, Event event, String time) {
-//        return theSchedule.addToSchedule(room, event, time);
-//    }
+    /**
+     *  Adds a new event to the schedule at a certain time in a room
+     *
+     * @param roomName Room that the event is going inside
+     * @param eventName Event that is being added
+     * @param time The time that the event is taking place
+     * @return true if the event was successfully added
+     */
+    public boolean addNewEvent(String roomName, String eventName, String time) {
+        return theSchedule.addToSchedule(roomName, eventName, time);
+    }
 
     /**
      *  Gets a schedule of all event's an attendee is enrolled in
@@ -138,7 +126,6 @@ public class ScheduleManager implements Serializable {
      * @return true if event has already occurred
      */
     public boolean eventHasHappened (String eventName) {
-        // TODO Discuss with TA
         if (eventExists(eventName)) {
             return true;
         } else return false;

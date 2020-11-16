@@ -8,19 +8,10 @@ import java.io.Serializable;
  * @author Parssa
  */
 public class ScheduleTime implements Serializable {
-    private int day, month, year, hour, minute = 0;
+    private int hour, minute = 0;
     private String referenceString;
 
     public ScheduleTime(int hour, int minute) {
-        this.hour = hour;
-        this.minute = minute;
-        setReferenceString(hour, minute);
-    }
-
-    public ScheduleTime(int day, int month, int year, int hour, int minute) {
-        this.day = day;
-        this.month = month;
-        this.year = year;
         this.hour = hour;
         this.minute = minute;
         setReferenceString(hour, minute);
@@ -35,18 +26,6 @@ public class ScheduleTime implements Serializable {
         return referenceString;
     }
 
-    public int getDay() {
-        return day;
-    }
-
-    public int getMonth() {
-        return month;
-    }
-
-    public int getYear() {
-        return year;
-    }
-
     public int getHour() {
         return hour;
     }
@@ -56,6 +35,15 @@ public class ScheduleTime implements Serializable {
     }
 
     public String getDateTime() { // YEAR : MONTH : DAY : HOUR : MINUTE
-        return String.format("%d:%d:%d:%d:%d", year, month, day, hour, minute);
+        return String.format("%d:%d", hour, minute);
+    }
+
+    public static ScheduleTime toScheduleTime(String time) {
+        if (time.contains(":")) {
+            int colonIndex = time.indexOf(':');
+            String hours = time.substring(0, colonIndex);
+            String minutes = time.substring(colonIndex + 1);
+            return new ScheduleTime(Integer.parseInt(hours), Integer.parseInt(minutes));
+        } else return null;
     }
 }

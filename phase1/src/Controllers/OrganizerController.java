@@ -41,8 +41,8 @@ public class OrganizerController extends AbstractController{
                 else assignToRoom(parsedCommand.get(1), parsedCommand.get(2), parsedCommand.get(3), presenter);
                 break;
             case "/createEvent":
-                if (parsedCommand.size() < 2) parseInput(command, presenter);
-                else createEvent(parsedCommand.get(1), presenter);
+                if (parsedCommand.size() < 4) parseInput(command, presenter);
+                else createEvent(parsedCommand.get(1), parsedCommand.get(2), parsedCommand.get(3), presenter);
                 break;
         }
     }
@@ -86,9 +86,10 @@ public class OrganizerController extends AbstractController{
      * Creates an event
      * @param eventName Name of the event
      */
-    protected void createEvent(String eventName, Presenter presenter){
-        presenter.printLines("Succesfully created new event: " + eventName);
-        scheduleManager.createEvent(eventName);
+    protected void createEvent(String eventName, String roomName, String time, Presenter presenter){
+        if (scheduleManager.addNewEvent(roomName, eventName, time)) {
+            presenter.printLines("Succesfully created new event: " + eventName + " in room " + roomName + " at "+ time);
+        } else presenter.printLines("Could not create new event");
     }
 
     @Override
@@ -105,8 +106,8 @@ public class OrganizerController extends AbstractController{
     protected void defineCommands() {
         commands.put("/createRoom", "Creates a new room, /createRoom ROOM_NAME");
         commands.put("/createSpeaker", "Creates a speaker account, /createSpeaker NAME USERNAME PASSWORD");
+        commands.put("/createEvent", "Creates an event, /createEvent EVENT_NAME ROOM_NAME HH:MM");
         commands.put("/assignToRoom", "Assigns a speaker to a room at a given time, /assignToRoom SPEAKER_USERNAME ROOM_NAME HH:MM");
-        commands.put("/createEvent", "Creates an event, /createEvent EVENT_NAME");
 
     }
 }

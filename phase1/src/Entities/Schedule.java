@@ -20,6 +20,18 @@ public class Schedule implements Serializable {
         }
     }
 
+    public boolean addToSchedule(String room, String event, String time) {
+
+        ScheduleTime actualTime = ScheduleTime.toScheduleTime(time);
+        if (schedule.get(actualTime).containsKey(room)) return false;
+        else {
+            HashMap<String, String> innerMap = new HashMap<>();
+            innerMap.put(room, event);
+            schedule.put(actualTime, innerMap);
+            return true;
+        }
+    }
+
     public boolean addToSchedule(String room, String event, ScheduleTime time) {
 
         if (schedule.get(time).containsKey(room)) return false;
