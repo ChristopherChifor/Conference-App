@@ -3,6 +3,7 @@ package Entities;
 import java.io.Serializable;
 import java.util.HashMap;
 
+import Util.ScheduleTime;
 /**
  * @author Andrei
  */
@@ -15,6 +16,18 @@ public class Schedule implements Serializable {
             HashMap<String, String> innerMap = new HashMap<>();
             innerMap.put(room.getName(), event.getName());
             schedule.put(time, innerMap);
+            return true;
+        }
+    }
+
+    public boolean addToSchedule(String room, String event, String time) {
+
+        ScheduleTime actualTime = ScheduleTime.toScheduleTime(time);
+        if (schedule.get(actualTime).containsKey(room)) return false;
+        else {
+            HashMap<String, String> innerMap = new HashMap<>();
+            innerMap.put(room, event);
+            schedule.put(actualTime, innerMap);
             return true;
         }
     }

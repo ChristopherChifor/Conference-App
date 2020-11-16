@@ -3,7 +3,7 @@ package UseCases;
 import Entities.Event;
 import Entities.Room;
 import Entities.Schedule;
-import Entities.ScheduleTime;
+import Util.ScheduleTime;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -32,13 +32,13 @@ public class ScheduleManager implements Serializable {
     /**
      * Adds a new event to the schedule at a certain time in a room
      *
-     * @param room  Room that the event is going inside
-     * @param event Event that is being added
-     * @param time  The time that the event is taking place
+     * @param roomName  Room that the event is going inside
+     * @param eventName Event that is being added
+     * @param time      The time that the event is taking place
      * @return true if the event was successfully added
      */
-    public boolean addNewEvent(Room room, Event event, ScheduleTime time) {
-        return theSchedule.addToSchedule(room, event, time);
+    public boolean addNewEvent(String roomName, String eventName, String time) {
+        return theSchedule.addToSchedule(roomName, eventName, time);
     }
 
     /**
@@ -133,7 +133,6 @@ public class ScheduleManager implements Serializable {
      * @return true if event has already occurred
      */
     public boolean eventHasHappened(String eventName) {
-        // TODO Discuss with TA
         if (eventExists(eventName)) {
             return true;
         } else return false;
@@ -203,5 +202,4 @@ public class ScheduleManager implements Serializable {
         // TODO
         return false;
     }
-
 }

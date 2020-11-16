@@ -1,8 +1,8 @@
 package Controllers;
 
-import Entities.Event;
+
 import Presenters.Presenter;
-import Entities.ScheduleTime;
+import Util.ScheduleTime;
 import UseCases.ScheduleManager;
 import UseCases.ConferenceManager;
 
