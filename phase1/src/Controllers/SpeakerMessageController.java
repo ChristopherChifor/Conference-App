@@ -6,7 +6,6 @@ import UseCases.ScheduleManager;
 
 import java.util.ArrayList;
 
-// TODO Nikita
 public class SpeakerMessageController extends MessageController {
     ScheduleManager scheduleManager;
 
@@ -16,6 +15,10 @@ public class SpeakerMessageController extends MessageController {
         this.scheduleManager = scheduleManager;
     }
 
+    /**
+     * Execute a command based on the String input
+     * @param input the input(String) containing information such as the command, the users, and the message body.
+     */
     @Override
     protected void executeCommand(String input, Presenter presenter) {
         ArrayList<String> parsedCommand = parseCommand(input);
@@ -44,6 +47,9 @@ public class SpeakerMessageController extends MessageController {
         }
     }
 
+    /**
+     *  Definitions of commands a speaker can do.
+     */
     @Override
     protected void defineCommands() {
         super.defineCommands();
