@@ -29,10 +29,12 @@ public class FrontController extends AbstractController {
             case "/login":
                 if (parsedCommand.size() < 3) parseInput(command, presenter);
                 else login(parsedCommand.get(1), parsedCommand.get(2), presenter);
+                break;
 
             case "/signup":
                 if (parsedCommand.size() < 4) parseInput(command, presenter);
                 else signUp(parsedCommand.get(1), parsedCommand.get(2), parsedCommand.get(3), presenter);
+                break;
         }
     }
 

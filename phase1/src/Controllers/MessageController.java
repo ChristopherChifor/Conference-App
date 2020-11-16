@@ -32,13 +32,16 @@ public class MessageController extends AbstractController {
             case "/open":
                 if (parsedCommand.size() < 2) parseInput(input, presenter);
                 else openConversation(parsedCommand.get(1), presenter);
+                break;
 
             case "/send":
                 if (parsedCommand.size() < 3) parseInput(input,presenter);
                 else sendMessage(parsedCommand.get(1), parsedCommand.get(2));
+                break;
 
             case "/inbox":
                 getInbox(presenter);
+                break;
         }
     }
 

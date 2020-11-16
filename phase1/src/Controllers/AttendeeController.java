@@ -31,14 +31,18 @@ public class AttendeeController extends AbstractController {
         switch (parsedCommand.get(0)) {
             case "/mainSchedule":
                 mainSchedule(presenter);
+                break;
             case "/mySchedule":
                 mySchedule(presenter);
+                break;
             case "/signUpEvent":
                 if (parsedCommand.size() < 2) parseInput(command, presenter);
                 else signUpEvent(parsedCommand.get(1));
+                break;
             case "/cancel":
                 if (parsedCommand.size() < 2) parseInput(command, presenter);
                 else cancelEnrolment(parsedCommand.get(1));
+                break;
         }
     }
 

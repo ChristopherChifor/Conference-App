@@ -23,13 +23,16 @@ public class SpeakerMessageController extends MessageController {
             case "/open":
                 if (parsedCommand.size() < 2) parseInput(input,presenter);
                 else openConversation(parsedCommand.get(1),presenter);
+                break;
 
             case "/send":
                 if (parsedCommand.size() < 3) parseInput(input,presenter);
                 else sendMessage(parsedCommand.get(1), parsedCommand.get(2));
+                break;
 
             case "/inbox":
                 getInbox(presenter);
+                break;
 
             case "/sendtoevent(s)":
                 if (parsedCommand.size() < 2) parseInput(input,presenter);
@@ -37,7 +40,7 @@ public class SpeakerMessageController extends MessageController {
                     ArrayList<String> eventList = new ArrayList(parsedCommand.subList(1, parsedCommand.size()-2));
                     sendToAttendees(eventList, parsedCommand.get(parsedCommand.size() -1));
                 }
-
+                break;
         }
     }
 

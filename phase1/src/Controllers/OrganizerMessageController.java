@@ -36,19 +36,21 @@ public class OrganizerMessageController extends MessageController{
             case "/open":
                 if (parsedCommand.size() < 2) parseInput(input, presenter);
                 openConversation(parsedCommand.get(1),presenter);
+                break;
             case "/send":
                 if (parsedCommand.size() < 2) parseInput(input,presenter);
                 sendMessage(parsedCommand.get(1), parsedCommand.get(2));
+                break;
             case "/sendToMany":
                 if (parsedCommand.size() < 2) parseInput(input,presenter);
                 ArrayList<String> usersArrayList = new ArrayList(parsedCommand.subList(1,
                         parsedCommand.size()-2));
                 sendMessageMany(usersArrayList, parsedCommand.get(2));
+                break;
             case "/inbox": {
                 getInbox(presenter);
-            }
-            default:
                 break;
+            }
         }
     }
 
