@@ -24,6 +24,10 @@ public class ScheduleManager implements Serializable {
         rooms = new HashMap<>();
     }
 
+    /**
+     * Returns theSchedule
+     */
+
     public HashMap<ScheduleTime, HashMap<String, String>> getTheSchedule() {
         return theSchedule.getSchedule();
     }
@@ -84,7 +88,7 @@ public class ScheduleManager implements Serializable {
             for (Map.Entry<String, String> roomEntry : timeEntry.getValue().entrySet()) {
                 String room = roomEntry.getKey();
                 String event = roomEntry.getValue();
-                if (getEvent(event).getSpeaker().getUsername().equals(username)) {
+                if (getEvent(event).getSpeaker().equals(username)) {
                     speakerSchedule.addToSchedule(room, event, time);
                 }
             }
@@ -98,32 +102,11 @@ public class ScheduleManager implements Serializable {
     /**
      * Checks if an event exists
      *
-     * @param event Event that is being checked
-     * @return true if event exists
-     */
-    public boolean eventExists(Event event) {
-        return events.containsValue(event);
-    }
-
-    /**
-     * Checks if an event exists
-     *
      * @param eventName Name of event that is being checked
      * @return true if event exists
      */
     public boolean eventExists(String eventName) {
         return events.containsKey(eventName);
-    }
-
-    /**
-     * Checks if event has already happened
-     *
-     * @param event Event that is being checked
-     * @return true if event has already occurred
-     */
-    public boolean eventHasHappened(Event event) {
-        // TODO Discuss with TA
-        return false;
     }
 
     /**
@@ -141,17 +124,6 @@ public class ScheduleManager implements Serializable {
     /**
      * Checks if an event is full
      *
-     * @param event Event that is being checked
-     * @return true if the event is full
-     */
-    public boolean eventFull(Event event) {
-        // TODO
-        return false;
-    }
-
-    /**
-     * Checks if an event is full
-     *
      * @param eventName Event that is being checked
      * @return true if the event is full
      */
@@ -160,30 +132,56 @@ public class ScheduleManager implements Serializable {
         return false;
     }
 
-
+    /**
+     * Creates a new Event
+     *
+     * @param eventName Name of Event that is to be created
+     * @return true if no other event has that name and new Event is created
+     */
     public boolean createEvent(String eventName) {
         if (getEvent(eventName) != null) return false;
         Event event = new Event(eventName);
         events.put(eventName, event);
         return true;
     }
-
+    /**
+     * Creates a new Room
+     *
+     * @param roomName Name of Room that is to be created
+     * @return true if no other room has that name and new Room is created
+     */
     public boolean createRoom(String roomName) {
         if (getRoom(roomName) != null) return false;
         Room room = new Room(roomName);
         rooms.put(roomName, room);
         return true;
     }
-
+    /**
+     * Gets Event from it's name
+     *
+     * @param eventName Name of Event that is to be taken
+     * @return the event if it exists and null otherwise
+     */
     public Event getEvent(String eventName) {
 
         return (events.containsKey(eventName)) ? events.get(eventName) : null;
     }
 
+    /**
+     * Gets Room from it's name
+     *
+     * @param roomName Name of Room that is to be taken
+     * @return the room if it exists and null otherwise
+     */
     public Room getRoom(String roomName) {
         return (rooms.containsKey(roomName)) ? rooms.get(roomName) : null;
     }
-
+    /**
+     * Gets list of attendees (as strings) of an event
+     *
+     * @param eventName Name of Event that we want attendees from
+     * @return the list of attendees of the event (is also empty if the event does not exist)
+     */
     public ArrayList<String> getEventAttendees(String eventName) {
         ArrayList<String> attendees = new ArrayList<>();
 
@@ -196,10 +194,22 @@ public class ScheduleManager implements Serializable {
         return attendees;
     }
 
-
+    /**
+     * Assigns speaker to aa room at a certain time
+     *
+     * @param speaker Name of Speaker to be added
+     * @param room Name of room
+     * @param time Time of the event
+     * @return true if an event exists at such a time and room and speaker is added
+     */
     public boolean assignSpeaker(String speaker, String room, String time) {
 
-        // TODO
+        ScheduleTime timeKey = ScheduleTime.toScheduleTime(time);
+        HashMap<ScheduleTime, HashMap<String, String>> schedule = theSchedule.getSchedule();
+        if (schedule.containsKey(timeKey)) {
+            String eventName = schedule.get(timeKey).get(room);
+            return events.get(eventName).setSpeaker(speaker);
+        }
         return false;
     }
 }
