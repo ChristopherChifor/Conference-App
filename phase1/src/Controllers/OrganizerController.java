@@ -63,8 +63,11 @@ public class OrganizerController extends AbstractController{
      * @param roomName other user they are speaking to
      */
     protected void createRoom(String roomName, Presenter presenter){
-        presenter.printLines("Succesfully created new room: " + roomName);
-        scheduleManager.createRoom(roomName);
+        if (scheduleManager.createRoom(roomName)) {
+            presenter.printLines("Succesfully created new room: " + roomName);
+        } else {
+            presenter.printLines("Could not create room");
+        }
     }
 
     /**
@@ -74,13 +77,14 @@ public class OrganizerController extends AbstractController{
      * @param password Password of speaker
      */
     protected void createSpeaker(String name, String username, String password, Presenter presenter) {
-        if (accountManager.canCreateUser(username)) {
-            accountManager.createUser(name, username, password, User.UserType.SPEAKER);
+
+        if (accountManager.createUser(name, username, password, User.UserType.SPEAKER)) {
             presenter.printLines("Succesfully created new speaker " + name);
         } else {
             presenter.printLines("The username " + username + " already exists.");
         }
     }
+
 
     /**
      * Assigns a speaker to a room
@@ -98,7 +102,6 @@ public class OrganizerController extends AbstractController{
      * @param eventName Name of the event
      */
     protected void createEvent(String eventName, String roomName, String time, Presenter presenter){
-        scheduleManager.createEvent(eventName);
         if (scheduleManager.addNewEvent(roomName, eventName, time)) {
             presenter.printLines("Succesfully created new event: " + eventName + " in room " + roomName + " at "+ time);
         } else presenter.printLines("Could not create new event");

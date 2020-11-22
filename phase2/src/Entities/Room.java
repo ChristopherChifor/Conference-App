@@ -18,10 +18,6 @@ public class Room implements Serializable {
         return name;
     }
 
-    public int getId() {
-        return id;
-    }
-
     public int getCapacity() {
         return capacity;
     }
