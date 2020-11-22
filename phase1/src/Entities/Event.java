@@ -9,7 +9,7 @@ import java.util.Set;
  */
 public class Event  implements Serializable {
     private String name;
-    private User speaker = null;
+    private String speaker = null;
     private int minutes = 60;
 
     private Set<String> attendees = new HashSet<String>();
@@ -50,7 +50,19 @@ public class Event  implements Serializable {
         attendees.add(username);
         return true;
     }
-
+    /**
+     * Setter for speaker
+     *
+     * @param username: username of speaker
+     * @return true if no speaker already exists and speaker is added to this event
+     */
+    public boolean setSpeaker(String username) {
+        if (speaker == null) {
+            speaker = username;
+            return true;
+        }
+        return false;
+    }
     /**
      * Getter for name
      * @return name of event
@@ -60,10 +72,10 @@ public class Event  implements Serializable {
     }
 
     /**
-     * Getter for speaker
+     * Getter for speaker name
      * @return speaker
      */
-    public User getSpeaker() {
+    public String getSpeaker() {
         return speaker;
     }
 

@@ -98,6 +98,7 @@ public class OrganizerController extends AbstractController{
      * @param eventName Name of the event
      */
     protected void createEvent(String eventName, String roomName, String time, Presenter presenter){
+        scheduleManager.createEvent(eventName);
         if (scheduleManager.addNewEvent(roomName, eventName, time)) {
             presenter.printLines("Succesfully created new event: " + eventName + " in room " + roomName + " at "+ time);
         } else presenter.printLines("Could not create new event");
