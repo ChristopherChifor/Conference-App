@@ -7,18 +7,19 @@ import java.util.Set;
 /**
  * @author Parssa
  */
-public class Event  implements Serializable {
+public class Event implements Serializable {
     private String name;
     private String speaker = null;
     private int minutes;
 
+    private boolean VIPOnly;
+
     private Set<String> attendees = new HashSet<String>();
 
-    // Are these needed?
-//    Boolean atCapacity;
-//    Boolean canModifyEvent;
-//    Boolean hasHappened;
-
+    /**
+     *  Creates new event
+     * @param name: name of the event
+     */
     public Event(String name) {
         this.name = name;
     }
@@ -104,5 +105,21 @@ public class Event  implements Serializable {
      */
     public Set<String> getAttendees() {
         return attendees;
+    }
+
+    /**
+     *  Getter for isVIPOnly
+     * @return true if is vip event
+     */
+    public boolean isVIPOnly() {
+        return VIPOnly;
+    }
+
+    /**
+     * Setter for isVIPOnly
+     * @param VIPOnly changed boolean value of VIPOnly status
+     */
+    public void setVIPOnly(boolean VIPOnly) {
+        this.VIPOnly = VIPOnly;
     }
 }

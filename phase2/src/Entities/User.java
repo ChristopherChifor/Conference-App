@@ -10,7 +10,7 @@ public class User implements Serializable {
     private String username;
     private String password;
 
-    public enum UserType { ATTENDEE, ORGANIZER, SPEAKER}
+    public enum UserType { ATTENDEE, ORGANIZER, SPEAKER, VIP}
 
     private UserType userType;
 
