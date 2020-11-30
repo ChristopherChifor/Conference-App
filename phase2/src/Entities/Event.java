@@ -17,6 +17,12 @@ public class Event implements Serializable {
     private boolean VIPOnly;
 
     private Set<String> attendees = new HashSet<String>();
+    public enum EventType { TALK, PARTY, PANEL}
+    private EventType eventType;
+
+    public void setEventType(EventType eventType) {
+        this.eventType = eventType;
+    }
 
     /**
      *  Creates new event

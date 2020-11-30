@@ -8,19 +8,26 @@ import java.io.Serializable;
 public class Room implements Serializable {
     private String name;
 
-    private int capacity;
+    private int roomCapacity;
 
-    public Room(String name, int capacity) {
+    public Room(String name) {
         this.name = name;
-        this.capacity = capacity;
     }
 
     public String getName() {
         return name;
     }
 
-    public int getCapacity() {
-        return capacity;
+    public int getRoomCapacity() {
+        return roomCapacity;
+    }
+
+    public boolean setRoomCapacity(int capacity) {
+        if (capacity >= 1) {
+            this.roomCapacity = capacity;
+            return true;
+        }
+        return false;
     }
 
     public String getString() {

@@ -45,7 +45,7 @@ public class ScheduleManager implements Serializable {
         if (!eventExists(eventName)) {
             return false;
         }
-        if (events.get(eventName).getEventCapacity() > rooms.get(roomName).getCapacity()) {
+        if (events.get(eventName).getEventCapacity() > rooms.get(roomName).getRoomCapacity()) {
             return false;
         }
         return theSchedule.addToSchedule(roomName, eventName, time);
@@ -142,12 +142,14 @@ public class ScheduleManager implements Serializable {
      *
      * @param eventName Name of Event that is to be created
      * @param eventCapacity Capacity of Event that is to be created
-     * @return true if no other event has that name and new Event is created
+     * @return true if no other event has that name and capacity is positiv and new Event is created
      */
     public boolean createEvent(String eventName, int eventCapacity) {
         if (getEvent(eventName) != null) return false;
         Event event = new Event(eventName);
-        event.setEventCapacity(eventCapacity);
+        if (! event.setEventCapacity(eventCapacity)) {
+            return false;
+        }
         events.put(eventName, event);
         return true;
     }
@@ -157,9 +159,12 @@ public class ScheduleManager implements Serializable {
      * @param roomName Name of Room that is to be created
      * @return true if no other room has that name and new Room is created
      */
-    public boolean createRoom(String roomName) {
+    public boolean createRoom(String roomName, int roomCapacity) {
         if (getRoom(roomName) != null) return false;
         Room room = new Room(roomName);
+        if (! room.setRoomCapacity(roomCapacity)) {
+            return false;
+        }
         rooms.put(roomName, room);
         return true;
     }
