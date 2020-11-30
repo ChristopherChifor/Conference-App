@@ -43,7 +43,10 @@ public class ScheduleManager implements Serializable {
      */
     public boolean addNewEvent(String roomName, String eventName, String time) {
         if (!eventExists(eventName)) {
-            createEvent(eventName);
+            return false;
+        }
+        if (events.get(eventName).getEventCapacity() > rooms.get(roomName).getCapacity()) {
+            return false;
         }
         return theSchedule.addToSchedule(roomName, eventName, time);
     }
@@ -91,7 +94,7 @@ public class ScheduleManager implements Serializable {
             for (Map.Entry<String, String> roomEntry : timeEntry.getValue().entrySet()) {
                 String room = roomEntry.getKey();
                 String event = roomEntry.getValue();
-                if (getEvent(event).getSpeaker().equals(username)) {
+                if (getEvent(event).getSpeakers().contains(username)) {
                     speakerSchedule.addToSchedule(room, event, time);
                 }
             }
@@ -131,19 +134,20 @@ public class ScheduleManager implements Serializable {
      * @return true if the event is full
      */
     public boolean eventFull(String eventName) {
-        // TODO
-        return false;
+        return events.get(eventName).isEventFull();
     }
 
     /**
      * Creates a new Event
      *
      * @param eventName Name of Event that is to be created
+     * @param eventCapacity Capacity of Event that is to be created
      * @return true if no other event has that name and new Event is created
      */
-    public boolean createEvent(String eventName) {
+    public boolean createEvent(String eventName, int eventCapacity) {
         if (getEvent(eventName) != null) return false;
         Event event = new Event(eventName);
+        event.setEventCapacity(eventCapacity);
         events.put(eventName, event);
         return true;
     }
@@ -198,7 +202,7 @@ public class ScheduleManager implements Serializable {
     }
 
     /**
-     * Assigns speaker to aa room at a certain time
+     * Assigns speaker to a room at a certain time
      *
      * @param speaker Name of Speaker to be added
      * @param room Name of room

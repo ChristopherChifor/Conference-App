@@ -1,6 +1,7 @@
 package Entities;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -9,8 +10,9 @@ import java.util.Set;
  */
 public class Event implements Serializable {
     private String name;
-    private String speaker = null;
+    private ArrayList<String> speakers = new ArrayList<String>();
     private int minutes;
+    private int eventCapacity;
 
     private boolean VIPOnly;
 
@@ -55,12 +57,11 @@ public class Event implements Serializable {
      * Setter for speaker
      *
      * @param username: username of speaker
-     * @return true if no speaker already exists and speaker is added to this event
+     * @return true if speaker isn't already added and speaker is added to this event
      */
     public boolean setSpeaker(String username) {
-        if (speaker == null) {
-            speaker = username;
-            return true;
+        if (! speakers.contains(username)) {
+            return speakers.add(username);
         }
         return false;
     }
@@ -76,10 +77,43 @@ public class Event implements Serializable {
      * Getter for speaker name
      * @return speaker
      */
-    public String getSpeaker() {
-        return speaker;
+    public ArrayList<String> getSpeakers() {
+        return speakers;
     }
-
+    /**
+     * Setter for the duration of event in minutes
+     *
+     * @param duration: duration of event in minutes
+     * @return true if minutes is positive and duration is set
+     */
+    public boolean setDuration(int duration) {
+        if (duration > 0) {
+            minutes = duration;
+            return true;
+        }
+        return false;
+    }
+    /**
+     * Setter for the capacity of events
+     *
+     * @param capacity: capacity of event
+     * @return true if capacity is positive and is successfully set
+     */
+    public boolean setEventCapacity(int capacity) {
+        if (capacity>= 1) {
+            eventCapacity = capacity;
+            return true;
+        }
+        return false;
+    }
+    /**
+     * Getter for the capacity of events
+     *
+     * @return capacity of event
+     */
+    public int getEventCapacity() {
+        return eventCapacity;
+    }
     /**
      * Getter for the duration of event
      *
@@ -89,6 +123,14 @@ public class Event implements Serializable {
         return minutes;
     }
 
+    /**
+     * Checks if event is full
+     *
+     * @return true if event is full
+     */
+    public boolean isEventFull() {
+        return numberOfAttendeesInEvent() ==  eventCapacity;
+    }
     /**
      * Returns the number of attendees signed up for this event.
      *

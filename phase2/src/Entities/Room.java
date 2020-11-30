@@ -8,10 +8,11 @@ import java.io.Serializable;
 public class Room implements Serializable {
     private String name;
 
-    private int capacity = 10;
+    private int capacity;
 
-    public Room(String name) {
+    public Room(String name, int capacity) {
         this.name = name;
+        this.capacity = capacity;
     }
 
     public String getName() {
@@ -23,7 +24,6 @@ public class Room implements Serializable {
     }
 
     public String getString() {
-        // TODO
-        return "";
+        return name;
     }
 }
