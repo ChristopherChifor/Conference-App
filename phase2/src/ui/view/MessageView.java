@@ -2,7 +2,9 @@ package ui.view;
 
 
 import Entities.Message;
-import ui.panels.MessageDisplayPanel;
+import Presenters.MessagePresenter;
+import
+        ui.panels.MessageDisplayPanel;
 
 import javax.swing.*;
 import java.awt.*;
@@ -23,7 +25,7 @@ public class MessageView extends JFrame implements View {
     private String selectedUsername = "";
     private JLabel selectedUsernameLabel = new JLabel(selectedUsername);
 
-    // private MessagePresenter presenter;
+    private MessagePresenter presenter;
 
     public MessageView() throws HeadlessException {
         // TODO LOAD PRESENTER (CHANGE THE CONSTRUCTOR)
@@ -155,10 +157,12 @@ public class MessageView extends JFrame implements View {
 
 
     private void initMessages() {
-        List<String> inbox = new ArrayList<>(); // TODO GET INBOX FROM PRESENTER
+        // Populate the inbox with actual information
+
+        List<String> inbox = presenter.getInbox();
 
         for (String person : inbox) {
-            List<Message> messages = new ArrayList<>(); // TODO GET CONVERSATION WITH THIS PERSON
+            List<Message> messages = presenter.getConversation(person);
             addMessageToggleButton(person, messages);
         }
 
@@ -178,7 +182,7 @@ public class MessageView extends JFrame implements View {
         conversations.add(text);
 
         // if conversation is unread, make button text bold.
-        if (true) { // TODO GET IF CONVERSATION IS UNREAD
+        if (presenter.isRead(messages)) {
             buttonBold(senderButton);
         }
 
@@ -194,7 +198,7 @@ public class MessageView extends JFrame implements View {
             CardLayout cards = (CardLayout) messageCards.getLayout();
             cards.show(messageCards, text);
 
-            // TODO CHANGE STATUS OF CONVERSATION TO READ
+            presenter.markAsRead(messages);
 
             buttonUnBold(senderButton);
             selectedUsername = text;

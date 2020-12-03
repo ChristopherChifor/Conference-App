@@ -66,7 +66,7 @@ public class MessageManager implements Serializable {
      * They can message iff:
      * - both users exist, and
      * - sender is speaker or organizer, or
-     * - sender is attendee and recipient attendy or speaker, or
+     * - sender is attendee and recipient attendee or speaker, or
      * - sender is attendee and recipient is organizer if they messaged before
      * - otherwise, true if they exist and have messaged before.
      *

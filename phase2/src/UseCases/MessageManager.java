@@ -127,6 +127,7 @@ public class MessageManager implements Serializable {
     }
 
 
+
     /**
      * Gets the messages between user1 and user2 as a list of formatted strings in the format:
      * "[ username ] body"
@@ -137,18 +138,18 @@ public class MessageManager implements Serializable {
      * @param user2
      * @return list of formatted strings; empty string if there is no conversation.
      */
-    public ArrayList<String> getMessages(String user1, String user2) {
-        ArrayList<String> messages = new ArrayList<>();
+    public ArrayList<Message> getMessages(String user1, String user2) {
+        // TODO CLEANUP
         Conversation c = getConversation(user1, user2);
 
-        if (c == null) return messages; // returns empty list
+        return c.getMessages();
 
-        for (Message m : c.getMessages()) {
-            // an example of the format "[ alex ] hello world!"
-            messages.add(String.format("[ %s ] %s", m.getSender(), m.getBody()));
-        }
-
-        return messages;
+//        for (Message m : c.getMessages()) {
+//            // an example of the format "[ alex ] hello world!"
+//            messages.add(String.format("[ %s ] %s", m.getSender(), m.getBody()));
+//        }
+//
+//        return messages;
     }
 
     /**
@@ -215,4 +216,40 @@ public class MessageManager implements Serializable {
 
     }
 
+    /**
+     * TODO doc
+     * @param messages
+     * @return
+     */
+    public boolean conversationIsRead(List<Message> messages) {
+        if (getConversation(messages) != null) {
+            return getConversation(messages).getIsRead();
+        }
+        return false;
+
+    }
+
+    /**
+     * TODO doc
+     * @param messages
+     */
+    public void markAsRead(List<Message> messages) {
+        if (getConversation(messages) != null) {
+            getConversation(messages).markAsRead();
+        }
+    }
+
+    /**
+     * Helper method
+     * @param messages
+     * @return
+     */
+    private Conversation getConversation(List<Message> messages) {
+        if (messages.isEmpty()) return null;
+        Message m = messages.get(0);
+        String userA = m.getRecipient();
+        String userB = m.getSender();
+
+        return getConversation(userA, userB);
+    }
 }

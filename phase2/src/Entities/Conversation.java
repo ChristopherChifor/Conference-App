@@ -10,10 +10,11 @@ import java.util.ArrayList;
 public class Conversation implements Serializable {
     private String userOne, userTwo;
     private ArrayList<Message> messages = new ArrayList<Message>();
-
+    private boolean isRead;
     public Conversation(String userOne, String userTwo) {
         this.userOne = userOne;
         this.userTwo = userTwo;
+        this.isRead = false;
     }
 
     /**
@@ -42,5 +43,13 @@ public class Conversation implements Serializable {
 
     public String getUserTwo() {
         return userTwo;
+    }
+
+    public void markAsRead() {
+        this.isRead = true;
+    }
+
+    public boolean getIsRead() {
+        return isRead;
     }
 }

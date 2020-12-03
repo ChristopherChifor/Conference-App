@@ -9,6 +9,7 @@ public class Message implements Serializable {
     private String sender, recipient;
     private String body;
 
+
     public Message(String sender, String recipient, String body) {
         this.sender = sender;
         this.recipient = recipient;
