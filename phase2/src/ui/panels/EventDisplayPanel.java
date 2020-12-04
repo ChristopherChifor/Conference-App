@@ -1,19 +1,25 @@
 package ui.panels;
 
+import ui.state.EventBundle;
+
 import javax.swing.*;
 import java.awt.*;
+import java.text.SimpleDateFormat;
+import java.util.Locale;
 
+/**
+ * Panel for displaying events.
+ */
 public class EventDisplayPanel extends JFrame {
     private JPanel leftPanel;
     private JLabel eventTitle;
-    private JTextPane eventDesc;
+    private JTextArea eventDesc;
     private JLabel speakerName;
     private JButton messageSpeaker;
 
 
     private JPanel rightPanel;
     private JLabel roomNumber;
-    private JLabel timeLabel;
     private JLabel dateLabel;
     private JLabel durationLabel;
     private JButton enroll;
@@ -33,7 +39,7 @@ public class EventDisplayPanel extends JFrame {
     }
 
 
-    public EventDisplayPanel() {
+    public EventDisplayPanel(EventBundle bundle) {
         setLayout(new GridBagLayout());
 
         leftPanel = new JPanel();
@@ -41,17 +47,22 @@ public class EventDisplayPanel extends JFrame {
 
         leftPanel.setLayout(new BoxLayout(leftPanel, BoxLayout.PAGE_AXIS));
 
-        eventTitle = new JLabel("My Cool Event");
-        eventDesc = new JTextPane();
-        eventDesc.setText("<h3>Hello World</h3><p>Welcome to my event. This is a cool event");
-        speakerName = new JLabel("Alex");
+        eventTitle = new JLabel(bundle.getTitle());
+        eventDesc = new JTextArea();
+        eventDesc.setLineWrap(true);
+        eventDesc.setText(bundle.getDescription());
+        speakerName = new JLabel(String.join(", ", bundle.getSpeaker()));
         messageSpeaker = new JButton("Message Speaker");
-        messageSpeaker.addActionListener(e->testAction());
+        messageSpeaker.addActionListener(e -> testAction());
 
         leftPanel.add(eventTitle);
+        makeSpace(leftPanel);
         leftPanel.add(eventDesc);
+        makeSpace(leftPanel);
         leftPanel.add(new JLabel("Speaker:"));
+        makeSpace(leftPanel);
         leftPanel.add(speakerName);
+        makeSpace(leftPanel);
         leftPanel.add(messageSpeaker);
 
         cst.gridx = 0;
@@ -60,25 +71,38 @@ public class EventDisplayPanel extends JFrame {
 
         rightPanel.setLayout(new BoxLayout(rightPanel, BoxLayout.PAGE_AXIS));
 
-        roomNumber = new JLabel("5");
-        timeLabel = new JLabel("12:30");
-        dateLabel = new JLabel("20 April, 2020");
-        durationLabel = new JLabel("1:30");
+        roomNumber = new JLabel(bundle.getRoom());
+
+        SimpleDateFormat df = new SimpleDateFormat("EEE MMM dd HH:mm z yyyy", Locale.CANADA);
+        dateLabel = new JLabel(df.format(bundle.getTime())); // todo check this
+
+        durationLabel = new JLabel(bundle.getDuration());
 
         enroll = new JButton("Enroll");
         messageEvent = new JButton("Message Event");
-        enroll.addActionListener(e->testAction());
-        messageEvent.addActionListener(e->testAction());
+        enroll.addActionListener(e -> testAction());
+        messageEvent.addActionListener(e -> testAction());
+        enroll.setAlignmentY(Component.BOTTOM_ALIGNMENT);
+        messageEvent.setAlignmentY(Component.BOTTOM_ALIGNMENT);
 
+        Container roomDiv = new Container();
+        roomDiv.setLayout(new BorderLayout(5, 5));
+        roomDiv.add(new JLabel("Room:"), BorderLayout.CENTER);
+        roomDiv.add(roomNumber, BorderLayout.EAST);
 
-        rightPanel.add(new JLabel("Room"));
-        rightPanel.add(roomNumber);
-        rightPanel.add(new JLabel("Time"));
-        rightPanel.add(timeLabel);
-        rightPanel.add(new JLabel("Date"));
-        rightPanel.add(dateLabel);
-        rightPanel.add(new JLabel("Duration"));
-        rightPanel.add(durationLabel);
+        Container dateDiv = new Container();
+        dateDiv.setLayout(new BorderLayout(5, 5));
+        dateDiv.add(new JLabel("Date:"), BorderLayout.CENTER);
+        dateDiv.add(dateLabel, BorderLayout.EAST);
+
+        Container durationDiv = new Container();
+        durationDiv.setLayout(new BorderLayout(5, 5));
+        durationDiv.add(new JLabel("Duration:"), BorderLayout.CENTER);
+        durationDiv.add(durationLabel, BorderLayout.EAST);
+
+        rightPanel.add(roomDiv);
+        rightPanel.add(dateDiv);
+        rightPanel.add(durationDiv);
         rightPanel.add(enroll);
         rightPanel.add(messageEvent);
 
@@ -87,15 +111,16 @@ public class EventDisplayPanel extends JFrame {
 
     }
 
-    private void testAction(){
+
+    private void testAction() {
         System.out.println("Button Press");
     }
 
     /**
      * Helper method for adding a new spacer.
      */
-    private void makeSpace(JComponent component){
-        component.add(Box.createRigidArea(new Dimension(0,7)));
-        component.add(Box.createRigidArea(new Dimension(2,0)));
+    private void makeSpace(JComponent component) {
+        component.add(Box.createRigidArea(new Dimension(0, 7)));
+        component.add(Box.createRigidArea(new Dimension(2, 0)));
     }
 }
