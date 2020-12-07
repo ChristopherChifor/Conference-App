@@ -1,7 +1,6 @@
 package Entities;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -10,7 +9,7 @@ import java.util.Set;
  */
 public class Event implements Serializable {
     private String name;
-    private ArrayList<String> speakers = new ArrayList<String>();
+    private Set<String> speakers = new HashSet<String>();
     private int minutes;
     private int eventCapacity;
 
@@ -20,12 +19,16 @@ public class Event implements Serializable {
     public enum EventType { TALK, PARTY, PANEL}
     private EventType eventType;
 
+    /**
+     * Sets the event type of the event
+     * @param eventType: event type of the event
+     */
     public void setEventType(EventType eventType) {
         this.eventType = eventType;
     }
 
     /**
-     *  Creates new event
+     * Creates new event (Event constructor)
      * @param name: name of the event
      */
     public Event(String name) {
@@ -33,43 +36,42 @@ public class Event implements Serializable {
     }
 
     /**
-     *
+     * Removes specified attendee from event
      * @param username: username of user
      * @return true if user is removed from event
      */
     public boolean removeAttendeeFromEvent(String username) {
-        // TODO discuss with TA
-        if (!attendees.contains(username)) {
-            return false;
-        }
-        attendees.remove(username);
-        return true;
+        return attendees.remove(username);
     }
 
     /**
-     *
+     * Adds specified attendee to event
      * @param username: username of user
      * @return true if username, user is added to attendees of this event
      */
     public boolean addAttendeeToEvent(String username) {
-        // TODO discuss with TA
-        if (attendees.contains(username)) {
+        if (isEventFull()) {
             return false;
         }
-        attendees.add(username);
-        return true;
+        return attendees.add(username);
     }
     /**
-     * Setter for speaker
+     * Adds specified speaker to event
      *
      * @param username: username of speaker
      * @return true if speaker isn't already added and speaker is added to this event
      */
     public boolean setSpeaker(String username) {
-        if (! speakers.contains(username)) {
-            return speakers.add(username);
-        }
-        return false;
+        return speakers.add(username);
+    }
+    /**
+     * Removes specified speaker to event
+     *
+     * @param username: username of speaker
+     * @return true if speaker isn't already added and speaker is added to this event
+     */
+    public boolean removeSpeaker(String username) {
+        return speakers.remove(username);
     }
     /**
      * Getter for name
@@ -80,10 +82,10 @@ public class Event implements Serializable {
     }
 
     /**
-     * Getter for speaker name
+     * Getter for speakers
      * @return speaker
      */
-    public ArrayList<String> getSpeakers() {
+    public Set<String> getSpeakers() {
         return speakers;
     }
     /**

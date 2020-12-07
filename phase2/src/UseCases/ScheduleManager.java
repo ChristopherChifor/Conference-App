@@ -90,7 +90,6 @@ public class ScheduleManager implements Serializable {
 
         for (Map.Entry<ScheduleTime, HashMap<String, String>> timeEntry : schedule.entrySet()) {
             ScheduleTime time = timeEntry.getKey();
-
             for (Map.Entry<String, String> roomEntry : timeEntry.getValue().entrySet()) {
                 String room = roomEntry.getKey();
                 String event = roomEntry.getValue();
@@ -147,7 +146,7 @@ public class ScheduleManager implements Serializable {
     public boolean createEvent(String eventName, int eventCapacity) {
         if (getEvent(eventName) != null) return false;
         Event event = new Event(eventName);
-        if (! event.setEventCapacity(eventCapacity)) {
+        if (event.setEventCapacity(eventCapacity)) {
             return false;
         }
         events.put(eventName, event);

@@ -42,7 +42,7 @@ public class ConferenceManager implements Serializable {
      * @return true if user is added to the event
      */
     public boolean signUpForEvent(String username, String eventName) {
-        if (scheduleManager.eventExists(eventName)) {
+        if (canSignUpForEvent(username, eventName)) {
             return scheduleManager.getEvent(eventName).addAttendeeToEvent(username);
         } else return false;
     }
