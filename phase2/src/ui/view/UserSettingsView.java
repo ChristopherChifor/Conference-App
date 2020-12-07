@@ -103,4 +103,9 @@ public class UserSettingsView extends JPanel implements View {
     private void eventsAction() {
         //todo
     }
+
+    @Override
+    public String getViewName() {
+        return String.format("%'s Account", username);
+    }
 }

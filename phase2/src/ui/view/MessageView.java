@@ -14,7 +14,7 @@ import java.util.List;
 /**
  * The view for messaging. Shows people you're messaging with and the messages
  */
-public class MessageView extends JFrame implements View {
+public class MessageView extends JPanel implements View {
     private ButtonGroup senderButtonGroup = new ButtonGroup();
     private Map<String, MessageDisplayPanel> panelMap = new HashMap<>();
     private Set<String> conversations = new HashSet<>();
@@ -26,6 +26,8 @@ public class MessageView extends JFrame implements View {
     private JLabel selectedUsernameLabel = new JLabel(selectedUsername);
 
     private MessagePresenter presenter;
+
+    private String username; //TODO FETCH USERNAME
 
     public MessageView() throws HeadlessException {
         // TODO LOAD PRESENTER (CHANGE THE CONSTRUCTOR)
@@ -222,5 +224,10 @@ public class MessageView extends JFrame implements View {
         button.setFont(buttonFont);
         button.repaint();
         button.revalidate();
+    }
+
+    @Override
+    public String getViewName() {
+        return String.format("%s's Messages", username);
     }
 }

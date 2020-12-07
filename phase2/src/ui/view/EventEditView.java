@@ -204,4 +204,8 @@ public class EventEditView extends JPanel implements View {
         return new EventBundle(title, description, speaker, room, dateTime, duration);
     }
 
+    @Override
+    public String getViewName() {
+        return "Edit/Create Event";
+    }
 }

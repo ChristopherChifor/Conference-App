@@ -31,16 +31,18 @@ public class UserEventsView extends JPanel implements View {
     private List<String> myEvents;
 
     private UserType type;
+    private String username;
 
     public UserEventsView() {
         // MAKE A PRESENTER FOR THIS THING AND PASS IT INTO THE CONSTRUCTOR
         //TODO FETCH EVENTS OF THIS USER
+        //TODO FETCH USERNAME
         myEvents = new ArrayList<>();
         myEvents.add("Event 1");
         myEvents.add("Event 2");
         myEvents.add("Event 3"); // <-- // TODO DELETE THIS STUFF (was used for testing)
 
-        this.type = type; // TODO FETCH USERTYPE
+        this.type = UserType.ORGANIZER; // TODO FETCH USERTYPE
 
 
         myEventsList = new JList<>();
@@ -183,5 +185,8 @@ public class UserEventsView extends JPanel implements View {
 
     }
 
-
+    @Override
+    public String getViewName() {
+        return String.format("%s's Events", username);
+    }
 }

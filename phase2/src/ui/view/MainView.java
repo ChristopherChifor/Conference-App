@@ -68,4 +68,9 @@ public class MainView extends JDialog implements View {
         repaint();
         revalidate();
     }
+
+    @Override
+    public String getViewName() {
+        return "Main View"; // would never be called
+    }
 }

@@ -44,4 +44,7 @@ public interface View {
         if (out == 0) return true;
         return false;
     }
+
+    String getViewName();
+    // void refresh();
 }
