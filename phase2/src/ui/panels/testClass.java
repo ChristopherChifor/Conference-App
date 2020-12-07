@@ -1,7 +1,9 @@
 package ui.panels;
 
+import Entities.User;
 import ui.state.EventEditBundle;
 import ui.view.EventEditView;
+import ui.view.UserEventsView;
 import ui.view.UserSettingsView;
 
 import javax.swing.*;
@@ -24,7 +26,8 @@ public class testClass {
 //        speakers.add("Room4");
 
         // frame.add(new EventEditView(new EventEditBundle(rooms, speakers)));
-        frame.add(new UserSettingsView(false, "Alex"));
+//        frame.add(new UserSettingsView(false, "Alex"));
+//        frame.add(new UserEventsView(User.UserType.ORGANIZER));
         frame.setVisible(true);
         frame.pack();
         frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);

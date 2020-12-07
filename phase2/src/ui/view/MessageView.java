@@ -121,7 +121,7 @@ public class MessageView extends JFrame implements View {
                 "Who do you want to message?",
                 "New Conversation",
                 JOptionPane.INFORMATION_MESSAGE);
-        if(username.isEmpty()){
+        if(username == null || username.isEmpty()){
             // should catch if user presses cancel button
             return;
         }
@@ -130,7 +130,7 @@ public class MessageView extends JFrame implements View {
                 "What do you want to say to " + username+"?",
                 "New Conversation",
                 JOptionPane.INFORMATION_MESSAGE);
-        if(message.isEmpty()){
+        if(message == null||message.isEmpty()){
             // should catch if user presses cancel button
             return;
         }
