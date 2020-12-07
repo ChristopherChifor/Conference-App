@@ -43,9 +43,9 @@ public class EventManager {
      * @return true if no other event has that name and capacity is positiv and new Event is created
      */
     public boolean createEvent(String eventName, int eventCapacity) {
-        if (getEvent(eventName) != null) return false;
+        if (! eventExists(eventName)) return false;
         Event event = new Event(eventName);
-        if (event.setEventCapacity(eventCapacity)) {
+        if (! event.setEventCapacity(eventCapacity)) {
             return false;
         }
         events.put(eventName, event);
@@ -58,8 +58,7 @@ public class EventManager {
      * @return the event if it exists and null otherwise
      */
     public Event getEvent(String eventName) {
-
-        return (events.containsKey(eventName)) ? events.get(eventName) : null;
+        return events.getOrDefault(eventName, null);
     }
     /**
      * Gets list of attendees (as strings) of an event
