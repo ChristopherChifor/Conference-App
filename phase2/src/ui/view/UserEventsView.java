@@ -1,6 +1,7 @@
 package ui.view;
 
 import Entities.User.UserType;
+import Presenters.UserEventPresenter;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
@@ -33,10 +34,13 @@ public class UserEventsView extends JPanel implements View {
     private UserType type;
     private String username;
 
-    public UserEventsView() {
-        // MAKE A PRESENTER FOR THIS THING AND PASS IT INTO THE CONSTRUCTOR
+    private UserEventPresenter presenter;
+
+    public UserEventsView(UserEventPresenter presenter) {
+
         //TODO FETCH EVENTS OF THIS USER
         //TODO FETCH USERNAME
+        this.presenter = presenter;
         myEvents = new ArrayList<>();
         myEvents.add("Event 1");
         myEvents.add("Event 2");
@@ -181,7 +185,7 @@ public class UserEventsView extends JPanel implements View {
         File file = fc.getSelectedFile();
         System.out.println("User wants to save to: " + file.toString());
 
-        //TODO SAVE PDF TO FILE
+        presenter.userScheduleToPDF(); // Converts user schedule to pdf
 
     }
 
