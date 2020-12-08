@@ -5,6 +5,9 @@ import Entities.Message;
 
 import java.util.List;
 
+/**
+ * @author chris
+ */
 public class MessagePresenter {
     private MessageController messageController;
 
