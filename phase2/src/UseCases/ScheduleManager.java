@@ -3,6 +3,7 @@ package UseCases;
 import Entities.Event;
 import Entities.Room;
 import Entities.Schedule;
+import Gateways.ScheduleGateway;
 import Util.ScheduleTime;
 
 import java.io.Serializable;
@@ -17,6 +18,8 @@ public class ScheduleManager implements Serializable {
     Schedule theSchedule; // should never be given out; its mutable
     HashMap<String, Event> events; // should never be given out; its mutable
     HashMap<String, Room> rooms; // should never be given out; its mutable
+
+    private ScheduleGateway scheduleGateway; // TODO make sure this gets set
 
     public ScheduleManager() {
         theSchedule = new Schedule();
@@ -55,27 +58,12 @@ public class ScheduleManager implements Serializable {
      * Gets a schedule of all event's an attendee is enrolled in
      *
      * @param username Username of the attendee
-     * @return Schedule containing only event's the attendee is in
+     * @return list containing event names of event the attendee is in
      */
-    protected Schedule getAttendeeEvents(String username) {
-        HashMap<ScheduleTime, HashMap<String, String>> schedule = theSchedule.getSchedule();
-        Schedule attendeeSchedule = new Schedule();
-        for (Map.Entry<ScheduleTime, HashMap<String, String>> timeEntry : schedule.entrySet()) {
-            ScheduleTime time = timeEntry.getKey();
-            for (Map.Entry<String, String> roomEntry : timeEntry.getValue().entrySet()) {
-                String room = roomEntry.getKey();
-                String event = roomEntry.getValue();
-                if (event != null) {
-                    if (getEvent(event).getAttendees().contains(username)) {
-                        attendeeSchedule.addToSchedule(room, event, time);
-                    }
-                }
-
-            }
-        }
-        return attendeeSchedule;
+    public ArrayList<String> getAttendeeEvents(String username) {
+        return scheduleGateway.getUserEvents(username);
     }
-
+    
     /**
      * Gets a schedule of all event's of a Speaker
      *

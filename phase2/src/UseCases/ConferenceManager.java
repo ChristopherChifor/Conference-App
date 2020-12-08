@@ -60,15 +60,16 @@ public class ConferenceManager implements Serializable {
         } else return false;
     }
 
-    /**
-     * Gets a schedule of the events this user is enrolled to attend.
-     *
-     * @param username: username of user
-     * @return schedule of events this user is enrolled in
-     */
-    public Schedule enrolledEvents(String username) {
-        return scheduleManager.getAttendeeEvents(username);
-    }
+    // TODO REMOVE THIS, parssa did this
+//    /**
+//     * Gets a schedule of the events this user is enrolled to attend.
+//     *
+//     * @param username: username of user
+//     * @return schedule of events this user is enrolled in
+//     */
+//    public Schedule enrolledEvents(String username) {
+//        return scheduleManager.getAttendeeEvents(username);
+//    }
 
 
 }

@@ -27,7 +27,7 @@ public class testClass {
 
         // frame.add(new EventEditView(new EventEditBundle(rooms, speakers)));
 //        frame.add(new UserSettingsView(false, "Alex"));
-//        frame.add(new UserEventsView(User.UserType.ORGANIZER));
+        frame.add(new UserEventsView());
         frame.setVisible(true);
         frame.pack();
         frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
