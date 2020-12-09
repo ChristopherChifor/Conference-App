@@ -3,6 +3,7 @@ package UseCases;
 import Entities.Conversation;
 import Entities.Message;
 import Entities.User;
+import Gateways.JsonDatabase;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -258,5 +259,9 @@ public class MessageManager implements Serializable {
 
     // todo ;)
     public void archiveMessages(List<String> messageIds) {
+    }
+    //todo lol
+    public List<Message> getArchivedMessages(String username) {
+        return null;
     }
 }

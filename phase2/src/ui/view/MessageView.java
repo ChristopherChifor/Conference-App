@@ -136,13 +136,8 @@ public class MessageView extends JPanel implements View {
             return;
         }
 
-
-        // TODO CHECK IF THE MESSAGE SENDING ACTION IS GOOD
-
-        boolean failed = presenter.canMessage(username); //TODO CHANGE TO TRUE IF COULDN'T SEND.
+        if(!presenter.canMessage(username)) return;
         // TODO SEND THE MESSAGE; IF COULDN'T SEND A MESSAGE CALL showIncorrectInputDialog
-
-        if(failed) return;
 
         List<Message> messages = presenter.getConversation(username); //TODO GET MESSAGES WITH username FROM PRESENTER.
 
@@ -169,8 +164,9 @@ public class MessageView extends JPanel implements View {
             addMessageToggleButton(person, messages);
         }
 
-        List<Message> archivedMessages = new ArrayList<>(); // TODO GET ARCHIVED MESSAGES
+        List<Message> archivedMessages = presenter.getArchivedMessages();
         addMessageToggleButton("Archived", archivedMessages);
+
 
     }
 
@@ -226,7 +222,6 @@ public class MessageView extends JPanel implements View {
         button.repaint();
         button.revalidate();
     }
-//alex, im begging you not to kill me please and danke.
     @Override
     public String getViewName() {
         return "Messages";

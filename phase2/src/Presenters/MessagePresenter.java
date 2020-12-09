@@ -58,4 +58,9 @@ public class MessagePresenter {
     public boolean canMessage(String otherUser) {
         return messageController.canMessage(username, otherUser);
     }
+
+    public List<Message> getArchivedMessages() {
+        return messageController.getArchivedMessages(username);
+
+    }
 }
