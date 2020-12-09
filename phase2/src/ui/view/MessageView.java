@@ -27,10 +27,8 @@ public class MessageView extends JPanel implements View {
 
     private MessagePresenter presenter;
 
-    private String username; //TODO FETCH USERNAME
-
-    public MessageView() throws HeadlessException {
-        // TODO LOAD PRESENTER (CHANGE THE CONSTRUCTOR)
+    public MessageView(MessagePresenter presenter) throws HeadlessException {
+        this.presenter = presenter;
 
         setLayout(new BorderLayout());
 
@@ -55,7 +53,11 @@ public class MessageView extends JPanel implements View {
                 JOptionPane.showMessageDialog(null, "Cannot send message to this address", "Bad Input", JOptionPane.ERROR_MESSAGE);
             }
 
+
             // TODO SEND MESSAGETEXT TO SELECTEDUSERNAME
+            presenter.sendMessage(selectedUsername, messageText);
+
+
         });
 
         sendMessagePanel.add(messageField, BorderLayout.CENTER);
@@ -225,9 +227,9 @@ public class MessageView extends JPanel implements View {
         button.repaint();
         button.revalidate();
     }
-
+//alex, im begging you not to kill me please and danke.
     @Override
     public String getViewName() {
-        return String.format("%s's Messages", username);
+        return "Messages";
     }
 }

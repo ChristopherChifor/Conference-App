@@ -43,19 +43,18 @@ public class MessageManager implements Serializable {
      * In order for the message to be sent, the fields may not be null. If they are, the message is
      * not sent, and method returns false.
      *
-     * @param message the message being sent.
-     * @return true if message was sent successfully; false if it wasn't (because message invalid).
+     * @param sender sender of message
+     * @param recipient recipient of message
+     * @param messageBody body of message
+     * @return boolean if sent
      */
-    public boolean sendMessage(Message message) {
-        String sender = message.getSender();
-        String recipient = message.getRecipient();
-
-        if (sender == null || recipient == null || message.getBody() == null) return false;
+    public boolean sendMessage(String sender, String recipient, String messageBody) {
+        if (sender == null || recipient == null || messageBody == null) return false;
 
         Conversation conversation = getConversation(sender, recipient);
 
         conversation = conversation == null ? newConversation(sender, recipient) : conversation;
-
+        Message message = new Message(sender, recipient, messageBody);
         conversation.addMessage(message);
         return true;
     }
@@ -217,9 +216,9 @@ public class MessageManager implements Serializable {
     }
 
     /**
-     * TODO doc
+     * Checks if the conversation has been read.
      * @param messages
-     * @return
+     * @return true if the conversation is read, otherwise, false if not read.
      */
     public boolean conversationIsRead(List<Message> messages) {
         if (getConversation(messages) != null) {
@@ -230,7 +229,7 @@ public class MessageManager implements Serializable {
     }
 
     /**
-     * TODO doc
+     * Marks a conversation as read.
      * @param messages
      */
     public void markAsRead(List<Message> messages) {
@@ -240,9 +239,9 @@ public class MessageManager implements Serializable {
     }
 
     /**
-     * Helper method
+     * Helper method that gets the conversation between two users.
      * @param messages
-     * @return
+     * @return the conversation between the two users as a conversation type.
      */
     private Conversation getConversation(List<Message> messages) {
         if (messages.isEmpty()) return null;

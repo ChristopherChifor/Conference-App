@@ -30,4 +30,8 @@ public class MessageController {
     public void markAsRead(List<Message> conversation) {
         messageManager.markAsRead(conversation);
     }
+
+    public void sendMessage(String username, String recipient, String messageText) {
+        messageManager.sendMessage(messageText)
+    }
 }

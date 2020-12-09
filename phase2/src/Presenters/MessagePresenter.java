@@ -10,9 +10,11 @@ import java.util.List;
  */
 public class MessagePresenter {
     private MessageController messageController;
+    private String username;
 
-    public MessagePresenter(MessageController messageController) {
+    public MessagePresenter(MessageController messageController, String username) {
         this.messageController = messageController;
+        this.username = username;
     }
 
     public List<String> getInbox() {
@@ -29,5 +31,9 @@ public class MessagePresenter {
 
     public void markAsRead(List<Message> conversation) {
         messageController.markAsRead(conversation);
+    }
+
+    public void sendMessage(String recipient, String messageText) {
+        messageController.sendMessage(username, recipient, messageText);
     }
 }
