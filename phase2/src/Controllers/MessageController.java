@@ -38,7 +38,7 @@ public class MessageController {
         messageManager.deleteMessages(messageIds);
     }
 
-    public void archiveMessages(List<String> messageIds) {
+    public void archiveMessages(List<Message> messageIds) {
         messageManager.archiveMessages(messageIds);
     }
 

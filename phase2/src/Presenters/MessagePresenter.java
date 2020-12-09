@@ -48,11 +48,7 @@ public class MessagePresenter {
     }
 
     public void markAsArchived(List<Message> messages) {
-        List<String> messageIds = new ArrayList<>();
-        for (Message m: messages) {
-            messageIds.add(m.getSender()+"-"+m.getRecipient());
-        }
-        messageController.archiveMessages(messageIds);
+        messageController.archiveMessages(messages);
     }
 
     public boolean canMessage(String otherUser) {

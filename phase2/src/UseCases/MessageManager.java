@@ -7,8 +7,6 @@ import Gateways.JsonDatabase;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-
-import java.util.HashMap;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -21,7 +19,7 @@ import java.util.stream.Collectors;
  * @author Alex
  */
 public class MessageManager implements Serializable {
-    private HashMap<String, ArrayList<Conversation>> database;
+    private JsonDatabase<Conversation> messageDatabase;
     private AccountManager accounts;
 
     /**
@@ -30,8 +28,8 @@ public class MessageManager implements Serializable {
      * @param accounts
      */
     public MessageManager(AccountManager accounts) {
-        this.database = new HashMap<>();
         this.accounts = accounts;
+        messageDatabase = new JsonDatabase("Messages", Conversation.class);
     }
 
     /**
@@ -52,11 +50,12 @@ public class MessageManager implements Serializable {
     public boolean sendMessage(String sender, String recipient, String messageBody) {
         if (sender == null || recipient == null || messageBody == null) return false;
 
-        Conversation conversation = getConversation(sender, recipient);
-
-        conversation = conversation == null ? newConversation(sender, recipient) : conversation;
-        Message message = new Message(sender, recipient, messageBody);
-        conversation.addMessage(message);
+        boolean hasMessaged = hasMessaged(sender, recipient);
+        if (!hasMessaged) newConversation(sender, recipient);
+        else {
+            Message message = new Message(sender, recipient, messageBody);
+            getConversationThread(sender, recipient).add(message);
+        }
         return true;
     }
 
@@ -115,17 +114,22 @@ public class MessageManager implements Serializable {
      * @param user1
      * @param user2
      * @return true iff user1 and user2 have a conversation
+     * Please test this
      */
     private boolean hasMessaged(String user1, String user2) {
-        if (database.containsKey(user1)) {
-            for (Conversation c : database.get(user1)) {
-                if (c.getUserOne().equals(user2) || c.getUserTwo().equals(user2)) return true;
+        List<String> conversations = messageDatabase.getIds();
+        for (String c : conversations) {
+            String u1 = c.substring(0, c.indexOf("-"));
+            if (u1 == user1 || u1 == user2){
+                String u2 = c.substring(c.indexOf("-")+1);
+                if (u2 == user1 || u2 == user2){
+                    return true;
+                }
             }
         }
-
         return false;
-    }
 
+    }
 
 
     /**
@@ -139,17 +143,7 @@ public class MessageManager implements Serializable {
      * @return list of formatted strings; empty string if there is no conversation.
      */
     public ArrayList<Message> getMessages(String user1, String user2) {
-        // TODO CLEANUP
-        Conversation c = getConversation(user1, user2);
-
-        return c.getMessages();
-
-//        for (Message m : c.getMessages()) {
-//            // an example of the format "[ alex ] hello world!"
-//            messages.add(String.format("[ %s ] %s", m.getSender(), m.getBody()));
-//        }
-//
-//        return messages;
+        return (ArrayList<Message>) getConversationThread(user1, user2);
     }
 
     /**
@@ -159,13 +153,17 @@ public class MessageManager implements Serializable {
      * @param user2
      * @return the conversation between user1 and user2; null if user1 or user2 DNE in db, or there's no conversation.
      */
-    private Conversation getConversation(String user1, String user2) {
-        if (database.containsKey(user1) && database.containsKey(user2)) {
-            for (Conversation c : database.get(user1)) {
-                if (c.getUserOne() == user2 || c.getUserTwo() == user2) return c;
+    private List<Message> getConversationThread(String user1, String user2) {
+        List<String> conversations = messageDatabase.getIds();
+        for (String c : conversations) {
+            String u1 = c.substring(0, c.indexOf("-"));
+            if (u1 == user1 || u1 == user2){
+                String u2 = c.substring(c.indexOf("-")+1);
+                if (u2 == user1 || u2 == user2){
+                    return messageDatabase.read(c).getMessages();
+                }
             }
         }
-
         return null;
     }
 
@@ -183,23 +181,8 @@ public class MessageManager implements Serializable {
      */
     private Conversation newConversation(String user1, String user2) {
         Conversation conversation = new Conversation(user1, user2);
-
-        (database.containsKey(user1) ? database.get(user1) : newList(user1)).add(conversation);
-        (database.containsKey(user2) ? database.get(user2) : newList(user2)).add(conversation);
-
+        messageDatabase.write(conversation, user1+"-"+user2);
         return conversation;
-    }
-
-    /**
-     * Creates a new list for conversations for user and puts it in database.
-     *
-     * @param user the user
-     * @return the newly created list
-     */
-    private ArrayList<Conversation> newList(String user) {
-        ArrayList<Conversation> list = new ArrayList<>();
-        database.put(user, list);
-        return list;
     }
 
     /**
@@ -208,12 +191,16 @@ public class MessageManager implements Serializable {
      * @param user username
      * @return list of usernames; empty list if user not in database
      */
-    public List<String> getMyInbox(String user) {
-        if (!database.containsKey(user)) return new ArrayList<>();
-        return database.get(user).stream()
-                .map(s -> (s.getUserOne().equals(user) ? s.getUserTwo() : s.getUserOne()))
-                .collect(Collectors.toList());
-
+    public ArrayList<String> getMyInbox(String user) {
+        List<String> conversations = messageDatabase.getIds();
+        ArrayList<String> myInbox = new ArrayList<>();
+        for (String c : conversations) {
+            String otherUser = c;
+            otherUser.replace("-","");
+            otherUser.replace(user,"");
+            if (c.contains(user)) myInbox.add(otherUser);
+        }
+        return myInbox;
     }
 
     /**
@@ -222,10 +209,7 @@ public class MessageManager implements Serializable {
      * @return true if the conversation is read, otherwise, false if not read.
      */
     public boolean conversationIsRead(List<Message> messages) {
-        if (getConversation(messages) != null) {
-            return getConversation(messages).getIsRead();
-        }
-        return false;
+        return messageDatabase.read(getIDfromMessages(messages)).getIsRead();
 
     }
 
@@ -234,34 +218,35 @@ public class MessageManager implements Serializable {
      * @param messages
      */
     public void markAsRead(List<Message> messages) {
-        if (getConversation(messages) != null) {
-            getConversation(messages).markAsRead();
+        messageDatabase.read(getIDfromMessages(messages)).markAsRead();
+    }
+
+    private String getIDfromMessages(List<Message> messages) {
+        if (messages.size() == 0) return null;
+        return messages.get(0).getSender()+"-"+ messages.get(0).getRecipient();
+    }
+
+    public void deleteMessages(List<String> messageIds) {
+        for (String a : messageIds) {
+            messageDatabase.delete(a);
         }
     }
 
-    /**
-     * Helper method that gets the conversation between two users.
-     * @param messages
-     * @return the conversation between the two users as a conversation type.
-     */
-    private Conversation getConversation(List<Message> messages) {
-        if (messages.isEmpty()) return null;
-        Message m = messages.get(0);
-        String userA = m.getRecipient();
-        String userB = m.getSender();
-
-        return getConversation(userA, userB);
+    public void archiveMessages(List<Message> messages) {
+        for (Message a : messages) {
+            a.markAsArchived();
+        }
     }
 
-    // todo
-    public void deleteMessages(List<String> messageIds) {
-    }
-
-    // todo ;)
-    public void archiveMessages(List<String> messageIds) {
-    }
-    //todo lol
     public List<Message> getArchivedMessages(String username) {
-        return null;
+        ArrayList<String> inbox = getMyInbox(username);
+        ArrayList<Message> archivedMessages = new ArrayList<>();
+        for (String s : inbox) {
+            List<Message> messages =getConversationThread(username, s);
+            for (Message m : messages) {
+                if (m.getIsArchived()) archivedMessages.add(m);
+            }
+        }
+        return archivedMessages;
     }
 }

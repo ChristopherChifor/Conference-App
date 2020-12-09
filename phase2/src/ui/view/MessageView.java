@@ -181,7 +181,7 @@ public class MessageView extends JPanel implements View {
         conversations.add(text);
 
         // if conversation is unread, make button text bold.
-        if (presenter.isRead(messages)) {
+        if (presenter.isRead(messages)) { //todo change this to take user names
             buttonBold(senderButton);
         }
 

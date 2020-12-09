@@ -27,4 +27,13 @@ public class Message implements Serializable {
     public String getBody() {
         return body;
     }
+
+    public void markAsArchived() {
+        isArchived = true;
+    }
+
+    public boolean getIsArchived() {
+        return isArchived;
+    }
+
 }
