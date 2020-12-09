@@ -3,10 +3,11 @@ package Presenters;
 import Controllers.MessageController;
 import Entities.Message;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
- * @author chris
+ * @author Chris and Nikita
  */
 public class MessagePresenter {
     private MessageController messageController;
@@ -35,5 +36,14 @@ public class MessagePresenter {
 
     public void sendMessage(String recipient, String messageText) {
         messageController.sendMessage(username, recipient, messageText);
+    }
+
+    public void deleteMessages(List<Message> messages) {
+        List<String> messageIds = new ArrayList<>();
+        for (Message m: messages) {
+            messageIds.add(m.getSender()+"-"+m.getRecipient());
+        }
+        messageController.deleteMessages(messageIds);
+
     }
 }

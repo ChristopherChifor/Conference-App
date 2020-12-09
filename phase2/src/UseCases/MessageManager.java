@@ -251,4 +251,8 @@ public class MessageManager implements Serializable {
 
         return getConversation(userA, userB);
     }
+
+    // todo
+    public void deleteMessages(List<String> messageIds) {
+    }
 }

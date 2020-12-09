@@ -32,6 +32,10 @@ public class MessageController {
     }
 
     public void sendMessage(String username, String recipient, String messageText) {
-        messageManager.sendMessage(messageText)
+        messageManager.sendMessage(username, recipient, messageText);
+    }
+
+    public void deleteMessages(List<String> messageIds) {
+        messageManager.deleteMessages(messageIds);
     }
 }

@@ -53,11 +53,7 @@ public class MessageView extends JPanel implements View {
                 JOptionPane.showMessageDialog(null, "Cannot send message to this address", "Bad Input", JOptionPane.ERROR_MESSAGE);
             }
 
-
-            // TODO SEND MESSAGETEXT TO SELECTEDUSERNAME
             presenter.sendMessage(selectedUsername, messageText);
-
-
         });
 
         sendMessagePanel.add(messageField, BorderLayout.CENTER);
@@ -96,7 +92,8 @@ public class MessageView extends JPanel implements View {
         if (selectedUsername.equals("")) return;
         MessageDisplayPanel panel = panelMap.get(selectedUsername);
         List<Message> messages = panel.getSelectedMessages();
-        // TODO CALL PRESENTER TO DELETE MESSAGES
+
+        presenter.deleteMessages(messages);
 
 
         // removes selected from view
