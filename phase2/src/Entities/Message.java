@@ -8,7 +8,7 @@ import java.io.Serializable;
 public class Message implements Serializable {
     private String sender, recipient;
     private String body;
-
+    private boolean isArchived = false;
 
     public Message(String sender, String recipient, String body) {
         this.sender = sender;

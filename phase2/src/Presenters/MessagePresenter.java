@@ -19,11 +19,11 @@ public class MessagePresenter {
     }
 
     public List<String> getInbox() {
-        return messageController.getInbox();
+        return messageController.getInbox(username);
     }
 
     public List<Message> getConversation(String otherUser) {
-        return messageController.getConversation(otherUser);
+        return messageController.getConversation(username, otherUser);
     }
 
     public boolean isRead(List<Message> conversation) {
@@ -45,5 +45,17 @@ public class MessagePresenter {
         }
         messageController.deleteMessages(messageIds);
 
+    }
+
+    public void markAsArchived(List<Message> messages) {
+        List<String> messageIds = new ArrayList<>();
+        for (Message m: messages) {
+            messageIds.add(m.getSender()+"-"+m.getRecipient());
+        }
+        messageController.archiveMessages(messageIds);
+    }
+
+    public boolean canMessage(String otherUser) {
+        return messageController.canMessage(username, otherUser);
     }
 }

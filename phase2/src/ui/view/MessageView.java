@@ -107,7 +107,7 @@ public class MessageView extends JPanel implements View {
         if (selectedUsername.equals("") || selectedUsername.equals("Archived")) return;
         MessageDisplayPanel panel = panelMap.get(selectedUsername);
         List<Message> messages = panel.getSelectedMessages();
-        // TODO CALL PRESENTER TO UPDATE THE ARCHIVE
+        presenter.markAsArchived(messages);
 
         MessageDisplayPanel archivePanel = panelMap.get("Archived");
         archivePanel.addMessageList(messages);
@@ -136,13 +136,15 @@ public class MessageView extends JPanel implements View {
             return;
         }
 
+
         // TODO CHECK IF THE MESSAGE SENDING ACTION IS GOOD
+
+        boolean failed = presenter.canMessage(username); //TODO CHANGE TO TRUE IF COULDN'T SEND.
         // TODO SEND THE MESSAGE; IF COULDN'T SEND A MESSAGE CALL showIncorrectInputDialog
-        boolean failed = false; //TODO CHANGE TO TRUE IF COULDN'T SEND.
 
         if(failed) return;
 
-        List<Message> messages = new ArrayList<>(); //TODO GET MESSAGES WITH username FROM PRESENTER.
+        List<Message> messages = presenter.getConversation(username); //TODO GET MESSAGES WITH username FROM PRESENTER.
 
         // this code should only run if message was sent!
         if(conversations.contains(username)) return;

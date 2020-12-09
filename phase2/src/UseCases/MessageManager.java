@@ -255,4 +255,8 @@ public class MessageManager implements Serializable {
     // todo
     public void deleteMessages(List<String> messageIds) {
     }
+
+    // todo ;)
+    public void archiveMessages(List<String> messageIds) {
+    }
 }
