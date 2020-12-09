@@ -24,8 +24,8 @@ public class EventController {
 
     public void convertScheduleToPDF(String filepath) {
         // TODO
-//        ArrayList<String> userEvents = scheduleManager.getAttendeeEvents(username);
-        pdfConverter.convertToPDF(filepath, username);
+        ArrayList<String> userEvents = scheduleManager.getAttendeeEvents(username);
+        pdfConverter.convertToPDF(filepath, username, userEvents);
     }
 
 }

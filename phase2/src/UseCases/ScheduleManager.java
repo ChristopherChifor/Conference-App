@@ -3,7 +3,7 @@ package UseCases;
 import Entities.Event;
 import Entities.Room;
 import Entities.Schedule;
-import Gateways.ScheduleGateway;
+//import Gateways.ScheduleGateway;
 import Util.ScheduleTime;
 
 import java.io.Serializable;
@@ -19,7 +19,7 @@ public class ScheduleManager implements Serializable {
     HashMap<String, Event> events; // should never be given out; its mutable
     HashMap<String, Room> rooms; // should never be given out; its mutable
 
-    private ScheduleGateway scheduleGateway; // TODO make sure this gets set
+//    private ScheduleGateway scheduleGateway; // TODO make sure this gets set
 
     public ScheduleManager() {
         theSchedule = new Schedule();
@@ -61,7 +61,9 @@ public class ScheduleManager implements Serializable {
      * @return list containing event names of event the attendee is in
      */
     public ArrayList<String> getAttendeeEvents(String username) {
-        return scheduleGateway.getUserEvents(username);
+        //TODO
+//        return scheduleGateway.getUserEvents(username);
+        return new ArrayList<>();
     }
     
     /**
