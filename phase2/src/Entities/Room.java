@@ -40,7 +40,6 @@ public class Room implements Serializable {
      * @param capacity: capacity of room
      * @return true if capacity is positive and is successfully set
      */
-
     public boolean setRoomCapacity(int capacity) {
         if (capacity >= 1) {
             this.roomCapacity = capacity;
