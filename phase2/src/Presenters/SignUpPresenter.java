@@ -2,6 +2,7 @@ package Presenters;
 
 import Controllers.AccountController;
 import Util.UserType;
+import ui.view.SignupView;
 import ui.view.View;
 
 public class SignUpPresenter implements Presenter{
@@ -25,11 +26,11 @@ public class SignUpPresenter implements Presenter{
 
     @Override
     public View makeView() {
-        return null;
+        return new SignupView(this);
     }
 
     @Override
     public MainPresenter getMainPresenter() {
-        return null;
+        return mainPresenter;
     }
 }
