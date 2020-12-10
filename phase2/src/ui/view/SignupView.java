@@ -1,5 +1,7 @@
 package ui.view;
 
+import Presenters.SignUpPresenter;
+
 import javax.swing.*;
 import java.awt.*;
 
@@ -13,7 +15,10 @@ public class SignupView extends JPanel implements View{
     private JPasswordField confirmPasswordField = new JPasswordField();
     private JButton signUpButton = new JButton("Sign Up");
 
-    public SignupView() {
+    private SignUpPresenter presenter;
+
+    public SignupView(SignUpPresenter presenter) {
+        this.presenter = presenter;
         setLayout(new GridBagLayout());
         GridBagConstraints cst = new GridBagConstraints();
         cst.gridx = 0;
@@ -58,7 +63,7 @@ public class SignupView extends JPanel implements View{
         String password = new String(passwordField.getPassword());
         String confirmPassword = new String(confirmPasswordField.getPassword());
 
-        // TODO SEND THIS STUFF TO PRESENTER; CHECK IF VALID INFO AND CREATE ACCOUNT
+        presenter.signUp(name, username, password, confirmPassword);
     }
 
     @Override
