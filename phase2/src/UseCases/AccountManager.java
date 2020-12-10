@@ -43,7 +43,9 @@ public class AccountManager implements Serializable {
      *
      */
     public void changeUserType(String username, UserType type) {
-        getUser(username).setUserType(type);
+        User e = getUser(username);
+        e.setUserType(type);
+        userJsonDatabase.write(e, e.getUsername());
     }
 
     /**

@@ -37,18 +37,17 @@ public class AccountController {
      * @param name     the name of the user(String) that is to be created.
      * @param username the username of the user(String) that is to be created.
      * @param password the password of the user(String) that is to be created.
+     * @param retype   the password of the user(string) typed again
      * @param type     the type of user(User.UserType) that is to be created.
      * @return true if the user is created (when the username hasn't been taken).
      * Else, return false.
      */
     public boolean createUser(String name, String username, String password, String retype, UserType type) {
         if (!accountManager.userExists(username)) {
-            if (password.contains(retype)) {
+            if (password.equals(retype) && !username.contains("-")) {
                 accountManager.createUser(name, username, password, type);
                 return true;
             }
-        } else {
-            System.out.println("3");
         }
         return false;
     }

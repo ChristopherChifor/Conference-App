@@ -81,13 +81,13 @@ public class MessageController {
     }
 
     /**
-     * TODO UNFINISHED
+     * TODO kinda finished, change the javadoc
      * Checks if sender can message recipient.
      * <p>
      * They can message iff:
      * - both users exist, and
      * - sender is speaker or organizer, or
-     * - sender is attendee and recipient attendy or speaker, or
+     * - sender is attendee and recipient attendee or speaker, or
      * - sender is attendee and recipient is organizer if they messaged before
      * - otherwise, true if they exist and have messaged before.
      *
@@ -98,22 +98,20 @@ public class MessageController {
     public boolean canMessage(String senderUsername, String recipientUsername) {
         UserType sender = accountManager.getUserType(senderUsername);
         UserType recipient = accountManager.getUserType(recipientUsername);
-        // todo @parssa
         if (sender == null || recipient == null) return false;
 
         switch (sender) {
             case ATTENDEE:
                 switch (recipient) {
                     case ATTENDEE:
-                        break;
                     case SPEAKER:
                         return true;
-
+                    default:
+                        return false;
                 }
             case SPEAKER:
-                break;
             case ORGANIZER:
-                return true;
+                break;
         }
         return true;
     }
