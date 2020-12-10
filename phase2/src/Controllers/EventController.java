@@ -16,8 +16,8 @@ public class EventController {
 
     private ScheduleManager scheduleManager;
 
-    public EventController(ScheduleManager scheduleManager) {
-        this.scheduleManager = scheduleManager;
+    public EventController() {
+        this.scheduleManager = new ScheduleManager();
         pdfConverter = new PDFConverter();
     }
 
@@ -57,9 +57,7 @@ public class EventController {
     }
 
     public void convertScheduleToPDF(String filepath, String username) {
-        // TODO
-        ArrayList<ScheduleEntry> userEvents = scheduleManager.getAttendeeEvents(username);
-        pdfConverter.convertToPDF(filepath, username, userEvents);
+        pdfConverter.convertToPDF(filepath, username, scheduleManager.getAttendeeEvents(username));
     }
 
 }

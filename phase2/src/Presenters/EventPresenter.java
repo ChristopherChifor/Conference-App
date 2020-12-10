@@ -6,8 +6,8 @@ public class EventPresenter {
     private EventController eventController;
     private String username;
 
-    public EventPresenter(String username, EventController eventController) {
-        this.eventController = eventController;
+    public EventPresenter(String username) {
+        this.eventController = new EventController();
         this.username = username;
     }
 

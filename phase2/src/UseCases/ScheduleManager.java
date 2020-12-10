@@ -2,17 +2,19 @@ package UseCases;
 
 import Entities.Event;
 import Entities.ScheduleEntry;
+import Gateways.IGateway;
 import Gateways.JsonDatabase;
 
 import java.io.Serializable;
 import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * @author Haoming & Parssa
  */
 public class ScheduleManager implements Serializable {
-    private JsonDatabase<Event> eventJsonDatabase;
-    private JsonDatabase<ScheduleEntry> scheduleEntryJsonDatabase;
+    private IGateway<Event> eventJsonDatabase;
+    private IGateway<ScheduleEntry> scheduleEntryJsonDatabase;
     private AccountManager accountManager; // todo make sure this gets set
     private RoomManager roomManager; // todo make sure this gets set
 
@@ -47,34 +49,24 @@ public class ScheduleManager implements Serializable {
      * @param username Username of the attendee
      * @return list containing event names of event the attendee is in
      */
-    public ArrayList<ScheduleEntry> getAttendeeEvents(String username) {
-        ArrayList<String> allEvents = (ArrayList<String>) eventJsonDatabase.getIds();
-        ArrayList<ScheduleEntry> userEvents = new ArrayList<>();
-
-        for (String eventName : allEvents) {
-            if (eventJsonDatabase.read(eventName).getAttendees().contains(username)) {
-                userEvents.add(scheduleEntryJsonDatabase.read(eventName));
-            }
-        }
-        return userEvents;
+    public List<ScheduleEntry> getAttendeeEvents(String username) {
+        return eventJsonDatabase.filterStream(e->e.getAttendees()
+                .contains(username))
+                .map(e->scheduleEntryJsonDatabase.read(e.getName()))
+                .collect(Collectors.toList());
     }
 
     /**
-     * Gets a schedule of all event's of a Speaker
+     * Gets a list of ScheduleEntries of all event's of a Speaker
      *
      * @param username Username of the speaker
-     * @return Schedule containing only event's a Speaker is speaking at
+     * @return List of ScheduleEntries containing only event's a Speaker is speaking at
      */
-    protected ArrayList<ScheduleEntry> getSpeakerEvents(String username) {
-        ArrayList<String> allEvents = (ArrayList<String>) eventJsonDatabase.getIds();
-        ArrayList<ScheduleEntry> speakerEvents = new ArrayList<>();
-
-        for (String eventName : allEvents) {
-            if (eventJsonDatabase.read(eventName).getSpeakers().contains(username)) {
-                speakerEvents.add(scheduleEntryJsonDatabase.read(eventName));
-            }
-        }
-        return speakerEvents;
+    protected List<ScheduleEntry> getSpeakerEvents(String username) {
+        return eventJsonDatabase.filterStream(e->e.getSpeakers()
+                .contains(username))
+                .map(e->scheduleEntryJsonDatabase.read(e.getName()))
+                .collect(Collectors.toList());
     }
 
     /**

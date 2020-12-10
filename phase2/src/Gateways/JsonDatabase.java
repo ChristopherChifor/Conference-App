@@ -18,7 +18,7 @@ import java.util.stream.Stream;
  * @param <T> objects being stored.
  * @author Alex
  */
-public class JsonDatabase<T> {
+public class JsonDatabase<T> implements IGateway<T> {
     private final String DIRECTORY_ROOT = "phase2/database/";
     private final File directory;
     private Gson gson = new Gson();
@@ -48,6 +48,7 @@ public class JsonDatabase<T> {
      * @param obj object.
      * @param id  unique identifier.
      */
+    @Override
     public void write(T obj, String id) {
         File file = getFile(id);
 
@@ -76,6 +77,7 @@ public class JsonDatabase<T> {
      * @param id unique identifier.
      * @return object with id; null if object DNE.
      */
+    @Override
     public T read(String id) {
         File file = getFile(id);
 
@@ -105,6 +107,7 @@ public class JsonDatabase<T> {
      * @param id unique identifier
      * @return object with id; null if object does not exist.
      */
+    @Override
     public T delete(String id) {
         File file = getFile(id);
 
@@ -125,6 +128,7 @@ public class JsonDatabase<T> {
      *
      * @return list of string ids. Null if could not access directory.
      */
+    @Override
     public List<String> getIds() {
         Stream<String> stream = getIdStream();
         if (stream == null) return null;
@@ -137,6 +141,7 @@ public class JsonDatabase<T> {
      * @param predicate a predicate checked against each element to see if it should be included
      * @return a stream of elements that match the predicate.
      */
+    @Override
     public Stream<T> filterStream(Predicate<T> predicate) {
         Stream<String> stream = getIdStream();
         if (stream == null) return null;
@@ -149,6 +154,7 @@ public class JsonDatabase<T> {
      * @param predicate a predicate checked against each element to see if it should be included
      * @return a list of elements that match the predicate
      */
+    @Override
     public List<T> filterList(Predicate<T> predicate){
         Stream<T> stream = filterStream(predicate);
         if (stream == null) return null;
