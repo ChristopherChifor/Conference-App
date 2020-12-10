@@ -13,8 +13,7 @@ public class TestUseCase {
 
     @Test(timeout=100)
     public void testSendMessageNull() {
-        AccountManager accountManager = new AccountManager();
-        MessageManager messageManager = new MessageManager(accountManager);
+        MessageManager messageManager = new MessageManager();
         User user = new User("David","CSC207","123", UserType.ATTENDEE);
         User user2 = new User("Sam","United Kingdom","java program", UserType.SPEAKER);
         assertEquals(false, messageManager.sendMessage(null, "CSC207", "Hello"));
@@ -27,12 +26,12 @@ public class TestUseCase {
 
     @Test
     public void testCanMessageNull() {
-        AccountManager accountManager = new AccountManager();
-        MessageManager messageManager = new MessageManager(accountManager);
+        MessageManager messageManager = new MessageManager();
         User user = new User("David","CSC207","123", UserType.ATTENDEE);
         User user2 = new User("Sam","United Kingdom","java program", UserType.SPEAKER);
         assertEquals(false, messageManager.canMessage(null, "CSC207"));
         assertEquals(false, messageManager.canMessage(null, null));
         assertEquals(false, messageManager.canMessage("United Kingdom", null));
     }
+
 }
