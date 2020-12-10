@@ -218,7 +218,7 @@ public class MessageManager implements Serializable {
      */
     public boolean canMessage(String senderUsername, String recipientUsername) {
         UserType sender = accountManager.getUserType(senderUsername);
-        UserType recipient = accountManager.getUserType(senderUsername);
+        UserType recipient = accountManager.getUserType(recipientUsername);
 
         if (sender == null || recipient == null) return false;
 
