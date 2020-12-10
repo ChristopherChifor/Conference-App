@@ -52,9 +52,10 @@ public class MessageManager implements Serializable {
 
     /**
      * Checks if user1 and user2 had a conversation. Does not matter if users exists or not.
+     * Uses JSONDatabase.
      *
-     * @param user1
-     * @param user2
+     * @param user1 user 1
+     * @param user2 user 2
      * @return true iff user1 and user2 have a conversation
      */
     private boolean hasMessaged(String user1, String user2) {
@@ -75,7 +76,7 @@ public class MessageManager implements Serializable {
     /**
      * Returns a list of all usernames this user can message.
      *
-     * @param user
+     * @param user user
      * @return list of usernames
      */
     public List<String> getContacts(String user) {
@@ -91,8 +92,8 @@ public class MessageManager implements Serializable {
      * <p>
      * Note: getMessages(user1, user2) is equivalent to getMessages(user2, user1)
      *
-     * @param user1
-     * @param user2
+     * @param user1 user 1
+     * @param user2 user 2
      * @return list of formatted strings; empty string if there is no conversation.
      */
     public ArrayList<Message> getMessages(String user1, String user2) {
@@ -102,8 +103,8 @@ public class MessageManager implements Serializable {
     /**
      * Searches conversations of user1 to see if there is a conversation with user2.
      *
-     * @param user1
-     * @param user2
+     * @param user1 user 1
+     * @param user2 user 2
      * @return the conversation between user1 and user2; null if user1 or user2 DNE in db, or there's no conversation.
      */
     private List<Message> getConversationThread(String user1, String user2) {
@@ -156,39 +157,57 @@ public class MessageManager implements Serializable {
 
     /**
      * Checks if the conversation has been read.
-     * @param messages
+     * @param messages list of messages
      * @return true if the conversation is read, otherwise, false if not read.
      */
     public boolean conversationIsRead(List<Message> messages) {
-        return messageDatabase.read(getIDfromMessages(messages)).getIsRead();
+        return messageDatabase.read(getIDFromMessages(messages)).getIsRead();
 
     }
 
     /**
      * Marks a conversation as read.
-     * @param messages
+     * @param messages list of messages
      */
     public void markAsRead(List<Message> messages) {
-        messageDatabase.read(getIDfromMessages(messages)).markAsRead();
+        messageDatabase.read(getIDFromMessages(messages)).markAsRead();
     }
 
-    private String getIDfromMessages(List<Message> messages) {
+    /**
+     * Gets a conversation between two users and returns as string.
+     * @param messages list of messages
+     * @return string of a sender and recipient of a message.
+     */
+    private String getIDFromMessages(List<Message> messages) {
         if (messages.size() == 0) return null;
         return messages.get(0).getSender()+"-"+ messages.get(0).getRecipient();
     }
 
+    /**
+     * Deletes a message
+     * @param messageIds list of messages
+     */
     public void deleteMessages(List<String> messageIds) {
         for (String a : messageIds) {
             messageDatabase.delete(a);
         }
     }
 
+    /**
+     * Takes messages and puts them into the archived list.
+     * @param messages list of messages
+     */
     public void archiveMessages(List<Message> messages) {
         for (Message a : messages) {
             a.markAsArchived();
         }
     }
 
+    /**
+     * Takes in a username and returns a list of archived messages for that user.
+     * @param username username
+     * @return a list of archived messages.
+     */
     public List<Message> getArchivedMessages(String username) {
         ArrayList<String> inbox = getMyInbox(username);
         ArrayList<Message> archivedMessages = new ArrayList<>();
