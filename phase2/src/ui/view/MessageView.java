@@ -197,7 +197,10 @@ public class MessageView extends JPanel implements View {
             CardLayout cards = (CardLayout) messageCards.getLayout();
             cards.show(messageCards, text);
 
-            presenter.markAsRead(messages);
+            if(!text.equals("Archived")){
+                //todo this is weird
+                presenter.markAsRead(messages);
+            }
 
             buttonUnBold(senderButton);
             selectedUsername = text;
