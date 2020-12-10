@@ -1,5 +1,6 @@
 package Controllers;
 
+import Entities.ScheduleEntry;
 import Entities.User;
 import UseCases.ScheduleManager;
 import Util.PDFConverter;
@@ -21,7 +22,7 @@ public class EventController {
 
     public void convertScheduleToPDF(String filepath, String username) {
         // TODO
-        ArrayList<String> userEvents = scheduleManager.getAttendeeEvents(username);
+        ArrayList<ScheduleEntry> userEvents = scheduleManager.getAttendeeEvents(username);
         pdfConverter.convertToPDF(filepath, username, userEvents);
     }
 
