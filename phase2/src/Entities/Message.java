@@ -3,7 +3,7 @@ package Entities;
 import java.io.Serializable;
 
 /**
- * @author Alex
+ * @author Alex and Chris
  */
 public class Message implements Serializable {
     private String sender, recipient;

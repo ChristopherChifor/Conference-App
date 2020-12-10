@@ -196,6 +196,11 @@ public class ScheduleManager implements Serializable {
         return false;
     }
 
+    /**
+     * Gets the event that is occurring in that room
+     * @param roomID id of the room
+     * @return a list of events occurring in that room
+     */
     // todo
     public List<ScheduleEntry> getRoomEvents(String roomID) {
         return null;

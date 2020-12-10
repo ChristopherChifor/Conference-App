@@ -46,10 +46,15 @@ public class MessageManager implements Serializable {
         if (!hasMessaged) newConversation(sender, recipient);
         Message message = new Message(sender, recipient, messageBody);
         getConversationThread(sender, recipient).add(message);
-        // todo add to the database
+        // todo add to the database LEFT OFF HERE
+//        messageDatabase.write(, user1+"-"+user2);
         return true;
     }
 
+    private Conversation getConversation(String leftoff) {
+        // todo add to the database LEFT OFF HERE
+        return  null;
+    }
     /**
      * Checks if user1 and user2 had a conversation. Does not matter if users exists or not.
      * Uses JSONDatabase.
