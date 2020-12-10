@@ -7,6 +7,7 @@ import Util.UserType;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -88,5 +89,10 @@ public class AccountManager implements Serializable {
      */
     public boolean userExists(String username) {
         return userJsonDatabase.getIds().contains(username);
+    }
+
+    public List<String> getUsernamesOfType(UserType userType) {
+        // todo @parssa
+        return null;
     }
 }

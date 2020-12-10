@@ -161,6 +161,9 @@ public class MessageManager implements Serializable {
      * @return true if the conversation is read, otherwise, false if not read.
      */
     public boolean conversationIsRead(List<Message> messages) {
+        System.out.println("enter----- convoIsRead");
+        String idFromMessages = getIDFromMessages(messages);
+        System.out.println("ID from messages: "+idFromMessages);
         return messageDatabase.read(getIDFromMessages(messages)).getIsRead();
 
     }
@@ -170,6 +173,7 @@ public class MessageManager implements Serializable {
      * @param messages list of messages
      */
     public void markAsRead(List<Message> messages) {
+        System.out.println("marked as read!");
         messageDatabase.read(getIDFromMessages(messages)).markAsRead();
     }
 
@@ -238,7 +242,7 @@ public class MessageManager implements Serializable {
     public boolean canMessage(String senderUsername, String recipientUsername) {
         UserType sender = accountManager.getUserType(senderUsername);
         UserType recipient = accountManager.getUserType(recipientUsername);
-
+        // todo @parssa
         if (sender == null || recipient == null) return false;
 
         switch (sender) {

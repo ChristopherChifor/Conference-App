@@ -25,6 +25,7 @@ public class MessageController {
     }
 
     public boolean conversationIsRead(List<Message> messages) {
+        if (messages.size() == 0) return false;
         return messageManager.conversationIsRead(messages);
     }
 
@@ -46,6 +47,9 @@ public class MessageController {
      */
     public boolean sendMessage(String sender, String recipient, String messageText) {
         if (sender == null || recipient == null || messageText == null) return false;
+        if (!canMessage(sender, recipient)) {
+            return false;
+        }
         messageManager.sendMessage(sender, recipient, messageText);
         return true;
     }
