@@ -43,18 +43,33 @@ public class Conversation implements Serializable {
         return messages;
     }
 
+    /**
+     * Gets the first user from a conversation between two users.
+     * @return the first user
+     */
     public String getUserOne() {
         return userOne;
     }
 
+    /**
+     * Gets the second user from a conversation between two users.
+     * @return the second user
+     */
     public String getUserTwo() {
         return userTwo;
     }
 
+    /**
+     * Marks a conversation as read.
+     */
     public void markAsRead() {
         this.isRead = true;
     }
 
+    /**
+     * Gets a read conversation.
+     * @return isRead
+     */
     public boolean getIsRead() {
         return isRead;
     }
