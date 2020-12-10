@@ -96,7 +96,7 @@ public class ScheduleManager implements Serializable {
     public boolean eventHasHappened(String eventName) {
         if (eventExists(eventName)) {
             return true;
-        } else return false;
+        } else return false; //TODO need to account for if event has actually happened
     }
 
     /**
@@ -186,15 +186,27 @@ public class ScheduleManager implements Serializable {
     }
 
     /**
-     *
+     * Removes Attendee from an event
+     * @param username the user being checked.
+     * @param event name of event
+     * @return true if succesfully removed from event
+     */
+    public boolean removeFromEvent(String username, String event) {
+        if (eventExists(event)) {
+            return eventJsonDatabase.read(event).removeAttendeeFromEvent(username);
+        }
+        return false;
+    }
+
+    /**
+     * Signs Attendee up for event
      * @param username username of user trying to sign up for event
      * @param event name of event
      * @return true if succesfully signed up for event
      */
     public boolean signUpForEvent(String username, String event) {
         if (canSignUpForEvent(username, event)) {
-            eventJsonDatabase.read(event).addAttendeeToEvent(username);
-            return true;
+            return eventJsonDatabase.read(event).addAttendeeToEvent(username);
         }
         return false;
     }

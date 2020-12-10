@@ -1,10 +1,10 @@
 package UseCases;
 
-import Entities.Event;
+
 import Entities.Room;
 import Gateways.JsonDatabase;
 
-import java.util.HashMap;
+
 
 public class RoomManager {
    private JsonDatabase<Room> roomJsonDatabase;
