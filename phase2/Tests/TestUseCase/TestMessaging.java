@@ -38,9 +38,9 @@ public class TestMessaging {
                 UserType.SPEAKER);
         accountController.createUser("John","Toronto","Clean Architecture", "Clean Architecture",
                 UserType.ORGANIZER);
-        assertEquals(false, messageController.canMessage("United Kingdom", "CSC207"));
-        assertEquals(false, messageController.canMessage("Toronto", "United Kingdom"));
-        assertEquals(false, messageController.canMessage("Toronto", "CSC207"));
+        assertEquals(true, messageController.canMessage("United Kingdom", "CSC207"));
+        assertEquals(true, messageController.canMessage("Toronto", "United Kingdom"));
+        assertEquals(true, messageController.canMessage("Toronto", "CSC207"));
 
 
     }
@@ -53,8 +53,8 @@ public class TestMessaging {
         accountController.createUser("Sam","United Kingdom","java program", "java program",
                 UserType.SPEAKER);
         assertEquals(false, messageController.canMessage(null, "CSC207"));
-//        assertEquals(false, messageController.canMessage(null, null));
-//        assertEquals(false, messageController.canMessage("United Kingdom", null));
+        assertEquals(false, messageController.canMessage(null, null));
+        assertEquals(false, messageController.canMessage("United Kingdom", null));
     }
 
 
