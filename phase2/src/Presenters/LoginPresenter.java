@@ -2,8 +2,10 @@ package Presenters;
 
 import Controllers.AccountController;
 import Util.UserType;
+import ui.view.LoginView;
+import ui.view.View;
 
-public class LoginPresenter {
+public class LoginPresenter implements Presenter{
 
     private AccountController accountController;
 
@@ -33,4 +35,8 @@ public class LoginPresenter {
         return accountController.createUser(name, username, password, type);
     }
 
+    @Override
+    public View makeView() {
+        return new LoginView(this);
+    }
 }

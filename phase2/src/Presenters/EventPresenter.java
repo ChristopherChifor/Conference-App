@@ -1,8 +1,10 @@
 package Presenters;
 
 import Controllers.EventController;
+import ui.view.EventView;
+import ui.view.View;
 
-public class EventPresenter {
+public class EventPresenter implements Presenter{
     private EventController eventController;
     private String username;
 
@@ -35,4 +37,9 @@ public class EventPresenter {
         eventController.signUpEvent(username, eventName);
     }
 
+    @Override
+    public View makeView() {
+        // return new EventView(); //TODO FIGURE THIS OUT ASAP
+        return null;
+    }
 }

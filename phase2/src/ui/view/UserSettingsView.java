@@ -30,9 +30,10 @@ public class UserSettingsView extends JPanel implements View {
 
     private UserSettingsPresenter userSettingsPresenter;
 
-    public UserSettingsView(boolean organizerMode, String user, UserSettingsPresenter userSettingsPresenter) {
-        this.organizerMode = organizerMode;
-        this.user = user;
+    public UserSettingsView(UserSettingsPresenter userSettingsPresenter) {
+        this.organizerMode = userSettingsPresenter.isOrganizerMode();
+        this.user = userSettingsPresenter.getUsername();
+        this.userSettingsPresenter = userSettingsPresenter;
         // TODO I left off here @parssa
         name = new JLabel(String.format("<html><h1>%s</h1></html>", user)); // TODO FETCH NAME
         username = new JLabel(user);

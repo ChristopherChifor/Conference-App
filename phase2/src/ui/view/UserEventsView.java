@@ -1,7 +1,7 @@
 package ui.view;
 
 import Util.UserType;
-import Presenters.UserEventPresenter;
+import Presenters.UserEventsPresenter;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
@@ -34,12 +34,13 @@ public class UserEventsView extends JPanel implements View {
     private UserType type;
     private String username = "TODOOOO";
 
-    private UserEventPresenter presenter;
+    private UserEventsPresenter presenter;
 
-    public UserEventsView() {
+    public UserEventsView(UserEventsPresenter presenter) {
+        this.presenter = presenter;
 
         //TODO FETCH EVENTS OF THIS USER
-        this.presenter = new UserEventPresenter(username);
+        this.presenter = new UserEventsPresenter(username);
         myEvents = new ArrayList<>();
         myEvents.add("Event 1");
         myEvents.add("Event 2");

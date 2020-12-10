@@ -1,7 +1,6 @@
 package ui.view;
 
 import Presenters.MainMenuPresenter;
-import Presenters.UserEventPresenter;
 import Util.UserType;
 
 import javax.swing.*;
