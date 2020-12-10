@@ -5,8 +5,6 @@ import Entities.Room;
 import Gateways.IGateway;
 import Gateways.JsonDatabase;
 
-
-
 public class RoomManager {
    private IGateway<Room> roomJsonDatabase;
 
