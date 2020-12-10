@@ -38,6 +38,7 @@ public class ScheduleManager implements Serializable {
         if (getEvent(eventName).getEventCapacity() > roomManager.getRoom(roomName).getRoomCapacity()) {
             return false;
         }
+        // TODO add if room is busy during time
         ScheduleEntry scheduleEntry = new ScheduleEntry(eventName, roomName, time, duration);
         scheduleEntryJsonDatabase.write(scheduleEntry, eventName);
         return true;
@@ -197,5 +198,10 @@ public class ScheduleManager implements Serializable {
             return eventJsonDatabase.read(event).addAttendeeToEvent(username);
         }
         return false;
+    }
+
+    // todo
+    public List<ScheduleEntry> getRoomEvents(String roomID) {
+        return null;
     }
 }

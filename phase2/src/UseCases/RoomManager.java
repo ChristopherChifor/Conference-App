@@ -2,12 +2,13 @@ package UseCases;
 
 
 import Entities.Room;
+import Gateways.IGateway;
 import Gateways.JsonDatabase;
 
 
 
 public class RoomManager {
-   private JsonDatabase<Room> roomJsonDatabase;
+   private IGateway<Room> roomJsonDatabase;
 
     /**
      * Constructor for EventManager
