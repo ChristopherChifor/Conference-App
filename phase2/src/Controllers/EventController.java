@@ -10,8 +10,6 @@ import java.util.ArrayList;
  * @author parssa
  */
 public class EventController {
-
-    private String username; // TODO MAKE THIS REFERENCE PROPERLY
     private User.UserType userType;
     private PDFConverter pdfConverter; // TODO make sure this gets set
 
@@ -19,10 +17,9 @@ public class EventController {
 
     public EventController() {
         pdfConverter = new PDFConverter();
-        this.username = "Parssa Kyanzadeh";
     }
 
-    public void convertScheduleToPDF(String filepath) {
+    public void convertScheduleToPDF(String filepath, String username) {
         // TODO
         ArrayList<String> userEvents = scheduleManager.getAttendeeEvents(username);
         pdfConverter.convertToPDF(filepath, username, userEvents);

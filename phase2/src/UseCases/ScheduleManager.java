@@ -3,7 +3,7 @@ package UseCases;
 import Entities.Event;
 import Entities.Room;
 import Entities.Schedule;
-//import Gateways.ScheduleGateway;
+import Gateways.JsonDatabase;
 import Util.ScheduleTime;
 
 import java.io.Serializable;
@@ -16,25 +16,15 @@ import java.util.Map;
  */
 public class ScheduleManager implements Serializable {
     Schedule theSchedule; // should never be given out; its mutable
-    HashMap<String, Event> events; // should never be given out; its mutable
+    private JsonDatabase<Event> eventJsonDatabase;
     HashMap<String, Room> rooms; // should never be given out; its mutable
 
-//    private ScheduleGateway scheduleGateway; // TODO make sure this gets set
-
     public ScheduleManager() {
-        theSchedule = new Schedule();
-        events = new HashMap<>();
-        rooms = new HashMap<>();
+        eventJsonDatabase = new JsonDatabase<>("Event", Event.class);
+//        theSchedule = new Schedule();
+//        events = new HashMap<>();
+//        rooms = new HashMap<>();
     }
-
-    /**
-     * Returns theSchedule
-     */
-
-    public HashMap<ScheduleTime, HashMap<String, String>> getTheSchedule() {
-        return theSchedule.getSchedule();
-    }
-
 
     /**
      * Adds a new event to the schedule at a certain time in a room
@@ -48,7 +38,7 @@ public class ScheduleManager implements Serializable {
         if (!eventExists(eventName)) {
             return false;
         }
-        if (events.get(eventName).getEventCapacity() > rooms.get(roomName).getRoomCapacity()) {
+        if (getEvent(eventName).getEventCapacity() > rooms.get(roomName).getRoomCapacity()) {
             return false;
         }
         return theSchedule.addToSchedule(roomName, eventName, time);
@@ -101,7 +91,7 @@ public class ScheduleManager implements Serializable {
      * @return true if event exists
      */
     public boolean eventExists(String eventName) {
-        return events.containsKey(eventName);
+        return eventJsonDatabase.getIds().contains(eventName);
     }
 
     /**
@@ -123,25 +113,9 @@ public class ScheduleManager implements Serializable {
      * @return true if the event is full
      */
     public boolean eventFull(String eventName) {
-        return events.get(eventName).isEventFull();
+        return eventJsonDatabase.read(eventName).isEventFull();
     }
 
-    /**
-     * Creates a new Event
-     *
-     * @param eventName Name of Event that is to be created
-     * @param eventCapacity Capacity of Event that is to be created
-     * @return true if no other event has that name and capacity is positiv and new Event is created
-     */
-    public boolean createEvent(String eventName, int eventCapacity) {
-        if (getEvent(eventName) != null) return false;
-        Event event = new Event(eventName);
-        if (event.setEventCapacity(eventCapacity)) {
-            return false;
-        }
-        events.put(eventName, event);
-        return true;
-    }
     /**
      * Creates a new Room
      *
@@ -164,8 +138,7 @@ public class ScheduleManager implements Serializable {
      * @return the event if it exists and null otherwise
      */
     public Event getEvent(String eventName) {
-
-        return (events.containsKey(eventName)) ? events.get(eventName) : null;
+        return eventJsonDatabase.read(eventName);
     }
 
     /**
@@ -209,8 +182,25 @@ public class ScheduleManager implements Serializable {
         HashMap<ScheduleTime, HashMap<String, String>> schedule = theSchedule.getSchedule();
         if (schedule.containsKey(timeKey)) {
             String eventName = schedule.get(timeKey).get(room);
-            return events.get(eventName).setSpeaker(speaker);
+            return getEvent(eventName).setSpeaker(speaker);
         }
         return false;
+    }
+
+    /**
+     * Creates a new Event
+     *
+     * @param eventName Name of Event that is to be created
+     * @param eventCapacity Capacity of Event that is to be created
+     * @return true if no other event has that name and capacity is positiv and new Event is created
+     */
+    public boolean createEvent(String eventName, int eventCapacity) {
+        if (!eventExists(eventName)) return false;
+        Event event = new Event(eventName);
+        if (!event.setEventCapacity(eventCapacity)) {
+            return false;
+        }
+        eventJsonDatabase.write(event, eventName);
+        return true;
     }
 }

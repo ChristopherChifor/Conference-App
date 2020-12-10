@@ -7,14 +7,14 @@ import com.itextpdf.text.pdf.PdfWriter;
 
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
-import java.util.ArrayList;
+import java.util.List;
 import java.util.stream.Stream;
 
 /**
  * @author parssa
  */
 public class PDFConverter {
-    public void convertToPDF(String filepath, String username, ArrayList<String> userSchedule) {
+    public void convertToPDF(String filepath, String username, List<String> userSchedule) {
         Document document = new Document();
         Font titleFont = FontFactory.getFont(FontFactory.HELVETICA_BOLD, 25, BaseColor.BLACK);
         Font bodyFont = FontFactory.getFont(FontFactory.HELVETICA, 15, BaseColor.BLACK);
@@ -29,7 +29,7 @@ public class PDFConverter {
             preface.add(name);
             addEmptyLine(preface, 2);
             PdfPTable table = new PdfPTable(3);
-            addTableHeader(table);
+            addScheduleHeader(table);
             addRows(table);
             preface.add(table);
             document.add(preface);
@@ -42,7 +42,7 @@ public class PDFConverter {
         }
     }
 
-    private void addTableHeader(PdfPTable table) {
+    private void addScheduleHeader(PdfPTable table) {
         Stream.of("Time", "Event", "Room")
                 .forEach(columnTitle -> {
                     PdfPCell header = new PdfPCell();

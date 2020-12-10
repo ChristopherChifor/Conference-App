@@ -32,16 +32,14 @@ public class UserEventsView extends JPanel implements View {
     private List<String> myEvents;
 
     private UserType type;
-    private String username;
+    private String username = "TODOOOO";
 
     private UserEventPresenter presenter;
 
     public UserEventsView() {
 
         //TODO FETCH EVENTS OF THIS USER
-        //TODO FETCH USERNAME
-//        UserEventPresenter presenter
-        this.presenter = new UserEventPresenter();
+        this.presenter = new UserEventPresenter(username);
         myEvents = new ArrayList<>();
         myEvents.add("Event 1");
         myEvents.add("Event 2");

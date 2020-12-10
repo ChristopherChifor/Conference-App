@@ -1,9 +1,12 @@
 package UseCases;
 
 import Entities.User;
+import Gateways.JsonDatabase;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Set;
 
 /**
@@ -12,15 +15,15 @@ import java.util.Set;
  * @author Paya
  */
 public class AccountManager implements Serializable {
-    private HashMap<String, User> users; // never share this
+    private JsonDatabase<User> userJsonDatabase;
 
     public AccountManager() {
-        users = new HashMap<>();
+        userJsonDatabase = new JsonDatabase<>("User", User.class);
     }
 
     /**
      * Create a user with a name, username, password, and user type (Attendee, Organizer, Speaker) if the username
-     * hasn't been taken (Checked using the canCreateUser method.)
+     * hasn't been taken (Checked using the !userExists method.)
      *
      * @param name     the name of the user(String) that is to be created.
      * @param username the username of the user(String) that is to be created.
@@ -30,29 +33,13 @@ public class AccountManager implements Serializable {
      * Else, return false.
      */
     public boolean createUser(String name, String username, String password, User.UserType type) {
-
-        if (canCreateUser(username)) {
+        if (!userExists(username)) {
             User newUser = new User(name, username, password, type);
             // Add the User object to the users HashMap.
-            users.put(username, newUser);
+            userJsonDatabase.write(newUser, username);
             return true;
         }
         return false;
-
-    }
-
-
-    /**
-     * Specifies if a user can be created based on if the username has been taken or not.
-     *
-     * @param username the username of the user(String) that we want to check to see if we can create.
-     * @return true if the username hasn't been taken (which means a user with that username can be created.)
-     * Else, return false.
-     */
-    public boolean canCreateUser(String username) {
-        // If the users HashMap contains a User value with the key, username, return false. If not, return true.
-        return !users.containsKey(username);
-
     }
 
     /**
@@ -65,8 +52,8 @@ public class AccountManager implements Serializable {
      */
     public boolean changeUserType(String username, User.UserType type) {
         // If the users HashMap contains a User value with the key, username, set its UserType to type and return true.
-        if (users.containsKey(username)) {
-            users.get(username).setUserType(type);
+        if (userExists(username)) {
+            getUser(username).setUserType(type);
             return true;
         }
         return false;
@@ -81,8 +68,9 @@ public class AccountManager implements Serializable {
      * ELse, return null.
      */
     public String authenticateUser(String username, String password) {
-        if (users.get(username).getPassword().equals(password)) {
-            return username;
+        if (userExists(username)) {
+            if (getUser(username).getPassword().equals(password))
+                return username;
         }
         return null;
     }
@@ -95,12 +83,7 @@ public class AccountManager implements Serializable {
      * ELse, return null.
      */
     User getUser(String username) {
-        //  returns null if username does not exist in the users HashMap
-        //  ideally accessible only to other usecases
-        if (users.containsKey(username)) {
-            return users.get(username);
-        }
-        return null;
+        return userJsonDatabase.read(username);
     }
 
     /**
@@ -120,17 +103,21 @@ public class AccountManager implements Serializable {
      * @return set of all usernames.
      */
     public Set<String> getUsernames() {
-        return users.keySet();
+        Set<String> usernames = new HashSet<>();
+        ArrayList<String> usernamesList = (ArrayList<String>) userJsonDatabase.getIds();
+        for (String username : usernamesList) {
+            usernames.add(username);
+        }
+        return usernames;
     }
 
     /**
-     * TODO REMOVE THIS OR CANCREATEUSER
      * Checks if user exists in users dictionary.
      *
      * @param username username of user to check
      * @return true if user exists
      */
     public boolean userExists(String username) {
-        return users.containsKey(username);
+        return userJsonDatabase.getIds().contains(username);
     }
 }
