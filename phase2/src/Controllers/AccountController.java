@@ -42,11 +42,17 @@ public class AccountController {
      * Else, return false.
      */
     public boolean createUser(String name, String username, String password, String retype, UserType type) {
+        System.out.println("--ENTERED");
         if (!accountManager.userExists(username)) {
-            if (password == retype) {
+            if (password.contains(retype)) {
                 accountManager.createUser(name, username, password, type);
+                System.out.println("1");
                 return true;
+            }else  {
+                System.out.println("2");
             }
+        } else {
+            System.out.println("3");
         }
         return false;
     }

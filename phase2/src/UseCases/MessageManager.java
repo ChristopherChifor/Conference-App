@@ -46,7 +46,7 @@ public class MessageManager implements Serializable {
         if (!hasMessaged) newConversation(sender, recipient);
         Message message = new Message(sender, recipient, messageBody);
         getConversationThread(sender, recipient).add(message);
-
+        // todo add to the database
         return true;
     }
 

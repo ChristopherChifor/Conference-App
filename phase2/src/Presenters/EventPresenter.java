@@ -9,7 +9,7 @@ public class EventPresenter implements Presenter{
     private String username;
     private MainPresenter mainPresenter;
 
-    public EventPresenter(String username, MainPresenter mainPresenter) {
+    public EventPresenter(String eventName, String username, MainPresenter mainPresenter) {
         this.eventController = new EventController();
         this.username = username;
         this.mainPresenter = mainPresenter;
@@ -41,7 +41,7 @@ public class EventPresenter implements Presenter{
 
     @Override
     public View makeView() {
-        // return new EventView(); //TODO FIGURE THIS OUT ASAP
+//         return new EventView(); //TODO FIGURE THIS OUT ASAP
         return null;
     }
 
