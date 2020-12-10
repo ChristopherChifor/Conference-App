@@ -4,6 +4,7 @@ import Entities.Conversation;
 import Entities.Message;
 import Entities.User;
 import Gateways.JsonDatabase;
+import Util.UserType;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -20,27 +21,20 @@ import java.util.stream.Collectors;
  */
 public class MessageManager implements Serializable {
     private JsonDatabase<Conversation> messageDatabase;
-    private AccountManager accounts;
+    private AccountManager accountManager;
 
     /**
      * Constructor.
      *
-     * @param accounts
      */
-    public MessageManager(AccountManager accounts) {
-        this.accounts = accounts;
+    public MessageManager() {
+        this.accountManager = new AccountManager();
         messageDatabase = new JsonDatabase("Messages", Conversation.class);
     }
 
     /**
      * If participants of this message have a conversation, adds message to conversation. If not,
      * makes a new conversation for sender and recipient and adds message to it.
-     * <p>
-     * This method assumes that the sender of the message is allowed to message the recipient, a
-     * calling method should first call canMessage().
-     * <p>
-     * In order for the message to be sent, the fields may not be null. If they are, the message is
-     * not sent, and method returns false.
      *
      * @param sender sender of message
      * @param recipient recipient of message
@@ -48,64 +42,12 @@ public class MessageManager implements Serializable {
      * @return boolean if sent
      */
     public boolean sendMessage(String sender, String recipient, String messageBody) {
-        if (sender == null || recipient == null || messageBody == null) return false;
-
         boolean hasMessaged = hasMessaged(sender, recipient);
         if (!hasMessaged) newConversation(sender, recipient);
-        else {
-            Message message = new Message(sender, recipient, messageBody);
-            getConversationThread(sender, recipient).add(message);
-        }
+        Message message = new Message(sender, recipient, messageBody);
+        getConversationThread(sender, recipient).add(message);
+
         return true;
-    }
-
-    /**
-     * Checks if sender can message recipient.
-     * <p>
-     * They can message iff:
-     * - both users exist, and
-     * - sender is speaker or organizer, or
-     * - sender is attendee and recipient attendy or speaker, or
-     * - sender is attendee and recipient is organizer if they messaged before
-     * - otherwise, true if they exist and have messaged before.
-     *
-     * @param senderUsername    username of sender
-     * @param recipientUsername username of recipient
-     * @return true if they can message.
-     */
-    public boolean canMessage(String senderUsername, String recipientUsername) {
-        User sender = accounts.getUser(senderUsername);
-        User recipient = accounts.getUser(recipientUsername);
-
-        if (sender == null || recipient == null) return false;
-
-        switch (sender.getUserType()) {
-            case ATTENDEE:
-                switch (recipient.getUserType()) {
-                    case ATTENDEE:
-                    case SPEAKER:
-                        return true;
-                    default:
-                        return hasMessaged(senderUsername, recipientUsername);
-                }
-            case SPEAKER:
-            case ORGANIZER:
-                return true;
-            default:
-                return hasMessaged(senderUsername, recipientUsername);
-        }
-    }
-
-    /**
-     * Returns a list of all usernames this user can message.
-     *
-     * @param user
-     * @return list of usernames
-     */
-    public List<String> getContacts(String user) {
-        return accounts.getUsernames().stream()
-                .filter(s -> canMessage(user, s) && s != user)
-                .collect(Collectors.toList());
     }
 
     /**
@@ -114,7 +56,6 @@ public class MessageManager implements Serializable {
      * @param user1
      * @param user2
      * @return true iff user1 and user2 have a conversation
-     * Please test this
      */
     private boolean hasMessaged(String user1, String user2) {
         List<String> conversations = messageDatabase.getIds();
@@ -129,6 +70,18 @@ public class MessageManager implements Serializable {
         }
         return false;
 
+    }
+
+    /**
+     * Returns a list of all usernames this user can message.
+     *
+     * @param user
+     * @return list of usernames
+     */
+    public List<String> getContacts(String user) {
+        return accountManager.getUsernames().stream()
+                .filter(s -> canMessage(user, s) && s != user)
+                .collect(Collectors.toList());
     }
 
 
@@ -177,12 +130,10 @@ public class MessageManager implements Serializable {
      *
      * @param user1 user 1
      * @param user2 user 2
-     * @return the newly created conversation.
      */
-    private Conversation newConversation(String user1, String user2) {
+    private void newConversation(String user1, String user2) {
         Conversation conversation = new Conversation(user1, user2);
         messageDatabase.write(conversation, user1+"-"+user2);
-        return conversation;
     }
 
     /**
@@ -248,5 +199,43 @@ public class MessageManager implements Serializable {
             }
         }
         return archivedMessages;
+    }
+
+    /**
+     * TODO UNFINISHED
+     * Checks if sender can message recipient.
+     * <p>
+     * They can message iff:
+     * - both users exist, and
+     * - sender is speaker or organizer, or
+     * - sender is attendee and recipient attendy or speaker, or
+     * - sender is attendee and recipient is organizer if they messaged before
+     * - otherwise, true if they exist and have messaged before.
+     *
+     * @param senderUsername    username of sender
+     * @param recipientUsername username of recipient
+     * @return true if they can message.
+     */
+    public boolean canMessage(String senderUsername, String recipientUsername) {
+        UserType sender = accountManager.getUserType(senderUsername);
+        UserType recipient = accountManager.getUserType(senderUsername);
+
+        if (sender == null || recipient == null) return false;
+
+        switch (sender) {
+            case ATTENDEE:
+                switch (recipient) {
+                    case ATTENDEE:
+                        break;
+                    case SPEAKER:
+                        return true;
+
+                }
+            case SPEAKER:
+                break;
+            case ORGANIZER:
+                return true;
+        }
+        return true;
     }
 }

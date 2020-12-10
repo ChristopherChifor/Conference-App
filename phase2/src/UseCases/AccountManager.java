@@ -81,7 +81,7 @@ public class AccountManager implements Serializable {
     }
 
     /**
-     * Checks if user exists in users database.
+     * Checks if user exists in users dictionary.
      *
      * @param username username of user to check
      * @return true if user exists

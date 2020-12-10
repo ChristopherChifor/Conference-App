@@ -1,14 +1,18 @@
 package Presenters;
 
 import Controllers.EventController;
+import ui.view.EventView;
+import ui.view.View;
 
-public class EventPresenter {
+public class EventPresenter implements Presenter{
     private EventController eventController;
     private String username;
+    private MainPresenter mainPresenter;
 
-    public EventPresenter(String username) {
+    public EventPresenter(String username, MainPresenter mainPresenter) {
         this.eventController = new EventController();
         this.username = username;
+        this.mainPresenter = mainPresenter;
     }
 
     /**
@@ -35,4 +39,14 @@ public class EventPresenter {
         eventController.signUpEvent(username, eventName);
     }
 
+    @Override
+    public View makeView() {
+        // return new EventView(); //TODO FIGURE THIS OUT ASAP
+        return null;
+    }
+
+    @Override
+    public MainPresenter getMainPresenter() {
+        return mainPresenter;
+    }
 }

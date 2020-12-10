@@ -1,6 +1,9 @@
 package ui.view;
 
 import Presenters.LoginPresenter;
+import Presenters.MainMenuPresenter;
+import Presenters.MainPresenter;
+import Util.UserType;
 
 import javax.swing.*;
 import java.awt.*;
@@ -52,9 +55,18 @@ public class LoginView extends JPanel implements View {
         String username = usernameField.getText();
         String password = new String(passwordField.getPassword());
 
-        presenter.tryLogin(username, password);
+        String result = presenter.tryLogin(username, password);
 
-        //todo show user the next view
+        if(result == null){
+            showErrorDialog("Username or Password Incorrect");
+            return;
+        }
+        //TODO GET USER TYPE
+
+        // we're in
+        MainPresenter mp = presenter.getMainPresenter();
+        MainMenuPresenter menu = new MainMenuPresenter(UserType.ATTENDEE, username, mp);
+        mp.addPresenter(menu);
     }
 
     /**

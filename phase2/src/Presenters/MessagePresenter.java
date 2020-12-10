@@ -2,6 +2,8 @@ package Presenters;
 
 import Controllers.MessageController;
 import Entities.Message;
+import ui.view.MessageView;
+import ui.view.View;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -9,13 +11,15 @@ import java.util.List;
 /**
  * @author Chris and Nikita
  */
-public class MessagePresenter {
+public class MessagePresenter implements Presenter{
     private MessageController messageController;
     private String username;
+    private MainPresenter mainPresenter;
 
-    public MessagePresenter(MessageController messageController, String username) {
-        this.messageController = messageController;
+    public MessagePresenter(String username, MainPresenter mainPresenter) {
         this.username = username;
+        messageController = new MessageController();
+        this.mainPresenter = mainPresenter;
     }
 
     public List<String> getInbox() {
@@ -57,6 +61,19 @@ public class MessagePresenter {
 
     public List<Message> getArchivedMessages() {
         return messageController.getArchivedMessages(username);
+    }
 
+    public List<String> getContacts() {
+        return messageController.getContacts(username);
+    }
+
+    @Override
+    public View makeView() {
+        return new MessageView(this);
+    }
+
+    @Override
+    public MainPresenter getMainPresenter() {
+        return mainPresenter;
     }
 }

@@ -33,6 +33,15 @@ public class RoomManager {
     }
 
     /**
+     * Getter for the capacity of room
+     *
+     * @return capacity of room
+     */
+    public int getRoomCapacity(String roomName) {
+        return getRoom(roomName).getRoomCapacity();
+    }
+
+    /**
      * Checks if a room exists
      *
      * @param roomName Name of room that is being checked

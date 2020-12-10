@@ -11,4 +11,10 @@ public interface Presenter {
      * @return view of this presenter.
      */
     View makeView();
+
+    /**
+     * Getter for the MainPresenter (used to show a new view/presenter)
+     * @return the main presenter.
+     */
+    MainPresenter getMainPresenter();
 }
