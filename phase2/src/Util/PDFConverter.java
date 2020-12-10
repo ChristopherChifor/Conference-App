@@ -1,5 +1,6 @@
 package Util;
 
+import Entities.ScheduleEntry;
 import com.itextpdf.text.*;
 import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
@@ -14,7 +15,7 @@ import java.util.stream.Stream;
  * @author parssa
  */
 public class PDFConverter {
-    public void convertToPDF(String filepath, String username, List<String> userSchedule) {
+    public void convertToPDF(String filepath, String username, List<ScheduleEntry> userSchedule) {
         Document document = new Document();
         Font titleFont = FontFactory.getFont(FontFactory.HELVETICA_BOLD, 25, BaseColor.BLACK);
         Font bodyFont = FontFactory.getFont(FontFactory.HELVETICA, 15, BaseColor.BLACK);
@@ -30,7 +31,7 @@ public class PDFConverter {
             addEmptyLine(preface, 2);
             PdfPTable table = new PdfPTable(3);
             addScheduleHeader(table);
-            addRows(table);
+            addRows(table, userSchedule);
             preface.add(table);
             document.add(preface);
             document.close();
@@ -53,16 +54,16 @@ public class PDFConverter {
                 });
     }
 
-    private void addRows(PdfPTable table) {
-        for (int i=0; i <= 10; i++) {
-            addElementEntry(table);
+    private void addRows(PdfPTable table, List<ScheduleEntry> userSchedule) {
+        for (ScheduleEntry s : userSchedule) {
+            addElementEntry(table, s.getEventName(), s.getRoomID(), s.getStartTime().toString());
         }
     }
 
-    private void addElementEntry(PdfPTable table) {
-        table.addCell("12:00pm");
-        table.addCell("Event name");
-        table.addCell("Room name");
+    private void addElementEntry(PdfPTable table, String eventName, String roomID, String startTime) {
+        table.addCell(eventName);
+        table.addCell(roomID);
+        table.addCell(startTime);
     }
 
     private static void addEmptyLine(Paragraph paragraph, int number) {

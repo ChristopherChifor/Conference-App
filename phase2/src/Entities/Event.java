@@ -10,7 +10,6 @@ import java.util.Set;
 public class Event implements Serializable {
     private String name;
     private Set<String> speakers = new HashSet<String>();
-    private int minutes;
     private int eventCapacity;
 
     private boolean VIPOnly;
@@ -88,19 +87,7 @@ public class Event implements Serializable {
     public Set<String> getSpeakers() {
         return speakers;
     }
-    /**
-     * Setter for the duration of event in minutes
-     *
-     * @param duration: duration of event in minutes
-     * @return true if minutes is positive and duration is set
-     */
-    public boolean setDuration(int duration) {
-        if (duration > 0) {
-            minutes = duration;
-            return true;
-        }
-        return false;
-    }
+
     /**
      * Setter for the capacity of events
      *
@@ -121,14 +108,6 @@ public class Event implements Serializable {
      */
     public int getEventCapacity() {
         return eventCapacity;
-    }
-    /**
-     * Getter for the duration of event
-     *
-     * @return duration in minutes
-     */
-    public int getDuration() {
-        return minutes;
     }
 
     /**
