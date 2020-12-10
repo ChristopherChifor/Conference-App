@@ -19,13 +19,13 @@ public class AccountController {
      *
      * @param username the username of the user(String).
      * @param password the password the user has entered(String).
-     * @return the username if the password entered matches with the password associated with the username.
+     * @return the UserType if the password entered matches with the password associated with the username.
      * ELse, return null.
      */
-    public String authenticateUser(String username, String password) {
+    public UserType authenticateUser(String username, String password) {
         if (accountManager.userExists(username)) {
             if (accountManager.getUser(username).getPassword().equals(password))
-                return username;
+                return accountManager.getUserType(username);
         }
         return null;
     }
