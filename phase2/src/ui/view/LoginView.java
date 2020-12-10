@@ -1,5 +1,7 @@
 package ui.view;
 
+import Presenters.LoginPresenter;
+
 import javax.swing.*;
 import java.awt.*;
 
@@ -11,8 +13,11 @@ public class LoginView extends JPanel implements View {
     private JPasswordField passwordField = new JPasswordField();
     private JButton loginButton = new JButton("Login");
     private JButton signupButton = new JButton("Sign Up");
+    private LoginPresenter presenter;
 
-    public LoginView() {
+    public LoginView(LoginPresenter presenter) {
+
+        this.presenter = presenter;
         setLayout(new GridBagLayout());
         GridBagConstraints cst = new GridBagConstraints();
 
@@ -47,7 +52,7 @@ public class LoginView extends JPanel implements View {
         String username = usernameField.getText();
         String password = new String(passwordField.getPassword());
 
-        //TODO VALIDATE USER
+        presenter.tryLogin(username, password);
 
         //todo show user the next view
     }
