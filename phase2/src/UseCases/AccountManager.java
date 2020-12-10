@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 /**
  * The use case class for creating and authenticating users.
@@ -40,7 +41,6 @@ public class AccountManager implements Serializable {
      *
      * @param username the username of the user(String).
      * @param type     the type that we want the user's type to change to(User.UserType).
-     *
      */
     public void changeUserType(String username, UserType type) {
         User e = getUser(username);
@@ -94,8 +94,8 @@ public class AccountManager implements Serializable {
     }
 
     public List<String> getUsernamesOfType(UserType userType) {
-        // todo @parssa
-
-        return null;
+        return userJsonDatabase.filterStream(u -> u.getUserType() == userType)
+                .map(User::getUsername)
+                .collect(Collectors.toList());
     }
 }
