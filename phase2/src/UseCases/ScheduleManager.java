@@ -1,10 +1,8 @@
 package UseCases;
 
 import Entities.Event;
-import Entities.Schedule;
 import Entities.ScheduleEntry;
 import Gateways.JsonDatabase;
-import Util.ScheduleTime;
 
 import java.io.Serializable;
 import java.util.*;
