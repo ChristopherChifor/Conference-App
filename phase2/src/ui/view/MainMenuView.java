@@ -57,28 +57,28 @@ public class MainMenuView extends JPanel implements View {
      * Triggered when user presses events button.
      */
     private void goEvents() {
-        //todo
+        presenter.goEvents();
     }
 
     /**
      * Triggered when user presses messages button.
      */
     private void goMessages() {
-        //todo
+        presenter.goMessages();
     }
 
     /**
      * Triggered when user presses account button.
      */
     private void goAccount() {
-        //todo
+        presenter.goAccount();
     }
 
     /**
      * Triggered when user presses organizer tools button (if they can do it)
      */
     private void goOrganizerTools() {
-        //todo
+        presenter.goOrganizer();
     }
 
     /**

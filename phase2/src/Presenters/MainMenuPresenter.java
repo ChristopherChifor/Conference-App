@@ -2,6 +2,7 @@ package Presenters;
 
 import Util.UserType;
 import ui.view.MainMenuView;
+import ui.view.UserEventsView;
 import ui.view.View;
 
 /**
@@ -31,6 +32,40 @@ public class MainMenuPresenter implements Presenter {
     public String getUsername() {
         return username;
     }
+
+    /**
+     * Creates an UserEventsPresenter for this user and adds it to mainPresenter
+     */
+    public void goEvents(){
+        UserEventsPresenter up = new UserEventsPresenter(username, mainPresenter);
+        mainPresenter.addPresenter(up);
+    }
+
+    /**
+     * Creates an MessagePresenter for this user and adds it to mainPresenter
+     */
+    public void goMessages(){
+        MessagePresenter mp = new MessagePresenter(username, mainPresenter);
+        mainPresenter.addPresenter(mp);
+    }
+
+    /**
+     * Creates an OrganizerPresenter for this user and adds it to mainPresenter.
+     * This method only gets called if this user can do this action.
+     */
+    public void goOrganizer(){
+        OrganizerPresenter op = new OrganizerPresenter(mainPresenter);
+        mainPresenter.addPresenter(op);
+    }
+
+    /**
+     * Creates an UserSettingsPresenter for this user and adds it to mainPresenter (not organizer mode)
+     */
+    public void goAccount(){
+        UserSettingsPresenter usp = new UserSettingsPresenter(false, username, mainPresenter);
+        mainPresenter.addPresenter(usp);
+    }
+
 
     @Override
     public View makeView() {

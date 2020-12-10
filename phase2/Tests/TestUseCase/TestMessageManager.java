@@ -1,3 +1,5 @@
+package TestUseCase;
+
 import Entities.User;
 import UseCases.AccountManager;
 import Util.UserType;
@@ -6,7 +8,7 @@ import java.util.HashMap;
 import UseCases.MessageManager;
 import static org.junit.Assert.*;
 
-public class TestUseCase {
+public class TestMessageManager {
 
 
     //TODO Test Cases for the MessageManager Use Case Class
@@ -34,22 +36,4 @@ public class TestUseCase {
         assertEquals(false, messageManager.canMessage("United Kingdom", null));
     }
 
-    //TODO Test Cases for the AccountManager Use Case Class
-
-    @Test
-    public void test_createUser() {
-        AccountManager accountManager = new AccountManager();
-        accountManager.createUser("Jason", "Jason_baba", "Jason123", UserType.ATTENDEE);
-        assertEquals(false, accountManager.getUser("jason_baba") == null);
-        assertEquals(true, accountManager.getUser("jason_2") == null);
-    }
-
-    @Test
-    public void changeUserType() {
-        AccountManager accountManager = new AccountManager();
-        accountManager.createUser("Jason", "Jason_baba", "Jason123", UserType.ATTENDEE);
-        accountManager.changeUserType("Jason_baba", UserType.SPEAKER);
-        assertEquals(false, accountManager.getUser("jason_baba").getUserType() == UserType.ATTENDEE);
-        assertEquals(true, accountManager.getUser("jason_baba").getUserType() == UserType.SPEAKER);
-    }
 }
