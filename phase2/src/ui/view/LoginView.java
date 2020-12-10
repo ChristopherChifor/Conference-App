@@ -26,6 +26,8 @@ public class LoginView extends JPanel implements View {
 
         loginButton.addActionListener(e -> login());
         signupButton.addActionListener(e -> signUp());
+        setPreferredSize(new Dimension(300,200));
+        usernameField.setPreferredSize(new Dimension(200,20));
 
         cst.gridx = 0;
         cst.gridy = 0;
