@@ -34,4 +34,12 @@ public class TestUseCase {
         assertEquals(false, messageManager.canMessage("United Kingdom", null));
     }
 
+    //TODO Test Cases for the AccountManager Use Case Class
+
+    @Test
+    public void test_createUser() {
+        AccountManager accountManager = new AccountManager();
+        accountManager.createUser("Jason", "Jason_baba", "Jason123", UserType.ATTENDEE);
+        assertEquals(false, accountManager.getUser("jason_baba") == null);
+    }
 }
