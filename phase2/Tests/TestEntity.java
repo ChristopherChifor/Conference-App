@@ -1,7 +1,6 @@
-import Entities.Schedule;
 import Entities.User;
 import Entities.Room;
-import Util.ScheduleTime;
+import Util.UserType;
 import org.junit.*;
 
 import java.util.HashMap;
@@ -14,51 +13,51 @@ public class TestEntity {
 
     @Test(timeout=50)
     public void testGetNameUser() {
-        User user = new User("David","CSC207","123", User.UserType.ATTENDEE);
+        User user = new User("David","CSC207","123", UserType.ATTENDEE);
         assertEquals("David", user.getName());
-        User user2 = new User("Sam","United Kingdom","java program", User.UserType.SPEAKER);
+        User user2 = new User("Sam","United Kingdom","java program", UserType.SPEAKER);
         assertEquals("Sam", user2.getName());
-        User user3 = new User("John","Toronto","Clean Architecture", User.UserType.ORGANIZER);
+        User user3 = new User("John","Toronto","Clean Architecture", UserType.ORGANIZER);
         assertEquals("John", user3.getName());
     }
 
     @Test(timeout=50)
     public void testGetUsername() {
-        User user = new User("David","CSC207","123", User.UserType.ATTENDEE);
+        User user = new User("David","CSC207","123", UserType.ATTENDEE);
         assertEquals("CSC207", user.getUsername());
-        User user2 = new User("Sam","United Kingdom","java program", User.UserType.SPEAKER);
+        User user2 = new User("Sam","United Kingdom","java program", UserType.SPEAKER);
         assertEquals("United Kingdom", user2.getUsername());
-        User user3 = new User("John","Toronto","Clean Architecture", User.UserType.ORGANIZER);
+        User user3 = new User("John","Toronto","Clean Architecture", UserType.ORGANIZER);
         assertEquals("Toronto", user3.getUsername());
     }
 
     @Test(timeout=50)
     public void testGetPassword() {
-        User user = new User("David","CSC207","123", User.UserType.ATTENDEE);
+        User user = new User("David","CSC207","123", UserType.ATTENDEE);
         assertEquals("123", user.getPassword());
-        User user2 = new User("Sam","United Kingdom","java program", User.UserType.SPEAKER);
+        User user2 = new User("Sam","United Kingdom","java program", UserType.SPEAKER);
         assertEquals("java program", user2.getPassword());
-        User user3 = new User("John","Toronto","Clean Architecture", User.UserType.ORGANIZER);
+        User user3 = new User("John","Toronto","Clean Architecture", UserType.ORGANIZER);
         assertEquals("Clean Architecture", user3.getPassword());
     }
 
     @Test(timeout=50)
     public void testGetUserType() {
-        User user = new User("David","CSC207","123", User.UserType.ATTENDEE);
-        assertEquals(User.UserType.ATTENDEE, user.getUserType());
-        User user2 = new User("Sam","United Kingdom","java program", User.UserType.SPEAKER);
-        assertEquals(User.UserType.SPEAKER, user2.getUserType());
-        User user3 = new User("John","Toronto","Clean Architecture", User.UserType.ORGANIZER);
-        assertEquals(User.UserType.ORGANIZER, user3.getUserType());
+        User user = new User("David","CSC207","123", UserType.ATTENDEE);
+        assertEquals(UserType.ATTENDEE, user.getUserType());
+        User user2 = new User("Sam","United Kingdom","java program", UserType.SPEAKER);
+        assertEquals(UserType.SPEAKER, user2.getUserType());
+        User user3 = new User("John","Toronto","Clean Architecture", UserType.ORGANIZER);
+        assertEquals(UserType.ORGANIZER, user3.getUserType());
     }
 
     @Test(timeout=50)
     public void testSetUserType() {
-        User user = new User("David","CSC207","123", User.UserType.ATTENDEE);
-        user.setUserType(User.UserType.SPEAKER);
-        assertEquals(User.UserType.SPEAKER, user.getUserType());
-        user.setUserType(User.UserType.ORGANIZER);
-        assertEquals(User.UserType.ORGANIZER, user.getUserType());
+        User user = new User("David","CSC207","123", UserType.ATTENDEE);
+        user.setUserType(UserType.SPEAKER);
+        assertEquals(UserType.SPEAKER, user.getUserType());
+        user.setUserType(UserType.ORGANIZER);
+        assertEquals(UserType.ORGANIZER, user.getUserType());
     }
 
     //TODO Test Cases for Room Entity
@@ -73,7 +72,7 @@ public class TestEntity {
     @Test(timeout=50)
     public void testGetStringRoom() {
         Room room = new Room("Room 207");
-        assertEquals("Room 207", room.getString());
+        assertEquals("Room 207", room.getName());
     }
 
 

@@ -27,10 +27,10 @@ public class AppWindow extends JDialog {
 
         panel.add(buttonBar, BorderLayout.NORTH);
 
+        add(panel);
         setTitle("Conference App");
         setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
         setSize(new Dimension(600,400));
-        setModal(true);
         setVisible(true);
 
     }
@@ -41,6 +41,7 @@ public class AppWindow extends JDialog {
             panel.remove(currentView);
         }
 
+        System.out.println("Show view run");
         panel.add((JPanel) view, BorderLayout.CENTER);
         currentView = (JPanel) view;
 
