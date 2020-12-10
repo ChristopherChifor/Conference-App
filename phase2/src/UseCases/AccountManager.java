@@ -22,24 +22,16 @@ public class AccountManager implements Serializable {
     }
 
     /**
-     * Create a user with a name, username, password, and user type (Attendee, Organizer, Speaker) if the username
-     * hasn't been taken (Checked using the !userExists method.)
+     * Create a user with a name, username, password, and user type
      *
      * @param name     the name of the user(String) that is to be created.
      * @param username the username of the user(String) that is to be created.
      * @param password the password of the user(String) that is to be created.
      * @param type     the type of user(User.UserType) that is to be created.
-     * @return true if the user is created (when the username hasn't been taken).
-     * Else, return false.
      */
-    public boolean createUser(String name, String username, String password, UserType type) {
-        if (!userExists(username)) {
-            User newUser = new User(name, username, password, type);
-            // Add the User object to the users HashMap.
-            userJsonDatabase.write(newUser, username);
-            return true;
-        }
-        return false;
+    public void createUser(String name, String username, String password, UserType type) {
+        User newUser = new User(name, username, password, type);
+        userJsonDatabase.write(newUser, username);
     }
 
     /**
@@ -47,32 +39,10 @@ public class AccountManager implements Serializable {
      *
      * @param username the username of the user(String).
      * @param type     the type that we want the user's type to change to(User.UserType).
-     * @return true and change the user type if the username is valid (There exists a user with that username).
-     * Else, return false.
-     */
-    public boolean changeUserType(String username, UserType type) {
-        // If the users HashMap contains a User value with the key, username, set its UserType to type and return true.
-        if (userExists(username)) {
-            getUser(username).setUserType(type);
-            return true;
-        }
-        return false;
-    }
-
-    /**
-     * Authenticate a user if their password matches with the password associated with their username.
      *
-     * @param username the username of the user(String).
-     * @param password the password the user has entered(String).
-     * @return the username if the password entered matches with the password associated with the username.
-     * ELse, return null.
      */
-    public String authenticateUser(String username, String password) {
-        if (userExists(username)) {
-            if (getUser(username).getPassword().equals(password))
-                return username;
-        }
-        return null;
+    public void changeUserType(String username, UserType type) {
+        getUser(username).setUserType(type);
     }
 
     /**
@@ -82,7 +52,7 @@ public class AccountManager implements Serializable {
      * @return that user if a user with that username exists.
      * ELse, return null.
      */
-    User getUser(String username) {
+    public User getUser(String username) {
         return userJsonDatabase.read(username);
     }
 
@@ -90,11 +60,10 @@ public class AccountManager implements Serializable {
      * Getter for user type.
      *
      * @param username username
-     * @return User.UserType of the user; null if user DNE.
+     * @return User.UserType of the user
      */
     public UserType getUserType(String username) {
-        User user = getUser(username);
-        return user == null ? null : user.getUserType();
+        return getUser(username).getUserType();
     }
 
     /**
@@ -112,7 +81,7 @@ public class AccountManager implements Serializable {
     }
 
     /**
-     * Checks if user exists in users dictionary.
+     * Checks if user exists in users database.
      *
      * @param username username of user to check
      * @return true if user exists
