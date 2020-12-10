@@ -1,5 +1,6 @@
 package TestUseCase;
 
+import Controllers.AccountController;
 import UseCases.AccountManager;
 import Util.UserType;
 import org.junit.Test;
@@ -12,8 +13,9 @@ public class TestAccountManager {
 
     @Test
     public void test_createUser() {
+        AccountController accountController = new AccountController();
         AccountManager accountManager = new AccountManager();
-        accountManager.createUser("Jason", "Jason_baba", "Jason123", UserType.ATTENDEE);
+        accountController.createUser("Jason", "Jason_baba", "Jason123", "Jason123",UserType.ATTENDEE);
         assertEquals(false, accountManager.getUser("jason_baba") == null);
         assertEquals(true, accountManager.getUser("jason_2") == null);
     }
@@ -21,7 +23,8 @@ public class TestAccountManager {
     @Test
     public void test_changeUserType() {
         AccountManager accountManager = new AccountManager();
-        accountManager.createUser("Jason", "Jason_baba", "Jason123", UserType.ATTENDEE);
+        AccountController accountController = new AccountController();
+        accountController.createUser("Jason", "Jason_baba", "Jason123","Jason123",  UserType.ATTENDEE);
         accountManager.changeUserType("Jason_baba", UserType.SPEAKER);
         assertFalse(accountManager.getUser("jason_baba").getUserType() == UserType.ATTENDEE);
         assertEquals(true, accountManager.getUser("jason_baba").getUserType() == UserType.SPEAKER);
