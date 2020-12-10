@@ -3,6 +3,7 @@ package ui.view;
 import Presenters.LoginPresenter;
 import Presenters.MainMenuPresenter;
 import Presenters.MainPresenter;
+import Presenters.SignUpPresenter;
 import Util.UserType;
 
 import javax.swing.*;
@@ -74,7 +75,9 @@ public class LoginView extends JPanel implements View {
      * Method triggered when user presses sign up button.
      */
     private void signUp() {
-        //todo
+        MainPresenter mp = presenter.getMainPresenter();
+        SignUpPresenter su = new SignUpPresenter(mp);
+        mp.addPresenter(su);
     }
 
     @Override
