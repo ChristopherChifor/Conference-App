@@ -122,16 +122,14 @@ public class EventController {
     /**
      * Method for checking if user can sign up for an event (calls scheduleManager.canSignUpForEvent())
      *
-     * @param username  the user being checked.
      * @param eventName the name of event.
      * @return true iff
-     * 1) attendee exists
-     * 2) event exists
-     * 3) event has not occurred
-     * 4) the event is not full
+     * 1) event exists
+     * 2) event has not occurred
+     * 3) the event is not full
      */
-    public boolean canSignUpForEvent(String username, String eventName) {
-        return scheduleManager.canSignUpForEvent(username, eventName);
+    public boolean canSignUpForEvent(String eventName) {
+        return scheduleManager.canSignUpForEvent(eventName);
     }
 
     /**

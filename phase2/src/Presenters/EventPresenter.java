@@ -28,7 +28,7 @@ public class EventPresenter implements Presenter{
     }
 
     public boolean canSignUpForEvent(String eventName) {
-        return eventController.canSignUpForEvent(username, eventName);
+        return eventController.canSignUpForEvent(eventName);
     }
 
     /**
