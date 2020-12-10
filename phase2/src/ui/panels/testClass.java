@@ -1,6 +1,7 @@
 package ui.panels;
 
 import Entities.User;
+import ui.AppWindow;
 import ui.state.EventBundle;
 import ui.state.EventEditBundle;
 import ui.view.*;
@@ -31,12 +32,13 @@ public class testClass {
 //                .getInstance(), "1:00");
 //        frame.add(new EventView(bundle, User.UserType.ORGANIZER));
 
-        frame.add(new OrganizerView());
+//        frame.add(new OrganizerView());
+//
+//        frame.setVisible(true);
+//        frame.pack();
+//        frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 
-        frame.setVisible(true);
-        frame.pack();
-        frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-
+        AppWindow w = new AppWindow(null);
 
     }
 }
