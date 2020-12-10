@@ -11,6 +11,12 @@ public class Conversation implements Serializable {
     private String userOne, userTwo;
     private ArrayList<Message> messages = new ArrayList<Message>();
     private boolean isRead;
+
+    /**
+     *
+     * @param userOne
+     * @param userTwo
+     */
     public Conversation(String userOne, String userTwo) {
         this.userOne = userOne;
         this.userTwo = userTwo;
