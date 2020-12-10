@@ -12,8 +12,8 @@ public class MessageController {
     private MessageManager messageManager;
     private AccountManager accountManager;
 
-    public MessageController(MessageManager messageManager) {
-        this.messageManager = messageManager;
+    public MessageController() {
+        messageManager = new MessageManager();
     }
 
     public List<String> getInbox(String username) {

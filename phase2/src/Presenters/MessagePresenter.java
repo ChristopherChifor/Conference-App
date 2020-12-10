@@ -14,10 +14,12 @@ import java.util.List;
 public class MessagePresenter implements Presenter{
     private MessageController messageController;
     private String username;
+    private MainPresenter mainPresenter;
 
-    public MessagePresenter(MessageController messageController, String username) {
-        this.messageController = messageController;
+    public MessagePresenter(String username, MainPresenter mainPresenter) {
         this.username = username;
+        messageController = new MessageController();
+        this.mainPresenter = mainPresenter;
     }
 
     public List<String> getInbox() {
@@ -68,5 +70,10 @@ public class MessagePresenter implements Presenter{
     @Override
     public View makeView() {
         return new MessageView(this);
+    }
+
+    @Override
+    public MainPresenter getMainPresenter() {
+        return mainPresenter;
     }
 }

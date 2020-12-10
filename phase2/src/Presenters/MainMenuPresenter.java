@@ -7,18 +7,21 @@ import ui.view.View;
 /**
  * A presenter for the main menu
  */
-public class MainMenuPresenter implements Presenter{
+public class MainMenuPresenter implements Presenter {
     private final UserType type;
     private final String username;
+    private MainPresenter mainPresenter;
 
     /**
      * Constructor
-     * @param type UserType of the user to whom the presenter belongs.
+     *
+     * @param type     UserType of the user to whom the presenter belongs.
      * @param username user's username.
      */
-    public MainMenuPresenter(UserType type, String username) {
+    public MainMenuPresenter(UserType type, String username, MainPresenter mainPresenter) {
         this.type = type;
         this.username = username;
+        this.mainPresenter = mainPresenter;
     }
 
     public UserType getType() {
@@ -32,5 +35,10 @@ public class MainMenuPresenter implements Presenter{
     @Override
     public View makeView() {
         return new MainMenuView(this);
+    }
+
+    @Override
+    public MainPresenter getMainPresenter() {
+        return mainPresenter;
     }
 }

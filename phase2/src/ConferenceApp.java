@@ -1,3 +1,4 @@
+import Presenters.LoginPresenter;
 import Presenters.MainPresenter;
 
 /**
@@ -5,6 +6,7 @@ import Presenters.MainPresenter;
  */
 public class ConferenceApp {
     public static void main(String[] args) {
-        //MainPresenter pres = new MainPresenter();
+        MainPresenter pres = new MainPresenter();
+        pres.addPresenter(new LoginPresenter(pres));
     }
 }

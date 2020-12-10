@@ -6,15 +6,17 @@ import ui.view.View;
 public class UserSettingsPresenter implements Presenter{
     private boolean organizerMode;
     private String username;
+    private MainPresenter mainPresenter;
 
     /**
      * Constructor
      * @param organizerMode is this presenter being accessed by organizer?
      * @param username username of user BEING accessed.
      */
-    public UserSettingsPresenter(boolean organizerMode, String username) {
+    public UserSettingsPresenter(boolean organizerMode, String username, MainPresenter mainPresenter) {
         this.organizerMode = organizerMode;
         this.username = username;
+        this.mainPresenter=mainPresenter;
     }
 
     @Override
@@ -28,5 +30,10 @@ public class UserSettingsPresenter implements Presenter{
 
     public String getUsername() {
         return username;
+    }
+
+    @Override
+    public MainPresenter getMainPresenter() {
+        return mainPresenter;
     }
 }

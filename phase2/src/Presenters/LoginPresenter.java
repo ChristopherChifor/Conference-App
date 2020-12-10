@@ -8,8 +8,10 @@ import ui.view.View;
 public class LoginPresenter implements Presenter{
 
     private AccountController accountController;
+    private MainPresenter mainPresenter;
 
-    public LoginPresenter() {
+    public LoginPresenter(MainPresenter mainPresenter) {
+        this.mainPresenter = mainPresenter;
         accountController = new AccountController();
     }
 
@@ -38,5 +40,10 @@ public class LoginPresenter implements Presenter{
     @Override
     public View makeView() {
         return new LoginView(this);
+    }
+
+    @Override
+    public MainPresenter getMainPresenter() {
+        return mainPresenter;
     }
 }

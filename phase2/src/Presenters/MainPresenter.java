@@ -47,4 +47,9 @@ public class MainPresenter implements Presenter{
     public View makeView() {
         return null;
     }
+
+    @Override
+    public MainPresenter getMainPresenter() {
+        return this;
+    }
 }
