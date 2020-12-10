@@ -120,21 +120,17 @@ public class ScheduleManager implements Serializable {
     }
 
     /**
-     * Gets list of attendees (as strings) of an event
+     * Gets set of attendees (as strings) of an event
      *
      * @param eventName Name of Event that we want attendees from
      * @return the list of attendees of the event (is also empty if the event does not exist)
      */
-    public ArrayList<String> getEventAttendees(String eventName) {
-        ArrayList<String> attendees = new ArrayList<>();
+    public Set<String> getEventAttendees(String eventName) {
+        return getEvent(eventName).getAttendees();
+    }
 
-        if (eventExists(eventName)) {
-            for (String e : getEvent(eventName).getAttendees()) {
-                attendees.add(e);
-            }
-        }
-
-        return attendees;
+    public boolean inEvent(String eventName, String username) {
+        return getEvent(eventName).getAttendees().contains(username);
     }
 
     /**

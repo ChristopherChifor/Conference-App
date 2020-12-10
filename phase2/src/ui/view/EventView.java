@@ -1,5 +1,6 @@
 package ui.view;
 
+import Presenters.EventPresenter;
 import Util.UserType;
 import ui.state.EventBundle;
 
@@ -28,10 +29,11 @@ public class EventView extends JPanel implements View {
 
     private final UserType type;
     private final GridBagConstraints cst = new GridBagConstraints();
+    private final EventPresenter eventPresenter;
 
-    public EventView(EventBundle event, UserType type) {
-        //TODO PASS IN PRESENTER
-
+    public EventView(EventBundle event, UserType type, EventPresenter eventPresenter) {
+        
+        this.eventPresenter = eventPresenter;
         this.event = event;
         this.type = type;
 
@@ -98,7 +100,7 @@ public class EventView extends JPanel implements View {
         switch (this.type) {
             case ATTENDEE:
             case VIP:
-                boolean enrolled = true;// TODO FETCH IF USER ENROLLED IN THIS EVENT
+                boolean enrolled = eventPresenter.attendeeInEvent(event.getTitle());
                 if (enrolled) {
                     add(unenrollButton, cst);
                 } else {
@@ -135,12 +137,11 @@ public class EventView extends JPanel implements View {
      */
     private void unenroll() {
         if (!showConfirmDialog("Are you sure you want to unenroll?\nYou may be unable to re-enroll later.")) return;
+        eventPresenter.cancelEnrolment(event.getTitle());
         remove(unenrollButton);
         add(enrollButton, cst);
         repaint();
         revalidate();
-
-        //TODO UNENROLL USER FROM EVENT
     }
 
     /**
@@ -148,18 +149,17 @@ public class EventView extends JPanel implements View {
      * Assumes the user is attendee and not enrolled in this event.
      */
     private void enroll() {
-        boolean canEnroll = true;//TODO CHECK IF USER CAN ENROLL IN THIS EVENT
+        boolean canEnroll = eventPresenter.canSignUpForEvent(event.getTitle());
 
         if (!canEnroll) {
             showWarningDialog("Sorry, it looks like you can't enroll in this event.");
             return;
         }
+        eventPresenter.signUpEvent(event.getTitle());
         remove(enrollButton);
         add(unenrollButton, cst);
         repaint();
         revalidate();
-
-        // TODO ENROLL USER IN THIS EVENT
     }
 
     /**

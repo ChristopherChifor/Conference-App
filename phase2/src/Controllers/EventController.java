@@ -16,7 +16,8 @@ public class EventController {
 
     private ScheduleManager scheduleManager;
 
-    public EventController() {
+    public EventController(ScheduleManager scheduleManager) {
+        this.scheduleManager = scheduleManager;
         pdfConverter = new PDFConverter();
     }
 
@@ -24,15 +25,34 @@ public class EventController {
      * Cancels enrolment of current user from event.
      * @param eventName name of event.
      */
-    void cancelEnrolment(String eventName, String username) {
+    public void cancelEnrolment(String eventName, String username) {
             scheduleManager.removeFromEvent(username, eventName);
+    }
+
+    public boolean attendeeInEvent(String eventName, String username) {
+        return scheduleManager.inEvent(eventName, username);
+    }
+
+    /**
+     * Method for checking if user can sign up for an event (calls scheduleManager.canSignUpForEvent())
+     *
+     * @param username  the user being checked.
+     * @param eventName the name of event.
+     * @return true iff
+     * 1) attendee exists
+     * 2) event exists
+     * 3) event has not occurred
+     * 4) the event is not full
+     */
+    public boolean canSignUpForEvent(String username, String eventName) {
+        return scheduleManager.canSignUpForEvent(username, eventName);
     }
 
     /**
      *  Signs up attendee for event
      * @param eventName name of the event
      */
-    public void signUpEvent(String eventName, String username) {
+    public void signUpEvent(String username, String eventName) {
         scheduleManager.signUpForEvent(username, eventName);
     }
 

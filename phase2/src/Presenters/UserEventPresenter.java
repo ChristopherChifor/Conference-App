@@ -12,7 +12,6 @@ public class UserEventPresenter {
 
     public UserEventPresenter(String username) {
         System.out.println("created a new presenter");
-        this.eventController = new EventController();
         this.username = username;
     }
 
