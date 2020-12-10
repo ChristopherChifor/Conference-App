@@ -2,10 +2,10 @@ package UseCases;
 
 import Entities.User;
 import Gateways.JsonDatabase;
+import Util.UserType;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -32,7 +32,7 @@ public class AccountManager implements Serializable {
      * @return true if the user is created (when the username hasn't been taken).
      * Else, return false.
      */
-    public boolean createUser(String name, String username, String password, User.UserType type) {
+    public boolean createUser(String name, String username, String password, UserType type) {
         if (!userExists(username)) {
             User newUser = new User(name, username, password, type);
             // Add the User object to the users HashMap.
@@ -50,7 +50,7 @@ public class AccountManager implements Serializable {
      * @return true and change the user type if the username is valid (There exists a user with that username).
      * Else, return false.
      */
-    public boolean changeUserType(String username, User.UserType type) {
+    public boolean changeUserType(String username, UserType type) {
         // If the users HashMap contains a User value with the key, username, set its UserType to type and return true.
         if (userExists(username)) {
             getUser(username).setUserType(type);
@@ -92,7 +92,7 @@ public class AccountManager implements Serializable {
      * @param username username
      * @return User.UserType of the user; null if user DNE.
      */
-    public User.UserType getUserType(String username) {
+    public UserType getUserType(String username) {
         User user = getUser(username);
         return user == null ? null : user.getUserType();
     }

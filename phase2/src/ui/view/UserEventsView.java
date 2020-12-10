@@ -1,6 +1,6 @@
 package ui.view;
 
-import Entities.User.UserType;
+import Util.UserType;
 import Presenters.UserEventPresenter;
 
 import javax.swing.*;

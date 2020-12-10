@@ -1,5 +1,7 @@
 package Entities;
 
+import Util.UserType;
+
 import java.io.Serializable;
 
 /**
@@ -9,8 +11,6 @@ public class User implements Serializable {
     private String name;
     private String username;
     private String password;
-
-    public enum UserType { ATTENDEE, ORGANIZER, SPEAKER, VIP}
 
     private UserType userType;
 

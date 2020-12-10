@@ -1,6 +1,6 @@
 package ui.view;
 
-import Entities.User;
+import Util.UserType;
 import ui.state.EventBundle;
 
 import javax.swing.*;
@@ -26,10 +26,10 @@ public class EventView extends JPanel implements View {
     private final JButton messageEvent = new JButton("Message Event");
     private final JButton messageSpeakerButton = new JButton("\u2709");
 
-    private final User.UserType type;
+    private final UserType type;
     private final GridBagConstraints cst = new GridBagConstraints();
 
-    public EventView(EventBundle event, User.UserType type) {
+    public EventView(EventBundle event, UserType type) {
         //TODO PASS IN PRESENTER
 
         this.event = event;

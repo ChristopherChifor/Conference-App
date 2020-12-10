@@ -1,8 +1,8 @@
 package Controllers;
 
-import Entities.User;
 import UseCases.ScheduleManager;
 import Util.PDFConverter;
+import Util.UserType;
 
 import java.util.ArrayList;
 
@@ -10,7 +10,7 @@ import java.util.ArrayList;
  * @author parssa
  */
 public class EventController {
-    private User.UserType userType;
+    private UserType userType;
     private PDFConverter pdfConverter; // TODO make sure this gets set
 
     private ScheduleManager scheduleManager;
