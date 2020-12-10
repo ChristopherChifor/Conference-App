@@ -15,10 +15,13 @@ import java.util.stream.Collectors;
 public class ScheduleManager implements Serializable {
     private IGateway<Event> eventJsonDatabase;
     private IGateway<ScheduleEntry> scheduleEntryJsonDatabase;
+
     private AccountManager accountManager; // todo make sure this gets set
-    private RoomManager roomManager; // todo make sure this gets set
+
 
     public ScheduleManager() {
+
+        accountManager = new AccountManager();
         eventJsonDatabase = new JsonDatabase<>("Event", Event.class);
         scheduleEntryJsonDatabase = new JsonDatabase<>("Schedule Entry", ScheduleEntry.class);
     }
@@ -32,16 +35,10 @@ public class ScheduleManager implements Serializable {
      * @return true if the event was successfully added
      */
     private boolean addNewEvent(String roomName, String eventName, Calendar time, int duration) {
-        if (!eventExists(eventName)) {
-            return false;
-        }
-        if (getEvent(eventName).getEventCapacity() > roomManager.getRoom(roomName).getRoomCapacity()) {
-            return false;
-        }
-        // TODO add if room is busy during time
+
         ScheduleEntry scheduleEntry = new ScheduleEntry(eventName, roomName, time, duration);
         scheduleEntryJsonDatabase.write(scheduleEntry, eventName);
-        return true;
+        return true; //TODO maybe get rid of bool
     }
 
     /**
@@ -63,7 +60,7 @@ public class ScheduleManager implements Serializable {
      * @param username Username of the speaker
      * @return List of ScheduleEntries containing only event's a Speaker is speaking at
      */
-    protected List<ScheduleEntry> getSpeakerEvents(String username) {
+    public List<ScheduleEntry> getSpeakerEvents(String username) {
         return eventJsonDatabase.filterStream(e->e.getSpeakers()
                 .contains(username))
                 .map(e->scheduleEntryJsonDatabase.read(e.getName()))
@@ -134,10 +131,7 @@ public class ScheduleManager implements Serializable {
      * @return true if an event exists and speaker is added
      */
     public boolean assignSpeaker(String speaker, String event) {
-        if (eventExists(event)) {
-            return getEvent(event).setSpeaker(event);
-        }
-        return false;
+        return getEvent(event).setSpeaker(event);
     }
 
     /**
@@ -148,15 +142,23 @@ public class ScheduleManager implements Serializable {
      * @return true if no other event has that name and capacity is positive and new Event is created
      */
     public boolean createEvent(String eventName, int eventCapacity, String roomName, Calendar time, int duration) {
-        if (eventExists(eventName)) return false;
         Event event = new Event(eventName);
-        if (!event.setEventCapacity(eventCapacity)) {
-            return false;
-        }
         eventJsonDatabase.write(event, eventName);
+        setEventCapacity(eventName, eventCapacity);
         addNewEvent(roomName, eventName, time, duration);
         return true;
     }
+
+    /**
+     * Setter for the capacity of events
+     *
+     * @param capacity: capacity of event
+     * @return true if capacity is positive and is successfully set
+     */
+    public boolean setEventCapacity(String event, int capacity) {
+        return getEvent(event).setEventCapacity(capacity);
+    }
+
 
     /**
      * Method for checking if user can sign up for an event.
