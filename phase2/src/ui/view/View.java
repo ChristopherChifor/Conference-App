@@ -16,6 +16,15 @@ public interface View {
     }
 
     /**
+     * Brings up a dialog with message to notify user of general message
+     *
+     * @param message message
+     */
+    default void showInfoDialog(String message) {
+        JOptionPane.showMessageDialog(null, message, "Info", JOptionPane.INFORMATION_MESSAGE);
+    }
+
+    /**
      * Brings up a dialog with message to notify user of error.
      *
      * @param message message

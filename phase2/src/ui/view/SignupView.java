@@ -1,5 +1,7 @@
 package ui.view;
 
+import Presenters.SignUpPresenter;
+
 import javax.swing.*;
 import java.awt.*;
 
@@ -13,7 +15,10 @@ public class SignupView extends JPanel implements View{
     private JPasswordField confirmPasswordField = new JPasswordField();
     private JButton signUpButton = new JButton("Sign Up");
 
-    public SignupView() {
+    private SignUpPresenter presenter;
+
+    public SignupView(SignUpPresenter presenter) {
+        this.presenter = presenter;
         setLayout(new GridBagLayout());
         GridBagConstraints cst = new GridBagConstraints();
         cst.gridx = 0;
@@ -22,6 +27,8 @@ public class SignupView extends JPanel implements View{
         cst.insets = new Insets(7, 7, 7, 7);
 
         signUpButton.addActionListener(e -> signUp());
+
+        usernameField.setPreferredSize(new Dimension(150, 20));
 
         add(new JLabel("Username: "),cst);
         cst.gridx = 1;
@@ -58,7 +65,17 @@ public class SignupView extends JPanel implements View{
         String password = new String(passwordField.getPassword());
         String confirmPassword = new String(confirmPasswordField.getPassword());
 
-        // TODO SEND THIS STUFF TO PRESENTER; CHECK IF VALID INFO AND CREATE ACCOUNT
+        //todo delete print when done:
+        System.out.println(String.format("sign up attempt%nusername: %s%nname: %s%npassword: %s%nconfirm: %s%n", username, name, password, confirmPassword));
+
+        boolean success = presenter.signUp(name, username, password, confirmPassword);
+        if(!success){
+            showErrorDialog("Cannot create account. (username taken or mismatched password)");
+            return;
+        }
+        showInfoDialog("Successfully Created Account!");
+        presenter.getMainPresenter().back();
+
     }
 
     @Override

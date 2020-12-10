@@ -1,6 +1,8 @@
 package ui.panels;
 
 import Entities.User;
+import UseCases.AccountManager;
+import Util.UserType;
 import ui.AppWindow;
 import ui.state.EventBundle;
 import ui.state.EventEditBundle;
@@ -38,7 +40,8 @@ public class testClass {
 //        frame.pack();
 //        frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 
-        AppWindow w = new AppWindow(null);
+        AccountManager man = new AccountManager();
+        man.createUser("admin", "admin", "admin", UserType.ORGANIZER);
 
     }
 }

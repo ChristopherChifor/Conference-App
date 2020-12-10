@@ -25,18 +25,6 @@ public class LoginPresenter implements Presenter{
         return accountController.authenticateUser(username, password);
     }
 
-    /**
-     *  Creates a new user
-     * @param name name of user
-     * @param username username of user
-     * @param password password of user
-     * @param type usertype of user
-     * @return true if user was successfully created
-     */
-    public boolean createUser(String name, String username, String password, UserType type) {
-        return accountController.createUser(name, username, password, type);
-    }
-
     @Override
     public View makeView() {
         return new LoginView(this);

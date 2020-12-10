@@ -41,10 +41,12 @@ public class AccountController {
      * @return true if the user is created (when the username hasn't been taken).
      * Else, return false.
      */
-    public boolean createUser(String name, String username, String password, UserType type) {
+    public boolean createUser(String name, String username, String password, String retype, UserType type) {
         if (!accountManager.userExists(username)) {
-            accountManager.createUser(name, username, password, type);
-            return true;
+            if (password == retype) {
+                accountManager.createUser(name, username, password, type);
+                return true;
+            }
         }
         return false;
     }
