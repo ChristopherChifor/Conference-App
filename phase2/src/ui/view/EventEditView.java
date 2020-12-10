@@ -62,6 +62,7 @@ public class EventEditView extends JPanel implements View {
     private JDatePickerImpl dateField = new JDatePickerImpl(datePanel, formatter);
 
     private JTextField durationField = new JTextField();
+    private JTextField capacityField = new JTextField();
 
     private JComboBox<String> roomField = new JComboBox<>();
     private JTextArea descField = new JTextArea();
@@ -118,13 +119,20 @@ public class EventEditView extends JPanel implements View {
         cst.gridx = 1;
         add(roomField, cst);
         cst.gridy = 5;
+
+        cst.gridx = 0;
+        add(new JLabel("Capacity:"), cst);
+        cst.gridx = 1;
+        add(capacityField, cst);
+        cst.gridy = 6;
+
         cst.gridx = 0;
         cst.gridwidth = 2;
         add(new JLabel("Description"), cst);
-        cst.gridy = 6;
+        cst.gridy = 7;
         cst.gridheight = 2;
         add(descField, cst);
-        cst.gridy = 8;
+        cst.gridy = 9;
         cst.gridheight = 1;
         cst.gridwidth = 1;
         add(saveButton, cst);
@@ -179,7 +187,7 @@ public class EventEditView extends JPanel implements View {
      * Gets the values from the fields as EventBundle
      *
      * @return EventBundle of info from fields.
-     * @throws ParseException iff user entered invalid input, i.e., invalid time or duration
+     * @throws ParseException iff user entered invalid input, i.e., invalid time or duration or capacity
      */
     public EventBundle getEventBundle() throws ParseException {
         String title = titleField.getText();
@@ -194,6 +202,14 @@ public class EventEditView extends JPanel implements View {
             throw new ParseException("Invalid duration entered", 0);
         }
 
+        String cap = capacityField.getText();
+        int capacity = 0;
+        try{
+            capacity = Integer.parseInt(cap);
+        } catch (NumberFormatException e) {
+            throw new ParseException("Invalid capacity entered",0);
+        }
+
 
         // todo mega sus stuff:
         String timeString = timeField.getText();
@@ -201,7 +217,7 @@ public class EventEditView extends JPanel implements View {
         Calendar dateTime = (Calendar) dateField.getModel().getValue();
         dateTime.setTime(timeNoDate);
 
-        return new EventBundle(title, description, speaker, room, dateTime, duration);
+        return new EventBundle(title, description, speaker, room, dateTime, duration, capacity);
     }
 
     @Override

@@ -14,6 +14,7 @@ public class EventBundle {
     protected final String room;
     protected final Calendar time;
     protected final String duration;
+    protected final int capacity;
 
     /**
      * Constructor.
@@ -24,14 +25,16 @@ public class EventBundle {
      * @param room        event room (id/name)
      * @param time        a calendar object of the event date and time
      * @param duration    the duration of the event as a string; hours and minutes (e.g. "2:30")
+     * @param capacity    the capacity of this event (equal to or smaller than room capacity)
      */
-    public EventBundle(String title, String description, List<String> speaker, String room, Calendar time, String duration) {
+    public EventBundle(String title, String description, List<String> speaker, String room, Calendar time, String duration, int capacity) {
         this.title = title;
         this.description = description;
         this.speaker = speaker;
         this.room = room;
         this.time = time;
         this.duration = duration;
+        this.capacity = capacity;
     }
 
     /**
@@ -86,5 +89,14 @@ public class EventBundle {
      */
     public String getDuration() {
         return duration;
+    }
+
+    /**
+     * Capacity getter
+     *
+     * @return capacity.
+     */
+    public int getCapacity() {
+        return capacity;
     }
 }

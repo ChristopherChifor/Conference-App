@@ -3,10 +3,7 @@ package ui.panels;
 import Entities.User;
 import ui.state.EventBundle;
 import ui.state.EventEditBundle;
-import ui.view.EventEditView;
-import ui.view.EventView;
-import ui.view.UserEventsView;
-import ui.view.UserSettingsView;
+import ui.view.*;
 
 import javax.swing.*;
 import java.awt.*;
@@ -30,9 +27,11 @@ public class testClass {
 //        frame.add(new UserSettingsView(false, "Alex"));
 //        frame.add(new UserEventsView(User.UserType.ORGANIZER));
 
-        EventBundle bundle = new EventBundle("Epic event", "This is a description of this epic event.", speakers, "Event Hall", Calendar
-                .getInstance(), "1:00");
-        frame.add(new EventView(bundle, User.UserType.ORGANIZER));
+//        EventBundle bundle = new EventBundle("Epic event", "This is a description of this epic event.", speakers, "Event Hall", Calendar
+//                .getInstance(), "1:00");
+//        frame.add(new EventView(bundle, User.UserType.ORGANIZER));
+
+        frame.add(new OrganizerView());
 
         frame.setVisible(true);
         frame.pack();
