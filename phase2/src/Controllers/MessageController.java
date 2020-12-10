@@ -1,6 +1,7 @@
 package Controllers;
 
 import Entities.Message;
+import UseCases.AccountManager;
 import UseCases.MessageManager;
 
 import java.util.List;
@@ -9,6 +10,7 @@ import java.util.List;
 public class MessageController {
 
     private MessageManager messageManager;
+    private AccountManager accountManager;
 
     public MessageController(MessageManager messageManager) {
         this.messageManager = messageManager;
@@ -30,8 +32,22 @@ public class MessageController {
         messageManager.markAsRead(conversation);
     }
 
-    public void sendMessage(String username, String recipient, String messageText) {
-        messageManager.sendMessage(username, recipient, messageText);
+    /**
+     * If participants of this message have a conversation, adds message to conversation. If not,
+     * makes a new conversation for sender and recipient and adds message to it.
+     * <p>
+     * In order for the message to be sent, the fields may not be null. If they are, the message is
+     * not sent, and method returns false.
+     *
+     * @param sender sender of message
+     * @param recipient recipient of message
+     * @param messageText body of message
+     * @return boolean if sent
+     */
+    public boolean sendMessage(String sender, String recipient, String messageText) {
+        if (sender == null || recipient == null || messageText == null) return false;
+        messageManager.sendMessage(sender, recipient, messageText);
+        return true;
     }
 
     public void deleteMessages(List<String> messageIds) {
@@ -42,11 +58,15 @@ public class MessageController {
         messageManager.archiveMessages(messageIds);
     }
 
+    public List<Message> getArchivedMessages(String username) {
+        return messageManager.getArchivedMessages(username);
+    }
+
     public boolean canMessage(String username, String otherUser) {
         return messageManager.canMessage(username, otherUser);
     }
 
-    public List<Message> getArchivedMessages(String username) {
-        return messageManager.getArchivedMessages(username);
+    public List<String> getContacts(String username) {
+        return messageManager.getContacts(username);
     }
 }

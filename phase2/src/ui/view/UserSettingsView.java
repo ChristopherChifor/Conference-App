@@ -1,5 +1,7 @@
 package ui.view;
 
+import Presenters.LoginPresenter;
+import Presenters.UserSettingsPresenter;
 import Util.UserType;
 
 import javax.swing.*;
@@ -11,7 +13,7 @@ import java.awt.*;
  * be changed when accessed by organizer
  */
 public class UserSettingsView extends JPanel implements View {
-    private static final UserType[] types = {UserType.ATTENDEE, UserType.ORGANIZER, UserType.SPEAKER}; // TODO ADD MORE TYPES OR FETCH ARRAY
+    private static final UserType[] types = {UserType.ATTENDEE, UserType.ORGANIZER, UserType.SPEAKER, UserType.VIP};
     private final String user;
 
     private final JLabel name;
@@ -26,12 +28,13 @@ public class UserSettingsView extends JPanel implements View {
     private final JButton events = new JButton("Events");
     private final JButton save = new JButton("Save");
 
-    public UserSettingsView(boolean organizerMode, String user) {
-        // TODO CHANGE CONSTRUCTOR TO PASS IN A PRESENTER (FOR CHANGING USER SETTINGS)
+    private UserSettingsPresenter userSettingsPresenter;
+
+    public UserSettingsView(boolean organizerMode, String user, UserSettingsPresenter userSettingsPresenter) {
         this.organizerMode = organizerMode;
         this.user = user;
-
-        name = new JLabel("<html><h1>Name</h1></html>"); // TODO FETCH NAME
+        // TODO I left off here @parssa
+        name = new JLabel(String.format("<html><h1>%s</h1></html>", user)); // TODO FETCH NAME
         username = new JLabel(user);
         password = new JPasswordField("password"); //TODO FETCH PASSWORD
         typeField.setSelectedItem(UserType.ATTENDEE); //TODO FETCH USERTYPE

@@ -9,7 +9,7 @@ import java.util.List;
 /**
  * @author Chris and Nikita
  */
-public class MessagePresenter {
+public class MessagePresenter{
     private MessageController messageController;
     private String username;
 
@@ -57,6 +57,9 @@ public class MessagePresenter {
 
     public List<Message> getArchivedMessages() {
         return messageController.getArchivedMessages(username);
+    }
 
+    public List<String> getContacts() {
+        return messageController.getContacts(username);
     }
 }
