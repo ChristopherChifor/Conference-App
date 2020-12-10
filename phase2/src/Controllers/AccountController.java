@@ -3,6 +3,8 @@ package Controllers;
 import UseCases.AccountManager;
 import Util.UserType;
 
+import java.util.List;
+
 /**
  * @author parssa
  */
@@ -67,5 +69,9 @@ public class AccountController {
             return true;
         }
         return false;
+    }
+
+    public List<String> getUsernamesOfType(UserType type){
+        return accountManager.getUsernamesOfType(type);
     }
 }

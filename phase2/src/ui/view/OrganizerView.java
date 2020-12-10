@@ -1,5 +1,6 @@
 package ui.view;
 
+import Presenters.OrganizerPresenter;
 import ui.panels.EventListPanel;
 
 import javax.swing.*;
@@ -18,22 +19,19 @@ public class OrganizerView extends JPanel implements View {
 
 
     // username lists:
-    private List<String> speakers = new ArrayList<>();
-    private List<String> attendees = new ArrayList<>();
-    private List<String> organizers = new ArrayList<>();
-    private List<String> vips = new ArrayList<>();
+    private List<String> speakers;
+    private List<String> attendees;
+    private List<String> organizers;
+    private List<String> vips;
 
-    public OrganizerView() {
-        //TODO GET PRESENTER
-        //TODO FETCH USERNAME LISTS
-        speakers.add("Obama");
-        speakers.add("Tom Cruïzé");
-        attendees.add("attendee5234");
-        attendees.add("attendee5235");
-        attendees.add("attendee5236");
-        attendees.add("attendee5237");
-        organizers.add("admin");
-        vips.add("\u2605\u2605\u2605"); // <-- delete this stuff (for testing)
+    private OrganizerPresenter presenter;
+
+    public OrganizerView(OrganizerPresenter presenter) {
+        this.presenter = presenter;
+        speakers = presenter.getSpeakers();
+        attendees = presenter.getAttendees();
+        organizers = presenter.getOrganizers();
+        vips = presenter.getVips();
 
         newRoomButton.addActionListener(e -> newRoom());
         newEventButton.addActionListener(e -> newEvent());
@@ -125,10 +123,7 @@ public class OrganizerView extends JPanel implements View {
 
         for (String username : usernames) {
             JButton userButton = new JButton(username);
-            userButton.addActionListener(e -> {
-                System.out.println("Pressed on " + username);
-                // todo open user's settings in organizer mode
-            });
+            userButton.addActionListener(e -> presenter.goToUser(username));
             panel.add(userButton, cst);
             cst.gridy++;
         }
