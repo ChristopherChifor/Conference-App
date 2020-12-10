@@ -16,12 +16,10 @@ public class ScheduleManager implements Serializable {
     private IGateway<Event> eventJsonDatabase;
     private IGateway<ScheduleEntry> scheduleEntryJsonDatabase;
 
-    private AccountManager accountManager; // todo make sure this gets set
 
 
     public ScheduleManager() {
 
-        accountManager = new AccountManager();
         eventJsonDatabase = new JsonDatabase<>("Event", Event.class);
         scheduleEntryJsonDatabase = new JsonDatabase<>("Schedule Entry", ScheduleEntry.class);
     }
@@ -145,8 +143,7 @@ public class ScheduleManager implements Serializable {
         Event event = new Event(eventName);
         eventJsonDatabase.write(event, eventName);
         setEventCapacity(eventName, eventCapacity);
-        addNewEvent(roomName, eventName, time, duration);
-        return true;
+        return addNewEvent(roomName, eventName, time, duration);
     }
 
     /**
@@ -163,17 +160,14 @@ public class ScheduleManager implements Serializable {
     /**
      * Method for checking if user can sign up for an event.
      *
-     * @param username  the user being checked.
      * @param eventName the name of event.
      * @return true iff
-     * 1) attendee exists
-     * 2) event exists
-     * 3) event has not occurred
-     * 4) the event is not full
+     * 1) event exists
+     * 2) event has not occurred
+     * 3) the event is not full
      */
-    public boolean canSignUpForEvent(String username, String eventName) {
-        return !(accountManager.getUser(username) == null || !eventExists(eventName) ||
-                eventHasHappened(eventName) || eventFull(eventName));
+    public boolean canSignUpForEvent(String eventName) {
+        return !(!eventExists(eventName) || eventHasHappened(eventName) || eventFull(eventName));
     }
 
     /**
@@ -196,7 +190,7 @@ public class ScheduleManager implements Serializable {
      * @return true if succesfully signed up for event
      */
     public boolean signUpForEvent(String username, String event) {
-        if (canSignUpForEvent(username, event)) {
+        if (canSignUpForEvent(event)) {
             return eventJsonDatabase.read(event).addAttendeeToEvent(username);
         }
         return false;

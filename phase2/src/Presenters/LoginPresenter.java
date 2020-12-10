@@ -21,7 +21,7 @@ public class LoginPresenter implements Presenter{
      * @param password
      * @return
      */
-    public String tryLogin(String username, String password) {
+    public UserType tryLogin(String username, String password) {
         return accountController.authenticateUser(username, password);
     }
 

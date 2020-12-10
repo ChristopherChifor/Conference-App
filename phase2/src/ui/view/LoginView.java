@@ -57,17 +57,16 @@ public class LoginView extends JPanel implements View {
         String username = usernameField.getText();
         String password = new String(passwordField.getPassword());
 
-        String result = presenter.tryLogin(username, password);
+        UserType result = presenter.tryLogin(username, password);
 
         if(result == null){
             showErrorDialog("Username or Password Incorrect");
             return;
         }
-        //TODO GET USER TYPE
 
         // we're in
         MainPresenter mp = presenter.getMainPresenter();
-        MainMenuPresenter menu = new MainMenuPresenter(UserType.ATTENDEE, username, mp);
+        MainMenuPresenter menu = new MainMenuPresenter(result, username, mp);
         mp.addPresenter(menu);
     }
 
