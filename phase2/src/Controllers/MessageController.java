@@ -9,18 +9,17 @@ import java.util.List;
 public class MessageController {
 
     private MessageManager messageManager;
-    private String username; //TODO MAKE THIS REFERENCE PROPERLY
 
     public MessageController(MessageManager messageManager) {
         this.messageManager = messageManager;
     }
 
-    public List<String> getInbox() {
+    public List<String> getInbox(String username) {
         return messageManager.getMyInbox(username);
     }
 
-    public List<Message> getConversation(String otherUser) {
-        return messageManager.getMessages(username, otherUser);
+    public List<Message> getConversation(String sender, String otherUser) {
+        return messageManager.getMessages(sender, otherUser);
     }
 
     public boolean conversationIsRead(List<Message> messages) {
@@ -29,5 +28,25 @@ public class MessageController {
 
     public void markAsRead(List<Message> conversation) {
         messageManager.markAsRead(conversation);
+    }
+
+    public void sendMessage(String username, String recipient, String messageText) {
+        messageManager.sendMessage(username, recipient, messageText);
+    }
+
+    public void deleteMessages(List<String> messageIds) {
+        messageManager.deleteMessages(messageIds);
+    }
+
+    public void archiveMessages(List<Message> messageIds) {
+        messageManager.archiveMessages(messageIds);
+    }
+
+    public boolean canMessage(String username, String otherUser) {
+        return messageManager.canMessage(username, otherUser);
+    }
+
+    public List<Message> getArchivedMessages(String username) {
+        return messageManager.getArchivedMessages(username);
     }
 }

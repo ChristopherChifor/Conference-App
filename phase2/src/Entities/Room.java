@@ -48,8 +48,4 @@ public class Room implements Serializable {
         }
         return false;
     }
-
-    public String getString() {
-        return name;
-    }
 }

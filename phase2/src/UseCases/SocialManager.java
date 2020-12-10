@@ -16,14 +16,14 @@ public class SocialManager implements Serializable {
         this.scheduleManager = scheduleManager;
     }
 
-    // TODO UNUSED
-    // returns true if two usernames share an event in common
-    public boolean isInEventTogether(String username, String otherUsername) {
-
-        Schedule attendeeSchedule = scheduleManager.getAttendeeEvents(username);
-
-        return isUserInSchedule(otherUsername, attendeeSchedule);
-    }
+//    // TODO Remove this - parssa did this
+//    // returns true if two usernames share an event in common
+//    public boolean isInEventTogether(String username, String otherUsername) {
+//
+//        Schedule attendeeSchedule = scheduleManager.getAttendeeEvents(username);
+//
+//        return isUserInSchedule(otherUsername, attendeeSchedule);
+//    }
 
     /**
      * Method for checking if a user is in a given schedule

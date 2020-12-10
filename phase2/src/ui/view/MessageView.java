@@ -27,10 +27,8 @@ public class MessageView extends JPanel implements View {
 
     private MessagePresenter presenter;
 
-    private String username; //TODO FETCH USERNAME
-
-    public MessageView() throws HeadlessException {
-        // TODO LOAD PRESENTER (CHANGE THE CONSTRUCTOR)
+    public MessageView(MessagePresenter presenter) throws HeadlessException {
+        this.presenter = presenter;
 
         setLayout(new BorderLayout());
 
@@ -55,7 +53,7 @@ public class MessageView extends JPanel implements View {
                 JOptionPane.showMessageDialog(null, "Cannot send message to this address", "Bad Input", JOptionPane.ERROR_MESSAGE);
             }
 
-            // TODO SEND MESSAGETEXT TO SELECTEDUSERNAME
+            presenter.sendMessage(selectedUsername, messageText);
         });
 
         sendMessagePanel.add(messageField, BorderLayout.CENTER);
@@ -94,7 +92,8 @@ public class MessageView extends JPanel implements View {
         if (selectedUsername.equals("")) return;
         MessageDisplayPanel panel = panelMap.get(selectedUsername);
         List<Message> messages = panel.getSelectedMessages();
-        // TODO CALL PRESENTER TO DELETE MESSAGES
+
+        presenter.deleteMessages(messages);
 
 
         // removes selected from view
@@ -108,7 +107,7 @@ public class MessageView extends JPanel implements View {
         if (selectedUsername.equals("") || selectedUsername.equals("Archived")) return;
         MessageDisplayPanel panel = panelMap.get(selectedUsername);
         List<Message> messages = panel.getSelectedMessages();
-        // TODO CALL PRESENTER TO UPDATE THE ARCHIVE
+        presenter.markAsArchived(messages);
 
         MessageDisplayPanel archivePanel = panelMap.get("Archived");
         archivePanel.addMessageList(messages);
@@ -137,13 +136,10 @@ public class MessageView extends JPanel implements View {
             return;
         }
 
-        // TODO CHECK IF THE MESSAGE SENDING ACTION IS GOOD
+        if(!presenter.canMessage(username)) return;
         // TODO SEND THE MESSAGE; IF COULDN'T SEND A MESSAGE CALL showIncorrectInputDialog
-        boolean failed = false; //TODO CHANGE TO TRUE IF COULDN'T SEND.
 
-        if(failed) return;
-
-        List<Message> messages = new ArrayList<>(); //TODO GET MESSAGES WITH username FROM PRESENTER.
+        List<Message> messages = presenter.getConversation(username); //TODO GET MESSAGES WITH username FROM PRESENTER.
 
         // this code should only run if message was sent!
         if(conversations.contains(username)) return;
@@ -168,8 +164,9 @@ public class MessageView extends JPanel implements View {
             addMessageToggleButton(person, messages);
         }
 
-        List<Message> archivedMessages = new ArrayList<>(); // TODO GET ARCHIVED MESSAGES
+        List<Message> archivedMessages = presenter.getArchivedMessages();
         addMessageToggleButton("Archived", archivedMessages);
+
 
     }
 
@@ -184,7 +181,7 @@ public class MessageView extends JPanel implements View {
         conversations.add(text);
 
         // if conversation is unread, make button text bold.
-        if (presenter.isRead(messages)) {
+        if (presenter.isRead(messages)) { //todo change this to take user names
             buttonBold(senderButton);
         }
 
@@ -225,9 +222,8 @@ public class MessageView extends JPanel implements View {
         button.repaint();
         button.revalidate();
     }
-
     @Override
     public String getViewName() {
-        return String.format("%s's Messages", username);
+        return "Messages";
     }
 }

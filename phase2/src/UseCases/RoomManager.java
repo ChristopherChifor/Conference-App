@@ -2,17 +2,18 @@ package UseCases;
 
 import Entities.Event;
 import Entities.Room;
+import Gateways.JsonDatabase;
 
 import java.util.HashMap;
 
 public class RoomManager {
-    HashMap<String, Room> rooms; // should never be given out; its mutable
+   private JsonDatabase<Room> roomJsonDatabase;
 
     /**
      * Constructor for EventManager
      */
     public RoomManager() {
-        rooms = new HashMap<>();
+        roomJsonDatabase = new JsonDatabase<Room>("Room", Room.class);
     }
 
     /**
@@ -28,7 +29,7 @@ public class RoomManager {
         if (!room.setRoomCapacity(roomCapacity)) {
             return false;
         }
-        rooms.put(roomName, room);
+        roomJsonDatabase.write(room, roomName);
         return true;
     }
 
@@ -39,7 +40,7 @@ public class RoomManager {
      * @return true if room exists
      */
     public boolean roomExists(String roomName) {
-        return rooms.containsKey(roomName);
+        return roomJsonDatabase.getIds().contains(roomName);
     }
 
     /**
@@ -49,6 +50,6 @@ public class RoomManager {
      * @return the room if it exists and null otherwise
      */
     public Room getRoom(String roomName) {
-        return rooms.getOrDefault(roomName, null);
+        return roomJsonDatabase.read(roomName);
     }
 }

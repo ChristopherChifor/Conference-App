@@ -8,12 +8,19 @@ import Controllers.EventController;
 public class UserEventPresenter {
 
     private EventController eventController;
+    private String username;
+
+    public UserEventPresenter(String username) {
+        System.out.println("created a new presenter");
+        this.eventController = new EventController();
+        this.username = username;
+    }
 
     public UserEventPresenter(EventController eventController) {
         this.eventController = eventController;
     }
 
-    public void userScheduleToPDF() {
-        eventController.convertScheduleToPDF();
+    public void userScheduleToPDF(String filepath) {
+        eventController.convertScheduleToPDF(filepath, username);
     }
 }

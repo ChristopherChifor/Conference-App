@@ -32,15 +32,14 @@ public class UserEventsView extends JPanel implements View {
     private List<String> myEvents;
 
     private UserType type;
-    private String username;
+    private String username = "TODOOOO";
 
     private UserEventPresenter presenter;
 
-    public UserEventsView(UserEventPresenter presenter) {
+    public UserEventsView() {
 
         //TODO FETCH EVENTS OF THIS USER
-        //TODO FETCH USERNAME
-        this.presenter = presenter;
+        this.presenter = new UserEventPresenter(username);
         myEvents = new ArrayList<>();
         myEvents.add("Event 1");
         myEvents.add("Event 2");
@@ -183,9 +182,9 @@ public class UserEventsView extends JPanel implements View {
         if (val != JFileChooser.APPROVE_OPTION) return;
 
         File file = fc.getSelectedFile();
-        System.out.println("User wants to save to: " + file.toString());
+        System.out.println("User wants to save to: " + file.toString()+".pdf");
 
-        presenter.userScheduleToPDF(); // Converts user schedule to pdf
+        presenter.userScheduleToPDF(file.toString()+".pdf"); // Converts user schedule to pdf
 
     }
 
