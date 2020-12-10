@@ -4,13 +4,15 @@ import com.google.gson.Gson;
 
 import java.io.*;
 import java.util.*;
+import java.util.function.Predicate;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 /**
  * A Database class that stores T type objects as individual JSON files.
  * JSON Files are stored in: group_0058/phase2/database/objectName if the directory does not exist,
  * it is created.
- *
+ * <p>
  * Uses GSON library for serializing into JSON
  *
  * @param <T> objects being stored.
@@ -124,17 +126,51 @@ public class JsonDatabase<T> {
      * @return list of string ids. Null if could not access directory.
      */
     public List<String> getIds() {
+        Stream<String> stream = getIdStream();
+        if (stream == null) return null;
+        return stream.collect(Collectors.toList());
+
+    }
+
+    /**
+     * Gets a stream of T elements from json that match the predicate.
+     * @param predicate a predicate checked against each element to see if it should be included
+     * @return a stream of elements that match the predicate.
+     */
+    public Stream<T> filterStream(Predicate<T> predicate) {
+        Stream<String> stream = getIdStream();
+        if (stream == null) return null;
+        return stream.map(e -> read(e))
+                .filter(predicate);
+    }
+
+    /**
+     * Gets a list of T elements from json that match the predicate.
+     * @param predicate a predicate checked against each element to see if it should be included
+     * @return a list of elements that match the predicate
+     */
+    public List<T> filterList(Predicate<T> predicate){
+        Stream<T> stream = filterStream(predicate);
+        if (stream == null) return null;
+        return stream.collect(Collectors.toList());
+    }
+
+    /**
+     * Private helper method for getting a stream of id's of stored elements.
+     *
+     * @return stream of strings that are id's; null if Security Exception
+     */
+    private Stream<String> getIdStream() {
         try {
             return Arrays.stream(directory.list())
                     .filter(s -> s.contains(objectName))
                     .filter(s -> s.contains(".json"))
-                    .map(s -> s.substring(objectName.length() + 1, s.length() - ".json".length()))
-                    .collect(Collectors.toList());
-
+                    .map(s -> s.substring(objectName.length() + 1, s.length() - ".json".length()));
         } catch (SecurityException e) {
             e.printStackTrace();
-            return null;
         }
+        return null;
+
     }
 
     /**
