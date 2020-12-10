@@ -1,5 +1,6 @@
 package TestUseCase;
 
+import Controllers.AccountController;
 import Controllers.MessageController;
 import Entities.User;
 import UseCases.AccountManager;
@@ -16,22 +17,27 @@ public class TestMessaging {
 
     @Test
     public void testSendMessageNull() {
-        MessageManager messageManager = new MessageManager();
-        User user = new User("David","CSC207","123", UserType.ATTENDEE);
-        User user2 = new User("Sam","United Kingdom","java program", UserType.SPEAKER);
-        assertEquals(false, messageManager.sendMessage(null, "CSC207", "Hello"));
-        assertEquals(false, messageManager.sendMessage(null, null, "Hello"));
-        assertEquals(false, messageManager.sendMessage(null, null, null));
-        assertEquals(false, messageManager.sendMessage("United Kingdom",null, null));
-        assertEquals(false, messageManager.sendMessage("United Kingdom",null, "Hi"));
+        MessageController messageController = new MessageController();
+        AccountController accountController = new AccountController();
+        accountController.createUser("David","CSC207","123", "123", UserType.ATTENDEE);
+        accountController.createUser("Sam","United Kingdom","java program", "java program",
+                UserType.SPEAKER);
+        assertEquals(false, messageController.sendMessage(null, "CSC207", "Hello"));
+        assertEquals(false, messageController.sendMessage(null, null, "Hello"));
+        assertEquals(false, messageController.sendMessage(null, null, null));
+        assertEquals(false, messageController.sendMessage("United Kingdom",null, null));
+        assertEquals(false, messageController.sendMessage("United Kingdom",null, "Hi"));
     }
 
     @Test
     public void testCanMessage() {
         MessageController messageController = new MessageController();
-        User user = new User("David","CSC207","123", UserType.ATTENDEE);
-        User user2 = new User("Sam","United Kingdom","java program", UserType.SPEAKER);
-        User user3 = new User("John","Toronto","Clean Architecture", UserType.ORGANIZER);
+        AccountController accountController = new AccountController();
+        accountController.createUser("David","CSC207","123", "123", UserType.ATTENDEE);
+        accountController.createUser("Sam","United Kingdom","java program", "java program",
+                UserType.SPEAKER);
+        accountController.createUser("John","Toronto","Clean Architecture", "Clean Architecture",
+                UserType.ORGANIZER);
         assertEquals(false, messageController.canMessage("United Kingdom", "CSC207"));
         assertEquals(false, messageController.canMessage("Toronto", "United Kingdom"));
         assertEquals(false, messageController.canMessage("Toronto", "CSC207"));
@@ -42,8 +48,10 @@ public class TestMessaging {
     @Test
     public void testCanMessageNull() {
         MessageController messageController = new MessageController();
-        User user = new User("David","CSC207","123", UserType.ATTENDEE);
-        User user2 = new User("Sam","United Kingdom","java program", UserType.SPEAKER);
+        AccountController accountController = new AccountController();
+        accountController.createUser("David","CSC207","123", "123", UserType.ATTENDEE);
+        accountController.createUser("Sam","United Kingdom","java program", "java program",
+                UserType.SPEAKER);
         assertEquals(false, messageController.canMessage(null, "CSC207"));
         assertEquals(false, messageController.canMessage(null, null));
         assertEquals(false, messageController.canMessage("United Kingdom", null));
