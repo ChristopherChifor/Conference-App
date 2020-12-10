@@ -74,19 +74,6 @@ public class MessageManager implements Serializable {
     }
 
     /**
-     * Returns a list of all usernames this user can message.
-     *
-     * @param user user
-     * @return list of usernames
-     */
-    public List<String> getContacts(String user) {
-        return accountManager.getUsernames().stream()
-                .filter(s -> canMessage(user, s) && s != user)
-                .collect(Collectors.toList());
-    }
-
-
-    /**
      * Gets the messages between user1 and user2 as a list of formatted strings in the format:
      * "[ username ] body"
      * <p>
@@ -224,41 +211,4 @@ public class MessageManager implements Serializable {
         return archivedMessages;
     }
 
-    /**
-     * TODO UNFINISHED
-     * Checks if sender can message recipient.
-     * <p>
-     * They can message iff:
-     * - both users exist, and
-     * - sender is speaker or organizer, or
-     * - sender is attendee and recipient attendy or speaker, or
-     * - sender is attendee and recipient is organizer if they messaged before
-     * - otherwise, true if they exist and have messaged before.
-     *
-     * @param senderUsername    username of sender
-     * @param recipientUsername username of recipient
-     * @return true if they can message.
-     */
-    public boolean canMessage(String senderUsername, String recipientUsername) {
-        UserType sender = accountManager.getUserType(senderUsername);
-        UserType recipient = accountManager.getUserType(recipientUsername);
-        // todo @parssa
-        if (sender == null || recipient == null) return false;
-
-        switch (sender) {
-            case ATTENDEE:
-                switch (recipient) {
-                    case ATTENDEE:
-                        break;
-                    case SPEAKER:
-                        return true;
-
-                }
-            case SPEAKER:
-                break;
-            case ORGANIZER:
-                return true;
-        }
-        return true;
-    }
 }
