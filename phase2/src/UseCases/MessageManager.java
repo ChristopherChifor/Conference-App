@@ -45,16 +45,12 @@ public class MessageManager implements Serializable {
         boolean hasMessaged = hasMessaged(sender, recipient);
         if (!hasMessaged) newConversation(sender, recipient);
         Message message = new Message(sender, recipient, messageBody);
-        getConversationThread(sender, recipient).add(message);
-        // todo add to the database LEFT OFF HERE
-//        messageDatabase.write(, user1+"-"+user2);
+        Conversation c = getConversation(sender, recipient);
+        c.addMessage(message);
+        messageDatabase.write(c, getIDFromMessages(getConversationThread(sender, recipient)));
         return true;
     }
 
-    private Conversation getConversation(String leftoff) {
-        // todo add to the database LEFT OFF HERE
-        return  null;
-    }
     /**
      * Checks if user1 and user2 had a conversation. Does not matter if users exists or not.
      * Uses JSONDatabase.
@@ -100,19 +96,22 @@ public class MessageManager implements Serializable {
      * @return the conversation between user1 and user2; null if user1 or user2 DNE in db, or there's no conversation.
      */
     private List<Message> getConversationThread(String user1, String user2) {
+        return getConversation(user1,user2).getMessages();
+    }
+
+    private Conversation getConversation(String user1, String user2) {
         List<String> conversations = messageDatabase.getIds();
         for (String c : conversations) {
             String u1 = c.substring(0, c.indexOf("-"));
             if (u1 == user1 || u1 == user2){
                 String u2 = c.substring(c.indexOf("-")+1);
                 if (u2 == user1 || u2 == user2){
-                    return messageDatabase.read(c).getMessages();
+                    return messageDatabase.read(c);
                 }
             }
         }
         return null;
     }
-
     /**
      * Creates a conversation between two users and puts it in the list of their conversations.
      *

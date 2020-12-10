@@ -93,6 +93,11 @@ public class AccountManager implements Serializable {
         return userJsonDatabase.getIds().contains(username);
     }
 
+    /**
+     * Gets all usernames of a specified UserType
+     * @param userType UserType we will sp
+     * @return a list of usernames of specified type
+     */
     public List<String> getUsernamesOfType(UserType userType) {
         return userJsonDatabase.filterStream(u -> u.getUserType() == userType)
                 .map(User::getUsername)
