@@ -3,8 +3,10 @@ package Controllers;
 import Entities.Message;
 import UseCases.AccountManager;
 import UseCases.MessageManager;
+import Util.UserType;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 
 public class MessageController {
@@ -66,11 +68,55 @@ public class MessageController {
         return messageManager.getArchivedMessages(username);
     }
 
-    public boolean canMessage(String username, String otherUser) {
-        return messageManager.canMessage(username, otherUser);
+    /**
+     * Returns a list of all usernames this user can message.
+     *
+     * @param user user
+     * @return list of usernames
+     */
+    public List<String> getContacts(String user) {
+        return accountManager.getUsernames().stream()
+                .filter(s -> canMessage(user, s) && s != user)
+                .collect(Collectors.toList());
     }
 
-    public List<String> getContacts(String username) {
-        return messageManager.getContacts(username);
+    /**
+     * TODO UNFINISHED
+     * Checks if sender can message recipient.
+     * <p>
+     * They can message iff:
+     * - both users exist, and
+     * - sender is speaker or organizer, or
+     * - sender is attendee and recipient attendy or speaker, or
+     * - sender is attendee and recipient is organizer if they messaged before
+     * - otherwise, true if they exist and have messaged before.
+     *
+     * @param senderUsername    username of sender
+     * @param recipientUsername username of recipient
+     * @return true if they can message.
+     */
+    public boolean canMessage(String senderUsername, String recipientUsername) {
+        UserType sender = accountManager.getUserType(senderUsername);
+        UserType recipient = accountManager.getUserType(recipientUsername);
+        // todo @parssa
+        if (sender == null || recipient == null) return false;
+
+        switch (sender) {
+            case ATTENDEE:
+                switch (recipient) {
+                    case ATTENDEE:
+                        break;
+                    case SPEAKER:
+                        return true;
+
+                }
+            case SPEAKER:
+                break;
+            case ORGANIZER:
+                return true;
+        }
+        return true;
     }
+
+
 }
