@@ -92,6 +92,11 @@ public class MessageView extends JPanel implements View {
 
         add(topPanel, BorderLayout.NORTH);
 
+        messageCards.add(new JPanel(), "-BLANK PAGE");
+
+        CardLayout cards = (CardLayout) messageCards.getLayout();
+        cards.show(messageCards, "-BLANK PAGE");
+
     }
 
     /**
