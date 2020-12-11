@@ -18,7 +18,7 @@ public class UserSettingsView extends JPanel implements View {
 
     private final JLabel name;
     private final JLabel username;
-    private final JPasswordField password; // could be changed
+    private final JPasswordField password;
     private final JComboBox<UserType> typeField = new JComboBox(types); // could be changed iff organizer
 
     // TRUE IFF ACCESSING USER IS ORGANIZER; not the display user
@@ -31,9 +31,10 @@ public class UserSettingsView extends JPanel implements View {
     private UserSettingsPresenter userSettingsPresenter;
 
     public UserSettingsView(UserSettingsPresenter userSettingsPresenter) {
+        this.userSettingsPresenter = userSettingsPresenter;
         this.organizerMode = userSettingsPresenter.isOrganizerMode();
         this.user = userSettingsPresenter.getUsername();
-        this.userSettingsPresenter = userSettingsPresenter;
+
 
         name = new JLabel(String.format("<html><h1>%s</h1></html>", userSettingsPresenter.getUserRealName()));
         username = new JLabel(user);

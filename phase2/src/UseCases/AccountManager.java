@@ -104,7 +104,33 @@ public class AccountManager implements Serializable {
                 .collect(Collectors.toList());
     }
 
+    /**
+     * Gets a users name
+     * @param username username of user
+     * @return name of user
+     */
     public String getName(String username) {
         return userJsonDatabase.read(username).getName();
+    }
+
+    /**
+     * Gets a users password
+     * @param username username of user
+     * @return password of user
+     */
+    public String getPassword(String username) {
+        return userJsonDatabase.read(username).getPassword();
+    }
+
+    public void changeUserName(String username) { //todo nonoononononoononononoononononoononononoononononoonono
+//        User currentUser = userJsonDatabase.read(username);
+//        User newUser = new User(currentUser.getName(), username, currentUser.getPassword(), currentUser.getUserType());
+
+    }
+
+    public void changeUserPassword(String username, String newPassword) {
+        User currentUser = userJsonDatabase.read(username);
+        currentUser.setPassword(newPassword);
+        userJsonDatabase.write(currentUser, username);
     }
 }

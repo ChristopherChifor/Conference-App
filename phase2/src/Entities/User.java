@@ -68,4 +68,8 @@ public class User implements Serializable {
     public void setUserType(UserType userType) {
         this.userType = userType;
     }
+
+    public void setPassword(String newPassword) {
+        this.password = newPassword;
+    }
 }

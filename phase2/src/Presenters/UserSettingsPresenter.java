@@ -28,8 +28,6 @@ public class UserSettingsPresenter implements Presenter{
      * @return user's real name
      */
     public String getUserRealName(){
-
-        // TODO DO THIS!
         return accountController.getUserRealName(username);
     }
 
@@ -38,8 +36,7 @@ public class UserSettingsPresenter implements Presenter{
      * @return users password
      */
     public String getPassword(){
-        //TODO DO THIS!!!
-        return "";
+        return accountController.getPassword(username);
     }
 
     /**
@@ -47,8 +44,7 @@ public class UserSettingsPresenter implements Presenter{
      * @return users type
      */
     public UserType getUserType(){
-        //TODO DO THIS!!!
-        return UserType.ATTENDEE;
+        return accountController.getUserType(username);
     }
 
     /**

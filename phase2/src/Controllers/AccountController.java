@@ -77,14 +77,38 @@ public class AccountController {
      * @param newPassword new password of the user
      */
     public void changeUserPassword(String username, String newPassword) {
-        //TODO DO THIS
+        accountManager.changeUserName(username);
+        accountManager.changeUserPassword(username, newPassword);
     }
 
     public List<String> getUsernamesOfType(UserType type) {
         return accountManager.getUsernamesOfType(type);
     }
 
+    /**
+     * Gets a user's real name based on username
+     * @param username username of user
+     * @return real name
+     */
     public String getUserRealName(String username) {
         return accountManager.getName(username);
+    }
+
+    /**
+     * Gets a user's password based on username
+     * @param username password of user
+     * @return password of user
+     */
+    public String getPassword(String username) {
+        return accountManager.getPassword(username);
+    }
+
+    /**
+     * Gets a user's user type based on username
+     * @param username username of user
+     * @return type of user (UserType)
+     */
+    public UserType getUserType(String username) {
+        return accountManager.getUserType(username);
     }
 }
