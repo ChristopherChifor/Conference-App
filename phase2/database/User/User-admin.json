@@ -1,6 +1,6 @@
 {
-  "name": "admin",
+  "name": "Admin",
   "username": "admin",
-  "password": "password",
-  "userType": "ATTENDEE"
+  "password": "admin",
+  "userType": "ORGANIZER"
 }
