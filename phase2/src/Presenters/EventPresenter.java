@@ -54,7 +54,7 @@ public class EventPresenter implements Presenter{
         List<String> speakers = new ArrayList<>();
         speakers.add("IMPLEMENT SPEAKERRR");
         Calendar time = Calendar.getInstance();
-        EventBundle eventBundle = new EventBundle(eventName, "TODOOOOO", speakers, "IMPLEMENT ROOOOOm", time, "1:00", 10);
+        EventBundle eventBundle = new EventBundle(eventName, "TODOOOOO", speakers, "IMPLEMENT ROOOOOm", time, "1:00", 10, false); //todo get vip status
         return new EventView(eventBundle, userType, this);
     }
 

@@ -64,13 +64,23 @@ public class AccountController {
      */
     public boolean changeUserType(String username, UserType type) {
         if (accountManager.userExists(username)) {
-            accountManager.changeUserType(username,type);
+            accountManager.changeUserType(username, type);
             return true;
         }
         return false;
     }
 
-    public List<String> getUsernamesOfType(UserType type){
+    /**
+     * Changes the password of the user.
+     *
+     * @param username    username of the user
+     * @param newPassword new password of the user
+     */
+    public void changeUserPassword(String username, String newPassword) {
+        //TODO DO THIS
+    }
+
+    public List<String> getUsernamesOfType(UserType type) {
         return accountManager.getUsernamesOfType(type);
     }
 }

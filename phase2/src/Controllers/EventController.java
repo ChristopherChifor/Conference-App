@@ -175,8 +175,20 @@ public class EventController {
         return scheduleManager.getEventNames(vipFilter);
     }
 
+    /**
+     * Getter for a list of VIP Event Names
+     * @return a list of vip events
+     */
     public List<String> getVIPEventNames(){
         return scheduleManager.getVIPEventNames();
+    }
+
+    /**
+     * Getter for a list of all room names
+     * @return a list of all room names
+     */
+    public List<String> getRoomNames(){
+        return roomManager.getRoomNames();
     }
 
 }

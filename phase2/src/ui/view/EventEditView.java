@@ -1,5 +1,6 @@
 package ui.view;
 
+import Presenters.EventEditPresenter;
 import org.jdatepicker.impl.JDatePanelImpl;
 import org.jdatepicker.impl.JDatePickerImpl;
 import org.jdatepicker.impl.UtilCalendarModel;
@@ -19,6 +20,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Properties;
 import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 
 /**
  * A view for editing or creating events. WIP
@@ -66,6 +68,7 @@ public class EventEditView extends JPanel implements View {
 
     private JComboBox<String> roomField = new JComboBox<>();
     private JTextArea descField = new JTextArea();
+    private JCheckBox vipCheckBox = new JCheckBox();
 
     private JButton saveButton = new JButton("Save");
     private JButton cancelButton = new JButton("Cancel");
@@ -73,20 +76,41 @@ public class EventEditView extends JPanel implements View {
     // for converting calendar date-time to time
     private SimpleDateFormat df = new SimpleDateFormat("h:mm a");
 
+    private EventEditPresenter presenter;
+
     /**
      * Constructor for pre-populated forms (for editing events)
      *
-     * @param bundle event information
+     * @param presenter the corresponding presenter for this view.
      */
-    public EventEditView(EventEditBundle bundle) {
-        //TODO CHANGE THE CONSTRUCTOR TO PASS IN A PRESENTER (USED FOR SAVING)
+    public EventEditView(EventEditPresenter presenter) {
+        this.presenter = presenter;
+        EventEditBundle bundle = presenter.getBundle();
 
         GridBagConstraints cst = new GridBagConstraints();
         setLayout(new GridBagLayout());
 
-        speakerField = new JList<>(bundle.getSpeaker().toArray(new String[0]));
+        speakerField = new JList<>();
+        DefaultListModel listModel = new DefaultListModel<>();
+        bundle.getSpeakerOptions().stream().forEach(listModel::addElement);
+        speakerField.setModel(listModel);
         speakerField.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
         speakerField.setLayoutOrientation(JList.VERTICAL_WRAP);
+        int[] selectedIndeces = new int[bundle.getSpeaker().size()];
+        for (int i = 0; i < selectedIndeces.length; i++) {
+            selectedIndeces[i] = listModel.indexOf(bundle.getSpeaker().get(i));
+        }
+        speakerField.setSelectedIndices(selectedIndeces);
+
+        titleField.setText(bundle.getTitle());
+        descField.setText(bundle.getDescription());
+        durationField.setText(bundle.getDuration());
+        capacityField.setText(Integer.toString(bundle.getCapacity()));
+        vipCheckBox.setSelected(bundle.isVipOnly());
+
+        bundle.getRoomOptions().stream().forEach(roomField::addItem);
+        if (!bundle.getRoom().isEmpty())
+            roomField.setSelectedItem(bundle.getRoom());
 
         cst.gridx = 0;
         cst.gridy = 0;
@@ -98,41 +122,51 @@ public class EventEditView extends JPanel implements View {
         add(new JLabel("Title:"), cst);
         cst.gridx = 1;
         add(titleField, cst);
-        cst.gridy = 1;
+        cst.gridy++;
         cst.gridx = 0;
         add(new JLabel("Speaker:"), cst);
-        cst.gridx = 1;
+        cst.gridy++;
+        cst.gridheight=3; cst.gridwidth=2;
         add(new JScrollPane(speakerField), cst);
-        cst.gridy = 2;
+        cst.gridheight=1;
+        cst.gridwidth=1;
+        cst.gridy+=3;
         cst.gridx = 0;
         add(new JLabel("Time:"), cst);
         cst.gridx = 1;
         add(timeField, cst);
-        cst.gridy = 3;
+        cst.gridy++;
         cst.gridx = 0;
         add(new JLabel("Date:"), cst);
         cst.gridx = 1;
         add(dateField, cst);
-        cst.gridy = 4;
+        cst.gridy++;
         cst.gridx = 0;
         add(new JLabel("Room:"), cst);
         cst.gridx = 1;
         add(roomField, cst);
-        cst.gridy = 5;
+        cst.gridy++;
 
         cst.gridx = 0;
         add(new JLabel("Capacity:"), cst);
         cst.gridx = 1;
         add(capacityField, cst);
-        cst.gridy = 6;
+        cst.gridy++;
+
+        cst.gridx = 0;
+        add(new JLabel("VIP Only:"), cst);
+        cst.gridx = 1;
+        add(vipCheckBox, cst);
+        cst.gridy++;
 
         cst.gridx = 0;
         cst.gridwidth = 2;
         add(new JLabel("Description"), cst);
-        cst.gridy = 7;
+        cst.gridy++;
         cst.gridheight = 2;
         add(descField, cst);
-        cst.gridy = 9;
+        cst.gridy++;
+        cst.gridy++;
         cst.gridheight = 1;
         cst.gridwidth = 1;
         add(saveButton, cst);
@@ -141,15 +175,6 @@ public class EventEditView extends JPanel implements View {
 
         saveButton.addActionListener(e -> save());
         cancelButton.addActionListener(e -> cancel());
-
-
-        titleField.setText(bundle.getTitle());
-        descField.setText(bundle.getDescription());
-        durationField.setText(bundle.getDuration());
-
-        bundle.getRoomOptions().stream().forEach(roomField::addItem);
-        if (!bundle.getRoom().isEmpty())
-            roomField.setSelectedItem(bundle.getRoom());
 
         timeField.setText(df.format(bundle.getTime().getTime())); // todo check this
         calModel.setValue(bundle.getTime()); // todo and this
@@ -169,18 +194,16 @@ public class EventEditView extends JPanel implements View {
             showIncorrectInputDialog("Proper time format: hour:minute am/pm\nProper duration format: hour:minute");
             return;
         }
-        // bundle should now be valid input.
-
-
-        // TODO TELL PRESENTER TO SAVE BUNDLE
+        presenter.save(bundle, this);
     }
 
     /**
      * Triggered when user presses cancel button
      */
     private void cancel() {
-        if (!showConfirmDialog("Are you sure? Your changes will be unsaved.")) return;
-        // todo return to main window.
+        if (showConfirmDialog("Are you sure? Your changes will be unsaved.")) {
+            presenter.cancel();
+        }
     }
 
     /**
@@ -195,6 +218,7 @@ public class EventEditView extends JPanel implements View {
         String room = (String) roomField.getSelectedItem();
         List<String> speaker = speakerField.getSelectedValuesList();
         String duration = durationField.getText();
+        boolean vipOnly = vipCheckBox.isSelected();
 
         // accepting 0:00, 1:10, 1323:00 but not 10:87
         Pattern durationPattern = Pattern.compile("^\\d+:[0-5]\\d$");
@@ -204,10 +228,10 @@ public class EventEditView extends JPanel implements View {
 
         String cap = capacityField.getText();
         int capacity = 0;
-        try{
+        try {
             capacity = Integer.parseInt(cap);
         } catch (NumberFormatException e) {
-            throw new ParseException("Invalid capacity entered",0);
+            throw new ParseException("Invalid capacity entered", 0);
         }
 
 
@@ -217,7 +241,7 @@ public class EventEditView extends JPanel implements View {
         Calendar dateTime = (Calendar) dateField.getModel().getValue();
         dateTime.setTime(timeNoDate);
 
-        return new EventBundle(title, description, speaker, room, dateTime, duration, capacity);
+        return new EventBundle(title, description, speaker, room, dateTime, duration, capacity, vipOnly);
     }
 
     @Override

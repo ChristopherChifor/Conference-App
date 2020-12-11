@@ -15,6 +15,7 @@ public class EventBundle {
     protected final Calendar time;
     protected final String duration;
     protected final int capacity;
+    protected final boolean vipOnly;
 
     /**
      * Constructor.
@@ -26,8 +27,9 @@ public class EventBundle {
      * @param time        a calendar object of the event date and time
      * @param duration    the duration of the event as a string; hours and minutes (e.g. "2:30")
      * @param capacity    the capacity of this event (equal to or smaller than room capacity)
+     * @param vipOnly     is this event only for VIP users?
      */
-    public EventBundle(String title, String description, List<String> speaker, String room, Calendar time, String duration, int capacity) {
+    public EventBundle(String title, String description, List<String> speaker, String room, Calendar time, String duration, int capacity, boolean vipOnly) {
         this.title = title;
         this.description = description;
         this.speaker = speaker;
@@ -35,6 +37,15 @@ public class EventBundle {
         this.time = time;
         this.duration = duration;
         this.capacity = capacity;
+        this.vipOnly = vipOnly;
+    }
+
+    /**
+     * Getter for VIP-Only status
+     * @return true iff vip only
+     */
+    public boolean isVipOnly() {
+        return vipOnly;
     }
 
     /**
