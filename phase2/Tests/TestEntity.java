@@ -40,6 +40,10 @@ public class TestEntity {
         assertEquals("java program", user2.getPassword());
         User user3 = new User("John","Toronto","Clean Architecture", UserType.ORGANIZER);
         assertEquals("Clean Architecture", user3.getPassword());
+        User user4 = new User("Sam","United Kingdom","java program", UserType.SPEAKER);
+        assertEquals("java program", user4.getPassword());
+        User user5 = new User("Shashank","Toronto","boss", UserType.ORGANIZER);
+        assertEquals("boss", user5.getPassword());
     }
 
     @Test(timeout=50)
