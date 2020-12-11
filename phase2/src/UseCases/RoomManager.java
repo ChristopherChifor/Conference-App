@@ -5,6 +5,8 @@ import Entities.Room;
 import Gateways.IGateway;
 import Gateways.JsonDatabase;
 
+import java.util.List;
+
 public class RoomManager {
    private IGateway<Room> roomJsonDatabase;
 
@@ -59,5 +61,13 @@ public class RoomManager {
      */
     public Room getRoom(String roomName) {
         return roomJsonDatabase.read(roomName);
+    }
+
+    /**
+     * Getter for a list of all room names
+     * @return list of all room names
+     */
+    public List<String> getRoomNames(){
+        return roomJsonDatabase.getIds();
     }
 }
