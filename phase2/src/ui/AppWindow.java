@@ -38,7 +38,7 @@ public class AppWindow extends JDialog {
         add(panel);
         setTitle("Conference App");
         setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
-        setSize(new Dimension(600, 400));
+        setSize(new Dimension(600, 600));
         setVisible(true);
 
     }

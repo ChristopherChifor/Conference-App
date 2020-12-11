@@ -74,7 +74,7 @@ public class OrganizerView extends JPanel implements View {
      * Triggered when user presses new event button
      */
     private void newEvent() {
-        //todo open EventEditView
+        presenter.newEvent();
     }
 
 
@@ -106,7 +106,7 @@ public class OrganizerView extends JPanel implements View {
         if (!showConfirmDialog("Are you sure you want to create this room? It cannot be deleted or edited")) return;
 
 
-        //TODO TELL PRESENTER TO MAKE A NEW ROOM WITH ROOMNAME AND CAPACITY (IF LEGAL)
+        presenter.newRoom(roomname, capacity, this);
     }
 
 

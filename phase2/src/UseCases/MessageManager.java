@@ -42,12 +42,21 @@ public class MessageManager implements Serializable {
      * @return boolean if sent
      */
     public boolean sendMessage(String sender, String recipient, String messageBody) {
+        System.out.println("1 made it here!!!!!!!!!!!!!!");
         boolean hasMessaged = hasMessaged(sender, recipient);
+
         if (!hasMessaged) newConversation(sender, recipient);
+        System.out.println("3 made it here!!!!!!!!!!!!!!");
         Message message = new Message(sender, recipient, messageBody);
         Conversation c = getConversation(sender, recipient);
         c.addMessage(message);
-        messageDatabase.write(c, getIDFromMessages(getConversationThread(sender, recipient)));
+        String convoID = getIDFromMessages(getConversationThread(sender, recipient));
+        if (convoID == null) {
+            System.out.println("gotcha!");
+            convoID = sender+"-"+recipient;
+        }
+        System.out.println("printed convoID as: " + convoID);
+        messageDatabase.write(c, convoID);
         return true;
     }
 
@@ -95,8 +104,11 @@ public class MessageManager implements Serializable {
      */
     private Conversation getConversation(String user1, String user2) {
         List<String> conversations = messageDatabase.getIds();
+        System.out.println("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA  ");
+        System.out.println(conversations);
         for (String c : conversations) {
-            String u1 = c.substring(0, c.indexOf("-"));
+            System.out.println(c);
+            String u1 = c.substring(0, c.indexOf("-")+1);
             if (u1.equals(user1) || u1.equals(user2)){
                 String u2 = c.substring(c.indexOf("-")+1);
                 if (u2.equals(user1) || u2.equals(user2)){
@@ -104,7 +116,9 @@ public class MessageManager implements Serializable {
                 }
             }
         }
-        return null;
+
+        // if it's made it here, we don't got a conversation, thus we will make one
+        return newConversation(user1, user2);
     }
 
     /**
@@ -149,10 +163,13 @@ public class MessageManager implements Serializable {
      *
      * @param user1 user 1
      * @param user2 user 2
+     * @return returns the conversation
      */
-    private void newConversation(String user1, String user2) {
+    private Conversation newConversation(String user1, String user2) {
         Conversation conversation = new Conversation(user1, user2);
+
         messageDatabase.write(conversation, user1+"-"+user2);
+        return conversation;
     }
 
     /**

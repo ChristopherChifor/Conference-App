@@ -74,6 +74,7 @@ public class MessageController {
      * @return boolean if sent
      */
     public boolean sendMessage(String sender, String recipient, String messageText) {
+        System.out.println("OGGGGGGG made it here!!!!!!!!!!!!!!");
         if (sender == null || recipient == null || messageText == null) return false;
         if (!canMessage(sender, recipient)) {
             return false;

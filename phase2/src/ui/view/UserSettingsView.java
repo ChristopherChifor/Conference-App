@@ -35,10 +35,10 @@ public class UserSettingsView extends JPanel implements View {
         this.user = userSettingsPresenter.getUsername();
         this.userSettingsPresenter = userSettingsPresenter;
 
-        name = new JLabel(String.format("<html><h1>%s</h1></html>", user)); // TODO FETCH NAME
+        name = new JLabel(String.format("<html><h1>%s</h1></html>", userSettingsPresenter.getUserRealName()));
         username = new JLabel(user);
-        password = new JPasswordField("password"); //TODO FETCH PASSWORD
-        typeField.setSelectedItem(UserType.ATTENDEE); //TODO FETCH USERTYPE
+        password = new JPasswordField(userSettingsPresenter.getPassword());
+        typeField.setSelectedItem(userSettingsPresenter.getUserType());
 
         if (!this.organizerMode) typeField.setEnabled(false); // can only be changed if in organizer mode
 
@@ -90,22 +90,21 @@ public class UserSettingsView extends JPanel implements View {
         UserType type = (UserType) typeField.getSelectedItem(); // type changed only if organizer mode
         String password = new String(this.password.getPassword());
 
-        //TODO CALL PRESENTER TO CHANGE TYPE AND PASSWORD
-
+        userSettingsPresenter.saveChanges(password, type);
     }
 
     /**
      * Triggered by messages button. Opens the message view for the user being displayed.
      */
     private void messagesAction() {
-        //todo
+        userSettingsPresenter.goMessages();
     }
 
     /**
      * Triggered by events button. Opens the events view for the user being displayed.
      */
     private void eventsAction() {
-        //todo
+        userSettingsPresenter.goEvents();
     }
 
     @Override
