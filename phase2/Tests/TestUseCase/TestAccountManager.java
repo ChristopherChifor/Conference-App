@@ -33,8 +33,11 @@ public class TestAccountManager {
     @Test
     public void test_getUserNames() {
         AccountManager accountManager = new AccountManager();
-        accountManager.createUser("Jafar", "Jafar_baba", "password", UserType.VIP);
-        accountManager.createUser("Sepehr", "Sepehr_baba", "password2", UserType.ORGANIZER);
+        AccountController accountController = new AccountController();
+        accountController.createUser("Jafar", "Jafar_baba", "password",
+                "password", UserType.VIP);
+        accountController.createUser("Sepehr", "Sepehr_baba", "password2",
+                "password2", UserType.ORGANIZER);
         assertTrue(accountManager.getUsernames().contains("Jafar_baba"));
         assertTrue(accountManager.getUsernames().contains("Sepehr_baba"));
     }
