@@ -161,7 +161,7 @@ public class MessageController {
      * @return true if they can message.
      */
     public boolean canMessage(String senderUsername, String recipientUsername) {
-        if (senderUsername == null || recipientUsername == null) {
+        if (senderUsername == null || recipientUsername == null || senderUsername.equals(recipientUsername)) {
             return false;
         }
         UserType sender = accountManager.getUserType(senderUsername);

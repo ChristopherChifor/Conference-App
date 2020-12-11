@@ -56,8 +56,8 @@ public class UserSettingsPresenter implements Presenter{
     }
 
     public void goEvents(){
-        //UserEventsPresenter up = new UserEventsPresenter(username, mainPresenter);
-        //TODO DO THIS ONCE USEREVENTSPRESENTER IS FIGURED OUT!!!!!
+        UserEventsPresenter up = new UserEventsPresenter(username, mainPresenter, accountController.getUserType(username));
+        mainPresenter.addPresenter(up);
     }
 
     public void saveChanges(String password, UserType type){

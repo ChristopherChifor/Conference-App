@@ -122,12 +122,6 @@ public class AccountManager implements Serializable {
         return userJsonDatabase.read(username).getPassword();
     }
 
-    public void changeUserName(String username) { //todo nonoononononoononononoononononoononononoononononoonono
-//        User currentUser = userJsonDatabase.read(username);
-//        User newUser = new User(currentUser.getName(), username, currentUser.getPassword(), currentUser.getUserType());
-
-    }
-
     public void changeUserPassword(String username, String newPassword) {
         User currentUser = userJsonDatabase.read(username);
         currentUser.setPassword(newPassword);

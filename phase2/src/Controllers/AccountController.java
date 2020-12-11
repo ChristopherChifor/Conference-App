@@ -77,7 +77,6 @@ public class AccountController {
      * @param newPassword new password of the user
      */
     public void changeUserPassword(String username, String newPassword) {
-        accountManager.changeUserName(username);
         accountManager.changeUserPassword(username, newPassword);
     }
 
