@@ -1,5 +1,6 @@
 package ui.view;
 
+import Presenters.EventListPresenter;
 import Util.UserType;
 import Presenters.UserEventsPresenter;
 
@@ -162,7 +163,7 @@ public class UserEventsView extends JPanel implements View {
      * Triggered when user presses add event button.
      */
     private void addEvent() {
-        //todo show menu of all events
+        presenter.goToEventsList();
     }
 
     private List<String> getSelectedEvents() {

@@ -1,12 +1,11 @@
 package ui.view;
 
+import Presenters.EventListPresenter;
 import Presenters.OrganizerPresenter;
-import ui.panels.EventListPanel;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -56,7 +55,8 @@ public class OrganizerView extends JPanel implements View {
         add(usersScroll, BorderLayout.WEST);
 
         JPanel panel = new JPanel(new BorderLayout(20, 20));
-        EventListPanel eventsPanel = new EventListPanel(true); //TODO TWEAK (PRESENTER)
+        EventListPresenter listPresenter = new EventListPresenter(true, presenter.getMainPresenter());
+        EventListView eventsPanel = new EventListView(listPresenter);
         JScrollPane scroll = new JScrollPane(eventsPanel);
         scroll.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
         scroll.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
@@ -104,7 +104,6 @@ public class OrganizerView extends JPanel implements View {
         }
 
         if (!showConfirmDialog("Are you sure you want to create this room? It cannot be deleted or edited")) return;
-
 
 
         //TODO TELL PRESENTER TO MAKE A NEW ROOM WITH ROOMNAME AND CAPACITY (IF LEGAL)

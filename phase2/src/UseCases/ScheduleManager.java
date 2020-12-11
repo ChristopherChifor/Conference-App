@@ -17,7 +17,6 @@ public class ScheduleManager implements Serializable {
     private IGateway<ScheduleEntry> scheduleEntryJsonDatabase;
 
 
-
     public ScheduleManager() {
 
         eventJsonDatabase = new JsonDatabase<>("Event", Event.class);
@@ -46,9 +45,9 @@ public class ScheduleManager implements Serializable {
      * @return list containing event names of event the attendee is in
      */
     public List<ScheduleEntry> getAttendeeEvents(String username) {
-        return eventJsonDatabase.filterStream(e->e.getAttendees()
+        return eventJsonDatabase.filterStream(e -> e.getAttendees()
                 .contains(username))
-                .map(e->scheduleEntryJsonDatabase.read(e.getName()))
+                .map(e -> scheduleEntryJsonDatabase.read(e.getName()))
                 .collect(Collectors.toList());
     }
 
@@ -59,9 +58,9 @@ public class ScheduleManager implements Serializable {
      * @return List of ScheduleEntries containing only event's a Speaker is speaking at
      */
     public List<ScheduleEntry> getSpeakerEvents(String username) {
-        return eventJsonDatabase.filterStream(e->e.getSpeakers()
+        return eventJsonDatabase.filterStream(e -> e.getSpeakers()
                 .contains(username))
-                .map(e->scheduleEntryJsonDatabase.read(e.getName()))
+                .map(e -> scheduleEntryJsonDatabase.read(e.getName()))
                 .collect(Collectors.toList());
     }
 
@@ -125,7 +124,7 @@ public class ScheduleManager implements Serializable {
      * Assigns speaker to an event
      *
      * @param speaker Name of Speaker to be added
-     * @param event Name of event
+     * @param event   Name of event
      * @return true if an event exists and speaker is added
      */
     public boolean assignSpeaker(String speaker, String event) {
@@ -135,7 +134,7 @@ public class ScheduleManager implements Serializable {
     /**
      * Creates a new Event
      *
-     * @param eventName Name of Event that is to be created
+     * @param eventName     Name of Event that is to be created
      * @param eventCapacity Capacity of Event that is to be created
      * @return true if no other event has that name and capacity is positive and new Event is created
      */
@@ -172,8 +171,9 @@ public class ScheduleManager implements Serializable {
 
     /**
      * Removes Attendee from an event
+     *
      * @param username the user being checked.
-     * @param event name of event
+     * @param event    name of event
      * @return true if succesfully removed from event
      */
     public boolean removeFromEvent(String username, String event) {
@@ -185,8 +185,9 @@ public class ScheduleManager implements Serializable {
 
     /**
      * Signs Attendee up for event
+     *
      * @param username username of user trying to sign up for event
-     * @param event name of event
+     * @param event    name of event
      * @return true if succesfully signed up for event
      */
     public boolean signUpForEvent(String username, String event) {
@@ -197,7 +198,31 @@ public class ScheduleManager implements Serializable {
     }
 
     /**
+     * Returns a list of all events (vip events hidden unles vipFilter is true)
+     *
+     * @param vipFilter true if vip events should be shown
+     * @return list of event titles.
+     */
+    public List<String> getEventNames(boolean vipFilter) {
+        return vipFilter
+                ? eventJsonDatabase.getIds()
+                : eventJsonDatabase
+                .filterStream(e -> !(e.isVIPOnly()))
+                .map(Event::getName)
+                .collect(Collectors.toList());
+    }
+
+    /**
+     * Returns a list of names of VIP events
+     * @return list of vip event names.
+     */
+    public List<String> getVIPEventNames() {
+        return eventJsonDatabase.filterStream(Event::isVIPOnly).map(Event::getName).collect(Collectors.toList());
+    }
+
+    /**
      * Gets the event that is occurring in that room
+     *
      * @param roomID id of the room
      * @return a list of events occurring in that room
      */

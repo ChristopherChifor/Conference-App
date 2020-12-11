@@ -37,7 +37,7 @@ public class MainMenuPresenter implements Presenter {
      * Creates an UserEventsPresenter for this user and adds it to mainPresenter
      */
     public void goEvents(){
-        UserEventsPresenter up = new UserEventsPresenter(username, mainPresenter);
+        UserEventsPresenter up = new UserEventsPresenter(username, mainPresenter, type);
         mainPresenter.addPresenter(up);
     }
 

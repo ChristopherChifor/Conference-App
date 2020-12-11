@@ -28,6 +28,7 @@ public class UserEventsPresenter implements Presenter{
         this.username = username;
         this.mainPresenter = mainPresenter;
         this.userType = userType;
+        eventController = new EventController();
     }
 
     public UserEventsPresenter(EventController eventController) {
@@ -56,6 +57,13 @@ public class UserEventsPresenter implements Presenter{
         return eventController.getAttendeeEvents(username).stream().map(ScheduleEntry::getEventName).collect(Collectors.toList());
     }
 
+    /**
+     * Opens list of all events (vip filter if user is vip)
+     */
+    public void goToEventsList(){
+        EventListPresenter list = new EventListPresenter(userType==UserType.VIP,mainPresenter);
+        mainPresenter.addPresenter(list);
+    }
 
     public UserType getUserType() {
         return userType;

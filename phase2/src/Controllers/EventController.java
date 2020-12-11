@@ -145,4 +145,17 @@ public class EventController {
         pdfConverter.convertToPDF(filepath, username, scheduleManager.getAttendeeEvents(username));
     }
 
+    /**
+     * Returns a list of all events (vip events hidden unles vipFilter is true)
+     * @param vipFilter should vip events be shown
+     * @return list of event titles.
+     */
+    public List<String> getEventNames(boolean vipFilter){
+        return scheduleManager.getEventNames(vipFilter);
+    }
+
+    public List<String> getVIPEventNames(){
+        return scheduleManager.getVIPEventNames();
+    }
+
 }

@@ -110,6 +110,6 @@ public class UserSettingsView extends JPanel implements View {
 
     @Override
     public String getViewName() {
-        return String.format("%'s Account", username);
+        return String.format("%s's Account", user);
     }
 }
