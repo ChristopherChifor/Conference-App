@@ -17,7 +17,7 @@ import java.util.stream.Collectors;
  * Maps usernames to lists of conversations. Conversations are mutable objects; user1 and user2 would share
  * the same conversation instance between them. Any two users can only have one conversations between them.
  *
- * @author Alex
+ * @author Chris, Nikita and Parssa
  */
 public class MessageManager implements Serializable {
     private JsonDatabase<Conversation> messageDatabase;
@@ -88,16 +88,11 @@ public class MessageManager implements Serializable {
     }
 
     /**
-     * Searches conversations of user1 to see if there is a conversation with user2.
-     *
-     * @param user1 user 1
-     * @param user2 user 2
-     * @return the conversation between user1 and user2; null if user1 or user2 DNE in db, or there's no conversation.
+     * Searches for a conversation between two users.
+     * @param user1 user1
+     * @param user2 user2
+     * @return returns that conversation
      */
-    private List<Message> getConversationThread(String user1, String user2) {
-        return getConversation(user1,user2).getMessages();
-    }
-
     private Conversation getConversation(String user1, String user2) {
         List<String> conversations = messageDatabase.getIds();
         for (String c : conversations) {
@@ -111,21 +106,20 @@ public class MessageManager implements Serializable {
         }
         return null;
     }
+
     /**
-     * Creates a conversation between two users and puts it in the list of their conversations.
-     *
-     * <b>This should be used iff user1 and user2 don't have conversation (i.e., messaging for the
-     * first time).</b>
-     * <p>
-     * Both users share the same conversation object; it is mutable.
+     * Searches conversations of user1 to see if there is a conversation with user2.
      *
      * @param user1 user 1
      * @param user2 user 2
+     * @return the conversation between user1 and user2; null if user1 or user2 DNE in db, or there's no conversation.
      */
-    private void newConversation(String user1, String user2) {
-        Conversation conversation = new Conversation(user1, user2);
-        messageDatabase.write(conversation, user1+"-"+user2);
+    private List<Message> getConversationThread(String user1, String user2) {
+        return getConversation(user1,user2).getMessages();
     }
+
+
+
 
     /**
      * Returns of a list of usernames this person has messaged.
@@ -146,16 +140,32 @@ public class MessageManager implements Serializable {
     }
 
     /**
+     * Creates a conversation between two users and puts it in the list of their conversations.
+     *
+     * <b>This should be used iff user1 and user2 don't have conversation (i.e., messaging for the
+     * first time).</b>
+     * <p>
+     * Both users share the same conversation object; it is mutable.
+     *
+     * @param user1 user 1
+     * @param user2 user 2
+     */
+    private void newConversation(String user1, String user2) {
+        Conversation conversation = new Conversation(user1, user2);
+        messageDatabase.write(conversation, user1+"-"+user2);
+    }
+
+    /**
      * Checks if the conversation has been read.
      * @param messages list of messages
      * @return true if the conversation is read, otherwise, false if not read.
      */
     public boolean conversationIsRead(List<Message> messages) {
+        //todo why is there souts
         System.out.println("enter----- convoIsRead");
         String idFromMessages = getIDFromMessages(messages);
         System.out.println("ID from messages: "+idFromMessages);
         return messageDatabase.read(getIDFromMessages(messages)).getIsRead();
-
     }
 
     /**
