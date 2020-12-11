@@ -40,12 +40,15 @@ public class MessageController {
     }
 
     /**
-     * Gets the conversation between two users.
+     * Gets a list of messages between two users.
      * @param sender sender
      * @param otherUser recipient
      * @return returns a list of messages between the two users.
      */
     public List<Message> getConversation(String sender, String otherUser) {
+        if (messageManager.getConvoID(sender, otherUser) == null) {
+            messageManager.newConversation(sender, otherUser);
+        }
         return messageManager.getMessages(sender, otherUser);
     }
 

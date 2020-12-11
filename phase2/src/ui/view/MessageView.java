@@ -106,6 +106,8 @@ public class MessageView extends JPanel implements View {
 
         // removes selected from view
         panel.removeSelectedMessages();
+        revalidate();
+        repaint();
     }
 
     /**
