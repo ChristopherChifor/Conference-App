@@ -83,7 +83,10 @@ public class MessagePresenter implements Presenter{
      * @param messageBody body of the message
      */
     public void sendMessage(String recipient, String messageBody) {
-        messageController.sendMessage(username, recipient, messageBody);
+        //TODO change how the recipients are displayed
+        String otherUser = recipient.replace(username,"");
+        otherUser.replace("-","");
+        messageController.sendMessage(username, otherUser, messageBody);
     }
 
     /**
