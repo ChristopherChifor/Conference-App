@@ -46,7 +46,7 @@ public class AccountController {
      */
     public boolean createUser(String name, String username, String password, String retype, UserType type) {
         if (!accountManager.userExists(username)) {
-            if (password.equals(retype) && !username.contains("-")) {
+            if (password.equals(retype) && !username.contains("-") && !username.equals("")) {
                 accountManager.createUser(name, username, password, type);
                 return true;
             }

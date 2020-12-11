@@ -62,19 +62,19 @@ public class MessagePresenter implements Presenter{
 
     /**
      * Read/Unread
-     * @param conversation a conversation between two users.
+     * @param otherUser a conversation between two users.
      * @return true iff the conversation has been read
      */
-    public boolean isRead(List<Message> conversation) {
-        return messageController.conversationIsRead(conversation);
+    public boolean isRead(String otherUser) {
+        return messageController.conversationIsRead(username, otherUser);
     }
 
     /**
      * Marks a conversation as read
      * @param conversation conversation between two users
      */
-    public void markAsRead(List<Message> conversation) {
-        messageController.markAsRead(conversation);
+    public void markAsRead(String otherUser) {
+        messageController.markAsRead(username, otherUser);
     }
 
     /**

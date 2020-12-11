@@ -55,7 +55,7 @@ public class MessageView extends JPanel implements View {
                 JOptionPane.showMessageDialog(null, "Cannot send message to this address", "Bad Input", JOptionPane.ERROR_MESSAGE);
             }
 
-            presenter.sendMessage(selectedUsername, messageText);
+            presenter.sendMessage(selectedUsername, messageText);  // not this line
         });
 
         sendMessagePanel.add(messageField, BorderLayout.CENTER);
@@ -161,7 +161,7 @@ public class MessageView extends JPanel implements View {
     private void initMessages() {
         // Populate the inbox with actual information
 
-        List<String> inbox = presenter.getInbox();
+        List<String> inbox = presenter.getInbox(); //TODO  change this to not output IDS
 
         for (String person : inbox) {
             List<Message> messages = presenter.getConversation(person);
@@ -185,10 +185,11 @@ public class MessageView extends JPanel implements View {
         conversations.add(text);
 
         // if conversation is unread, make button text bold.
-//        if (presenter.isRead(messages)) { //todo change this to take user names
-//            buttonBold(senderButton);
-//        }
-
+        if (!text.equals("Archived")) {
+            if (!presenter.isRead(text)) {
+                buttonBold(senderButton);
+            }
+        }
         MessageDisplayPanel messagePanel = new MessageDisplayPanel(messages);
         panelMap.put(text, messagePanel);
 
@@ -203,7 +204,7 @@ public class MessageView extends JPanel implements View {
 
             if(!text.equals("Archived")){
                 //todo this is weird
-                presenter.markAsRead(messages);
+                presenter.markAsRead(text);
             }
 
             buttonUnBold(senderButton);
