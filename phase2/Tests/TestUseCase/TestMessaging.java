@@ -57,5 +57,17 @@ public class TestMessaging {
         assertEquals(false, messageController.canMessage("United Kingdom", null));
     }
 
+    @Test
+    public void testGetMessages() {
+        MessageController messageController = new MessageController();
+        AccountController accountController = new AccountController();
+        accountController.createUser("David","CSC207","123", "123", UserType.ATTENDEE);
+        accountController.createUser("Sam","United Kingdom","java program", "java program",
+                UserType.SPEAKER);
+        messageController.sendMessage("United Kingdom", "CSC207", "Hello");
+        assertEquals("United Kingdom", messageController.getConversation("United Kingdom", "CSC207"));
+
+    }
+
 
 }
