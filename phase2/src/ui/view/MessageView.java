@@ -224,7 +224,7 @@ public class MessageView extends JPanel implements View {
     }
 
     private void buttonUnBold(JToggleButton button) {
-        Font buttonFont = new Font(button.getFont().getName(), Font.BOLD, button.getFont().getSize());
+        Font buttonFont = new Font(button.getFont().getName(), Font.PLAIN, button.getFont().getSize());
         button.setFont(buttonFont);
         button.repaint();
         button.revalidate();
