@@ -33,6 +33,8 @@ public class MessageView extends JPanel implements View {
         setLayout(new BorderLayout());
 
         messageCards.setLayout(new CardLayout());
+        BoxLayout pplLayout = new BoxLayout(pplPanel,BoxLayout.PAGE_AXIS); //todo check
+        pplPanel.setLayout(pplLayout);
 
         initMessages();
 
