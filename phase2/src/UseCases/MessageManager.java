@@ -63,9 +63,9 @@ public class MessageManager implements Serializable {
         List<String> conversations = messageDatabase.getIds();
         for (String c : conversations) {
             String u1 = c.substring(0, c.indexOf("-"));
-            if (u1 == user1 || u1 == user2){
+            if (u1.equals(user1) || u1.equals(user2)){
                 String u2 = c.substring(c.indexOf("-")+1);
-                if (u2 == user1 || u2 == user2){
+                if (u2.equals(user1) || u2.equals(user2)){
                     return true;
                 }
             }
@@ -97,9 +97,9 @@ public class MessageManager implements Serializable {
         List<String> conversations = messageDatabase.getIds();
         for (String c : conversations) {
             String u1 = c.substring(0, c.indexOf("-"));
-            if (u1 == user1 || u1 == user2){
+            if (u1.equals(user1) || u1.equals(user2)){
                 String u2 = c.substring(c.indexOf("-")+1);
-                if (u2 == user1 || u2 == user2){
+                if (u2.equals(user1) || u2.equals(user2)){
                     return messageDatabase.read(c);
                 }
             }
