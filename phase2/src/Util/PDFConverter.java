@@ -44,6 +44,12 @@ public class PDFConverter {
         }
     }
 
+    private void addRows(PdfPTable table, List<ScheduleEntry> userSchedule) {
+        for (ScheduleEntry s : userSchedule) {
+            addElementEntry(table, s.getEventName(), s.getRoomID(), s.getStartTime().toString());
+        }
+    }
+
     private void addScheduleHeader(PdfPTable table) {
         Stream.of("Time", "Event", "Room")
                 .forEach(columnTitle -> {
@@ -55,9 +61,10 @@ public class PDFConverter {
                 });
     }
 
-    private void addRows(PdfPTable table, List<ScheduleEntry> userSchedule) {
-        for (ScheduleEntry s : userSchedule) {
-            addElementEntry(table, s.getEventName(), s.getRoomID(), s.getStartTime().toString());
+
+    private static void addEmptyLine(Paragraph paragraph, int number) {
+        for (int i = 0; i < number; i++) {
+            paragraph.add(new Paragraph(" "));
         }
     }
 
@@ -65,11 +72,5 @@ public class PDFConverter {
         table.addCell(eventName);
         table.addCell(roomID);
         table.addCell(startTime);
-    }
-
-    private static void addEmptyLine(Paragraph paragraph, int number) {
-        for (int i = 0; i < number; i++) {
-            paragraph.add(new Paragraph(" "));
-        }
     }
 }
