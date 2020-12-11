@@ -64,7 +64,7 @@ public class TestMessaging {
         accountController.createUser("David","CSC207","123", "123", UserType.ATTENDEE);
         accountController.createUser("Sam","United Kingdom","java program", "java program",
                 UserType.SPEAKER);
-        assertEquals(false, messageController.sendMessage("United Kingdom", "CSC207", "Hello"));
+        assertEquals(true, messageController.sendMessage("United Kingdom", "CSC207", "Hello"));
 //        assertEquals("United Kingdom", messageController.getConversation("United Kingdom", "CSC207"));
 
     }

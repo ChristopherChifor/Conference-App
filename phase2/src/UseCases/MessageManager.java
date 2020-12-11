@@ -55,6 +55,7 @@ public class MessageManager implements Serializable {
             System.out.println("gotcha!");
             convoID = sender+"-"+recipient;
         }
+        System.out.println("printed convoID as: " + convoID);
         messageDatabase.write(c, convoID);
         return true;
     }
