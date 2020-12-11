@@ -63,7 +63,7 @@ public class SpeakerController extends AbstractController {
      * Prints the talks the speaker speaks at.
      */
     void viewMyTalks() {
-
+        
     }
 
 
