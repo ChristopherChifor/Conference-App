@@ -107,10 +107,16 @@ public class MessageController {
 
     /**
      * Deletes a message
-     * @param messageIds the exact message to delete
+     * @param messages the exact message to delete
      */
-    public void deleteMessages(List<String> messageIds) {
-        messageManager.deleteMessages(messageIds);
+    public void deleteMessages(List<Message> messages) {
+        if (messages.size() == 0) return;
+        List<Integer> messageIds = new ArrayList<>();
+        for (Message msg : messages) {
+            messageIds.add(msg.getId());
+        }
+        System.out.println("the list of message ids is: " + messageIds);
+        messageManager.deleteMessages(messageIds, messages.get(0).getSender(), messages.get(0).getRecipient());
     }
 
     /**

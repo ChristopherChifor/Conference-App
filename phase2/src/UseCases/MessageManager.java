@@ -80,6 +80,7 @@ public class MessageManager implements Serializable {
     }
 
     /**
+     * TODO change this javadoc
      * Gets the messages between user1 and user2 as a list of formatted strings in the format:
      * "[ username ] body"
      * <p>
@@ -181,14 +182,31 @@ public class MessageManager implements Serializable {
     }
 
     /**
-     * Deletes a message
+     * Deletes a list of messages
      *
-     * @param messageIds list of messages
+     * @param messages list of messages
      */
-    public void deleteMessages(List<String> messageIds) {
-        for (String a : messageIds) {
-            messageDatabase.delete(a);
+    public void deleteMessages(List<Integer> messages, String user1, String user2) {
+        Conversation c = getConversation(user1, user2);
+        for (Integer messageID : messages) {
+            c.deleteMessage(messageID);
         }
+        messageDatabase.write(c, getConvoID(user1, user2));
+
+
+//        c.getMessages().stream().filter(messages::contains).forEach(c.getMessages()::remove);
+//        List<Message> mlist = c.getMessages();
+//        for (Message m: messages) {
+//            for (int i = mlist.size() - 1; i>=0;i--){
+//                if(m.equals(mlist.get(i))) {
+//                    System.out.println("ever??????");
+//                    mlist.remove(i);
+//                }
+//            }
+//        }
+//
+//        Conversation newC = new Conversation(user1, user2, mlist);
+//        messageDatabase.write(newC, getConvoID(user1, user2));
     }
 
     /**

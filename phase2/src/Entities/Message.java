@@ -1,6 +1,7 @@
 package Entities;
 
 import java.io.Serializable;
+import java.util.Random;
 
 /**
  * @author Alex and Chris
@@ -9,7 +10,7 @@ public class Message implements Serializable {
     private String sender, recipient;
     private String body;
     private boolean isArchived = false;
-
+    private int id;
     /**
      * Constructor for the message Entity.
      * @param sender sender
@@ -20,6 +21,7 @@ public class Message implements Serializable {
         this.sender = sender;
         this.recipient = recipient;
         this.body = body;
+        id = this.hashCode()+(new Random()).nextInt(100);
     }
 
     /**
@@ -59,6 +61,10 @@ public class Message implements Serializable {
      */
     public boolean getIsArchived() {
         return isArchived;
+    }
+
+    public int getId() {
+        return id;
     }
 
 }

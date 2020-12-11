@@ -71,7 +71,7 @@ public class MessagePresenter implements Presenter{
 
     /**
      * Marks a conversation as read
-     * @param conversation conversation between two users
+     * @param otheruser other user in conversation
      */
     public void markAsRead(String otherUser) {
         messageController.markAsRead(username, otherUser);
@@ -94,11 +94,7 @@ public class MessagePresenter implements Presenter{
      * @param messages list of messages
      */
     public void deleteMessages(List<Message> messages) {
-        List<String> messageIds = new ArrayList<>();
-        for (Message m: messages) {
-            messageIds.add(m.getSender()+"-"+m.getRecipient());
-        }
-        messageController.deleteMessages(messageIds);
+        messageController.deleteMessages(messages);
     }
 
     /**

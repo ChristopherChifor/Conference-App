@@ -2,6 +2,8 @@ package Entities;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 
 /**
@@ -21,6 +23,20 @@ public class Conversation implements Serializable {
         this.userOne = userOne;
         this.userTwo = userTwo;
         this.isRead = false;
+    }
+
+    /**
+     * This is used when deleting messages
+     *
+     * @param userOne user one
+     * @param userTwo user two
+     * @param messages messages
+     */
+    public Conversation(String userOne, String userTwo, List<Message> messages) {
+        this.userOne = userOne;
+        this.userTwo = userTwo;
+        this.isRead = false;
+        this.messages = (ArrayList<Message>) messages;
     }
 
     /**
@@ -73,4 +89,14 @@ public class Conversation implements Serializable {
     public boolean getIsRead() {
         return isRead;
     }
+
+    public void deleteMessage(int messageID) {
+        for (int a = 0; a < messages.size(); a++) {
+            if (messages.get(a).getId() == (messageID)) {
+                messages.set(a, null);
+            }
+        }
+        messages.removeAll(Collections.singleton(null));
+    }
+
 }
