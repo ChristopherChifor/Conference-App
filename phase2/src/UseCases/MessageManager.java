@@ -101,6 +101,7 @@ public class MessageManager implements Serializable {
      * @return returns that conversation
      */
     private Conversation getConversation(String user1, String user2) {
+        System.out.println(user1+" "+user2);
         return messageDatabase.read(getConvoID(user1, user2));
 //        for (String c : conversations) {
 //            System.out.println(c);
@@ -169,7 +170,7 @@ public class MessageManager implements Serializable {
      * @param user2 user 2
      * @return returns the conversation
      */
-    private Conversation newConversation(String user1, String user2) {
+    public Conversation newConversation(String user1, String user2) {
         System.out.println("making a new conversation with " + user1 + " " + user2);
         Conversation conversation = new Conversation(user1, user2);
         messageDatabase.write(conversation, user1 + "-" + user2);
