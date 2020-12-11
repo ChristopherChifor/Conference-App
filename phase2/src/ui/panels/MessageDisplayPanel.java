@@ -12,14 +12,17 @@ import java.util.stream.Collectors;
  * Panel for displaying MessageComponents. Messages can be selected and removed.
  */
 public class MessageDisplayPanel extends JPanel {
-    List<MessageComponent> messageList = new ArrayList<>();
+    private List<MessageComponent> messageList = new ArrayList<>();
+    private BoxLayout layout;
 
     /**
      * Constructor
      * @param messages list of messages being displayed
      */
     public MessageDisplayPanel(List<Message> messages) {
-        // todo decide if layout is needed
+        layout = new BoxLayout(this, BoxLayout.PAGE_AXIS);
+        setLayout(layout);
+
         for (Message m : messages) {
             MessageComponent c = new MessageComponent(m);
             messageList.add(c);
@@ -57,7 +60,6 @@ public class MessageDisplayPanel extends JPanel {
         for (Message message : messages) {
             MessageComponent newMessage = new MessageComponent(message);
             messageList.add(newMessage);
-            // todo needs to be changed if using a layout.
             add(newMessage);
         }
         refresh();

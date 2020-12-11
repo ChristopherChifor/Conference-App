@@ -30,10 +30,10 @@ public class MessageView extends JPanel implements View {
     public MessageView(MessagePresenter presenter) throws HeadlessException {
         this.presenter = presenter;
 
-        setLayout(new BorderLayout());
+        setLayout(new BorderLayout(20, 20));
 
         messageCards.setLayout(new CardLayout());
-        BoxLayout pplLayout = new BoxLayout(pplPanel,BoxLayout.PAGE_AXIS); //todo check
+        BoxLayout pplLayout = new BoxLayout(pplPanel, BoxLayout.PAGE_AXIS);
         pplPanel.setLayout(pplLayout);
 
         initMessages();
@@ -42,7 +42,7 @@ public class MessageView extends JPanel implements View {
         JScrollPane pplScroll = new JScrollPane(pplPanel);
         add(pplScroll, BorderLayout.WEST);
 
-        JPanel sendMessagePanel = new JPanel(new BorderLayout());
+        JPanel sendMessagePanel = new JPanel(new BorderLayout(20, 20));
         JTextField messageField = new JTextField("");
         JButton sendButton = new JButton("Send");
 
@@ -56,6 +56,12 @@ public class MessageView extends JPanel implements View {
             }
 
             presenter.sendMessage(selectedUsername, messageText);  // not this line
+
+            Message m = new Message(presenter.getUsername(), selectedUsername, messageText);
+            panelMap.get(selectedUsername).addMessages(m);
+
+            repaint();
+            revalidate();
         });
 
         sendMessagePanel.add(messageField, BorderLayout.CENTER);
@@ -124,21 +130,21 @@ public class MessageView extends JPanel implements View {
                 "Who do you want to message?",
                 "New Conversation",
                 JOptionPane.INFORMATION_MESSAGE);
-        if(username == null || username.isEmpty()){
+        if (username == null || username.isEmpty()) {
             // should catch if user presses cancel button
             return;
         }
 
         String message = JOptionPane.showInputDialog(null,
-                "What do you want to say to " + username+"?",
+                "What do you want to say to " + username + "?",
                 "New Conversation",
                 JOptionPane.INFORMATION_MESSAGE);
-        if(message == null||message.isEmpty()){
+        if (message == null || message.isEmpty()) {
             // should catch if user presses cancel button
             return;
         }
 
-        if(!presenter.canMessage(username)) return;
+        if (!presenter.canMessage(username)) return;
         System.out.println("omg no way");
         presenter.sendMessage(username, message);
         // TODO IF COULDN'T SEND A MESSAGE CALL showIncorrectInputDialog
@@ -146,7 +152,7 @@ public class MessageView extends JPanel implements View {
         List<Message> messages = presenter.getConversation(username);
 
         // this code should only run if message was sent!
-        if(conversations.contains(username)) return;
+        if (conversations.contains(username)) return;
         // creates a new button for this user if it does not exist.
         addMessageToggleButton(username, messages);
     }
@@ -202,7 +208,7 @@ public class MessageView extends JPanel implements View {
             CardLayout cards = (CardLayout) messageCards.getLayout();
             cards.show(messageCards, text);
 
-            if(!text.equals("Archived")){
+            if (!text.equals("Archived")) {
                 //todo this is weird
                 presenter.markAsRead(text);
             }
@@ -214,7 +220,7 @@ public class MessageView extends JPanel implements View {
         });
 
         senderButtonGroup.add(senderButton);
-        pplPanel.add(senderButton); // todo decide on layout
+        pplPanel.add(senderButton);
     }
 
     private void buttonBold(JToggleButton button) {
@@ -230,6 +236,7 @@ public class MessageView extends JPanel implements View {
         button.repaint();
         button.revalidate();
     }
+
     @Override
     public String getViewName() {
         return "Messages";

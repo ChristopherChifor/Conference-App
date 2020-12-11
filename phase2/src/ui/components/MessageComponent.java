@@ -15,12 +15,13 @@ public class MessageComponent extends Container {
 
     /**
      * Constructor
+     *
      * @param message message being displayed.
      */
     public MessageComponent(Message message) {
         this.message = message;
 
-        setLayout(new BorderLayout());
+        setLayout(new BorderLayout(50,10));
         add(new JLabel(message.getSender() + "> "), BorderLayout.WEST);
         add(new JLabel(message.getBody()), BorderLayout.CENTER);
         add(checkBox, BorderLayout.EAST);
@@ -29,25 +30,27 @@ public class MessageComponent extends Container {
 
     /**
      * Gets state of checkbox
+     *
      * @return true if selected; false otherwise
      */
-    public boolean isSelected(){
+    public boolean isSelected() {
         return checkBox.isSelected();
     }
 
     /**
      * Unchecks checkbox if checked.
      */
-    public void deselect(){
+    public void deselect() {
         checkBox.setSelected(false);
         checkBox.repaint();
     }
 
     /**
      * Getter for message
+     *
      * @return message
      */
-    public Message getMessage(){
+    public Message getMessage() {
         return message;
     }
 }

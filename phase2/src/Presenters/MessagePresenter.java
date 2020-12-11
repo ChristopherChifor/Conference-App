@@ -129,6 +129,14 @@ public class MessagePresenter implements Presenter{
     }
 
     /**
+     * Getter for username
+     * @return username of the user to whom this presenter belongs.
+     */
+    public String getUsername() {
+        return username;
+    }
+
+    /**
      * Makes a view
      * @return view
      */
