@@ -5,6 +5,7 @@ import UseCases.AccountManager;
 import UseCases.MessageManager;
 import Util.UserType;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -25,12 +26,17 @@ public class MessageController {
     }
 
     /**
-     * Returns the inbox as a List of strings of users in ones inbox.
+     * Returns the inbox as a List of strings of usernames that this user can message.
      * @param username username
      * @return inbox as strings
      */
     public List<String> getInbox(String username) {
-        return messageManager.getMyInbox(username);
+        return accountManager
+                .getUsernames()
+                .stream()
+                .filter(u->!u.equals(username))
+                .filter(u->canMessage(username, u))
+                .collect(Collectors.toList());
     }
 
     /**
@@ -45,20 +51,25 @@ public class MessageController {
 
     /**
      * Checks if the conversation is read
-     * @param messages list of messages
+     * @param thisUser this user
+     * @param otherUser other user in convo
      * @return true iff conversation is read.
      */
-    public boolean conversationIsRead(List<Message> messages) {
-        if (messages.size() == 0) return false;
-        return messageManager.conversationIsRead(messages);
+    public boolean conversationIsRead(String thisUser, String otherUser) {
+
+        return messageManager.conversationIsRead(messageManager.getConvoID(thisUser, otherUser));
     }
 
     /**
-     * //todo what does this do??
-     * @param conversation conversation
+     * Marks a conversation as read
+     * @param thisUser this user
+     * @param otherUser other user in convo
+     *
      */
-    public void markAsRead(List<Message> conversation) {
-        messageManager.markAsRead(conversation);
+    public void markAsRead(String thisUser, String otherUser) {
+        String convoID = messageManager.getConvoID(thisUser, otherUser);
+        System.out.println("found conversation ID: " + convoID);
+        messageManager.markAsRead(convoID);
     }
 
     /**
@@ -105,7 +116,12 @@ public class MessageController {
      * @return a list of users
      */
     public List<Message> getArchivedMessages(String username) {
-        return messageManager.getArchivedMessages(username);
+        List<String> otherPeople = getInbox(username);
+        List<Message> allArchived = new ArrayList<>();
+        for (String person : otherPeople) {
+            allArchived.addAll(messageManager.getArchivedMessages(username, person));
+        }
+        return allArchived;
     }
 
     /**
@@ -157,6 +173,8 @@ public class MessageController {
         }
         return true;
     }
+
+
 
 
 }

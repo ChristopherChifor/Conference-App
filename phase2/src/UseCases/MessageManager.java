@@ -9,6 +9,7 @@ import Util.UserType;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 /**
@@ -42,11 +43,10 @@ public class MessageManager implements Serializable {
      * @return boolean if sent
      */
     public boolean sendMessage(String sender, String recipient, String messageBody) {
-        System.out.println("1 made it here!!!!!!!!!!!!!!");
         boolean hasMessaged = hasMessaged(sender, recipient);
-
+        if (hasMessaged) System.out.println("they have messaged");
+        else System.out.println("they have NOTTTTT messaged");
         if (!hasMessaged) newConversation(sender, recipient);
-        System.out.println("3 made it here!!!!!!!!!!!!!!");
         Message message = new Message(sender, recipient, messageBody);
         Conversation c = getConversation(sender, recipient);
         c.addMessage(message);
@@ -135,23 +135,33 @@ public class MessageManager implements Serializable {
 
 
 
-    /**
-     * Returns of a list of usernames this person has messaged.
-     *
-     * @param user username
-     * @return list of usernames; empty list if user not in database
-     */
-    public ArrayList<String> getMyInbox(String user) {
-        List<String> conversations = messageDatabase.getIds();
-        ArrayList<String> myInbox = new ArrayList<>();
-        for (String c : conversations) {
-            String otherUser = c;
-            otherUser.replace("-","");
-            otherUser.replace(user,"");
-            if (c.contains(user)) myInbox.add(otherUser);
-        }
-        return myInbox;
-    }
+//    /** todo remove
+//     * Returns of a list of usernames this person can message.
+//     *
+//     * @param user username
+//     * @return list of usernames; empty list if user not in database
+//     */
+//    public ArrayList<String> getMyInbox(String thisUser) {
+////        System.out.println("------------------------this was called");
+////        List<String> conversations = messageDatabase.getIds();
+//
+////        System.out.println(conversations);
+////        for (String c : conversations) {
+////            System.out.println("------------------------1");
+////            if (c.contains(user))  {
+////                String otherUser = c;
+////                otherUser.replace(user,"");
+////                otherUser.replace("-","");
+////                System.out.println("OTHER USER IS : "+ otherUser);
+////                myInbox.add(otherUser);
+////            }
+////        }
+//        ArrayList<String> myInbox = new ArrayList<>();
+//        Set<String> allUsernames = accountManager.getUsernames().stream().filter(u->u!=thisUser).filter(u->)
+//        // foreach user, canMessage
+//
+//        return myInbox;
+//    }
 
     /**
      * Creates a conversation between two users and puts it in the list of their conversations.
@@ -166,32 +176,29 @@ public class MessageManager implements Serializable {
      * @return returns the conversation
      */
     private Conversation newConversation(String user1, String user2) {
+        System.out.println("making a new conversation with "+ user1 + " "+ user2);
         Conversation conversation = new Conversation(user1, user2);
-
         messageDatabase.write(conversation, user1+"-"+user2);
         return conversation;
     }
 
     /**
      * Checks if the conversation has been read.
-     * @param messages list of messages
+     * @param convoID ID of the conversation
      * @return true if the conversation is read, otherwise, false if not read.
      */
-    public boolean conversationIsRead(List<Message> messages) {
-        //todo why is there souts
-        System.out.println("enter----- convoIsRead");
-        String idFromMessages = getIDFromMessages(messages);
-        System.out.println("ID from messages: "+idFromMessages);
-        return messageDatabase.read(getIDFromMessages(messages)).getIsRead();
+    public boolean conversationIsRead(String convoID) {
+        return messageDatabase.read(convoID).getIsRead();
     }
 
     /**
      * Marks a conversation as read.
-     * @param messages list of messages
+     * @param conversationID ID of conversation
      */
-    public void markAsRead(List<Message> messages) {
-        System.out.println("marked as read!");
-        messageDatabase.read(getIDFromMessages(messages)).markAsRead();
+    public void markAsRead(String conversationID) {
+        Conversation c =messageDatabase.read(conversationID);
+        c.markAsRead();
+        messageDatabase.write(c, conversationID);
     }
 
     /**
@@ -224,21 +231,24 @@ public class MessageManager implements Serializable {
         }
     }
 
-    /**
-     * Takes in a username and returns a list of archived messages for that user.
-     * @param username username
-     * @return a list of archived messages.
-     */
-    public List<Message> getArchivedMessages(String username) {
-        ArrayList<String> inbox = getMyInbox(username);
-        ArrayList<Message> archivedMessages = new ArrayList<>();
-        for (String s : inbox) {
-            List<Message> messages =getConversationThread(username, s);
-            for (Message m : messages) {
-                if (m.getIsArchived()) archivedMessages.add(m);
+    public ArrayList<Message> getArchivedMessages(String sender, String recipient) {
+        ArrayList<Message>conversation =  getConversation(sender, recipient).getMessages();
+        ArrayList<Message> archived = new ArrayList<>();
+        for (Message m : conversation) {
+            if (m.getIsArchived()) {
+                archived.add(m);
             }
         }
-        return archivedMessages;
+        return archived;
     }
 
+    public String getConvoID(String user1, String user2) {
+        List<String> allIDs = messageDatabase.getIds();
+        for (String id : allIDs) {
+            if (id.contains(user1) && id.contains(user2)) {
+                return id;
+            }
+        }
+        return "";
+    }
 }
