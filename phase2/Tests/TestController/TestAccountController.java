@@ -29,11 +29,33 @@ public class TestAccountController {
                 "jafar123", "jafar123", UserType.ORGANIZER));
         assertFalse(accountController.createUser("baba", "baba", "baba1",
                 "baba2", UserType.ORGANIZER));
-        assertTrue(accountController.createUser("baba", "baba", "baba1",
-                "baba1", UserType.ORGANIZER));
-        assertTrue(accountManager.userExists("baba"));
     }
 
+    @Test
+    public void test_changeUserType() {
+        AccountController accountController = new AccountController();
+        AccountManager accountManager = new AccountManager();
+        accountController.createUser("Parssa", "Parssa_baba", "parssa123",
+                "parssa123", UserType.VIP);
+        accountController.changeUserType("Parssa_baba", UserType.ATTENDEE);
+        assertEquals(UserType.ATTENDEE, accountManager.getUser("parssa_baba").getUserType());
+        assertNotEquals(UserType.VIP, accountManager.getUser("parssa_baba").getUserType());
+    }
 
+    @Test
+    public void getUsernamesOfType() {
+        AccountController accountController = new AccountController();
+        AccountManager accountManager = new AccountManager();
+        accountController.createUser("VIP1", "VIP1", "password",
+                "password", UserType.VIP);
+        accountController.createUser("VIP2", "VIP2", "password",
+                "password", UserType.VIP);
+        accountController.createUser("NotVIP", "NotVIP", "password",
+                "password", UserType.SPEAKER);
+        assertTrue(accountController.getUsernamesOfType(UserType.VIP).contains("VIP1"));
+        assertTrue(accountController.getUsernamesOfType(UserType.VIP).contains("VIP2"));
+        assertFalse(accountController.getUsernamesOfType(UserType.VIP).contains("NotVIP"));
+        assertFalse(accountController.getUsernamesOfType(UserType.ATTENDEE).contains("VIP1"));
+    }
 
 }
