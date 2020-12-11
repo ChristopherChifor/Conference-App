@@ -146,7 +146,7 @@ public class MessageController {
     }
 
     /**
-     * TODO kinda finished, change the javadoc
+     *
      * Checks if sender can message recipient.
      * <p>
      * They can message iff:
