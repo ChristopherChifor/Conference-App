@@ -24,14 +24,9 @@ public class RoomManager {
      * @param roomCapacity Capacity of the room that is to be created
      * @return true if no other room has that name and new Room is created
      */
-    public boolean createRoom(String roomName, int roomCapacity) {
-        if (!roomExists(roomName)) return false;
+    public void createRoom(String roomName, int roomCapacity) {
         Room room = new Room(roomName);
-        if (!room.setRoomCapacity(roomCapacity)) {
-            return false;
-        }
         roomJsonDatabase.write(room, roomName);
-        return true;
     }
 
     /**

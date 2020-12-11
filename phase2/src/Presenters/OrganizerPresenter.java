@@ -1,6 +1,7 @@
 package Presenters;
 
 import Controllers.AccountController;
+import Controllers.RoomController;
 import UseCases.AccountManager;
 import Util.UserType;
 import ui.view.OrganizerView;
@@ -13,10 +14,12 @@ import java.util.List;
  * Presenter for organizer
  */
 public class OrganizerPresenter implements Presenter {
+    private RoomController roomController;
     private MainPresenter mainPresenter;
     private AccountController accountController;
 
     public OrganizerPresenter(MainPresenter presenter) {
+        this.roomController = new RoomController();
         this.mainPresenter = presenter;
         this.accountController = new AccountController();
     }
@@ -74,8 +77,7 @@ public class OrganizerPresenter implements Presenter {
      * @param view view used to show any error messages
      */
     public void newRoom(String roomName, int roomCapacity, View view){
-        //TODO MAKE NEW ROOM
-        //USE view.showIncorrectInputDialog() to notify users of bad input.
+        if (!roomController.createRoom(roomName, roomCapacity)) view.showIncorrectInputDialog("Invalid input.");
     }
 
     /**

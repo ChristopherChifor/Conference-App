@@ -8,4 +8,10 @@ public class RoomController {
     public RoomController() {
         this.roomManager = new RoomManager();
     }
+
+    public boolean createRoom(String roomName, int capacity) {
+        if (!roomManager.roomExists(roomName) || capacity == 0) return false;
+        roomManager.createRoom(roomName, capacity);
+        return true;
+    }
 }
