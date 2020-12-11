@@ -1,6 +1,7 @@
 package Gateways;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 import java.io.*;
 import java.util.*;
@@ -21,7 +22,7 @@ import java.util.stream.Stream;
 public class JsonDatabase<T> implements IGateway<T> {
     private final String DIRECTORY_ROOT = "phase2/database/";
     private final File directory;
-    private Gson gson = new Gson();
+    private Gson gson;
     private final String objectName;
     private final Class<T> type;
 
@@ -35,6 +36,7 @@ public class JsonDatabase<T> implements IGateway<T> {
         this.directory = new File(String.format("%s%s/", DIRECTORY_ROOT, objectName));
         this.objectName = objectName;
         this.type = type;
+        gson = new GsonBuilder().setPrettyPrinting().create();
 
         // creates the directory if it does not exist
         if (!this.directory.exists()) {
