@@ -9,7 +9,7 @@ import java.util.ArrayList;
  */
 public class Conversation implements Serializable {
     private String userOne, userTwo;
-    private ArrayList<Message> messages = new ArrayList<Message>();
+    private ArrayList<Message> messages = new ArrayList<>();
     private boolean isRead;
 
     /**
