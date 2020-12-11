@@ -32,10 +32,9 @@ public class ScheduleManager implements Serializable {
      * @return true if the event was successfully added
      */
     private boolean addNewEvent(String roomName, String eventName, Calendar time, int duration) {
-
         ScheduleEntry scheduleEntry = new ScheduleEntry(eventName, roomName, time, duration);
         scheduleEntryJsonDatabase.write(scheduleEntry, eventName);
-        return true; //TODO maybe get rid of bool
+        return true;
     }
 
     /**
@@ -177,10 +176,7 @@ public class ScheduleManager implements Serializable {
      * @return true if succesfully removed from event
      */
     public boolean removeFromEvent(String username, String event) {
-        if (eventExists(event)) {
-            return eventJsonDatabase.read(event).removeAttendeeFromEvent(username);
-        }
-        return false;
+        return eventJsonDatabase.read(event).removeAttendeeFromEvent(username);
     }
 
     /**
@@ -191,10 +187,7 @@ public class ScheduleManager implements Serializable {
      * @return true if succesfully signed up for event
      */
     public boolean signUpForEvent(String username, String event) {
-        if (canSignUpForEvent(event)) {
-            return eventJsonDatabase.read(event).addAttendeeToEvent(username);
-        }
-        return false;
+        return eventJsonDatabase.read(event).addAttendeeToEvent(username);
     }
 
     /**
