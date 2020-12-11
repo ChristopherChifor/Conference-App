@@ -32,6 +32,21 @@ public class EventController {
     }
 
     /**
+     * Signs up user for event
+     *
+     * @param eventName name of event
+     * @param username usernmae of event
+     * @return true if signed up for event
+     */
+    public boolean enrolAttendee(String eventName, String username) {
+        if (scheduleManager.canSignUpForEvent(eventName)) {
+            scheduleManager.signUpForEvent(username, eventName);
+            return true;
+        }
+        return false;
+    }
+
+    /**
      * Cancels enrolment of current user from event.
      * @param eventName name of event.
      */

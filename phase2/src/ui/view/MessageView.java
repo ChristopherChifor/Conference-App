@@ -53,7 +53,7 @@ public class MessageView extends JPanel implements View {
                 JOptionPane.showMessageDialog(null, "Cannot send message to this address", "Bad Input", JOptionPane.ERROR_MESSAGE);
             }
 
-            presenter.sendMessage(selectedUsername, messageText);
+            presenter.sendMessage("alex", messageText);
         });
 
         sendMessagePanel.add(messageField, BorderLayout.CENTER);
@@ -137,7 +137,9 @@ public class MessageView extends JPanel implements View {
         }
 
         if(!presenter.canMessage(username)) return;
-        // TODO SEND THE MESSAGE; IF COULDN'T SEND A MESSAGE CALL showIncorrectInputDialog
+        System.out.println("omg no way");
+        presenter.sendMessage(username, message);
+        // TODO IF COULDN'T SEND A MESSAGE CALL showIncorrectInputDialog
 
         List<Message> messages = presenter.getConversation(username);
 
