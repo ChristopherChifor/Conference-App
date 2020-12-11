@@ -26,6 +26,7 @@ public class RoomManager {
      */
     public void createRoom(String roomName, int roomCapacity) {
         Room room = new Room(roomName);
+        room.setRoomCapacity(roomCapacity);
         roomJsonDatabase.write(room, roomName);
     }
 
@@ -45,6 +46,9 @@ public class RoomManager {
      * @return true if room exists
      */
     public boolean roomExists(String roomName) {
+        List<String> ids = roomJsonDatabase.getIds();
+        if (ids.size() == 0) return true;
+        System.out.println(ids);
         return roomJsonDatabase.getIds().contains(roomName);
     }
 

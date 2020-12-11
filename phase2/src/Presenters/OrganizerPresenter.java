@@ -77,7 +77,11 @@ public class OrganizerPresenter implements Presenter {
      * @param view view used to show any error messages
      */
     public void newRoom(String roomName, int roomCapacity, View view){
-        if (!roomController.createRoom(roomName, roomCapacity)) view.showIncorrectInputDialog("Invalid input.");
+        roomController.createRoom(roomName, roomCapacity);
+//    }
+//        if (!) {
+//            view.showIncorrectInputDialog("Invalid input.");
+//        }
     }
 
     /**
