@@ -32,21 +32,6 @@ public class EventController {
     }
 
     /**
-     * Signs up user for event
-     *
-     * @param eventName name of event
-     * @param username usernmae of event
-     * @return true if signed up for event
-     */
-    public boolean enrolAttendee(String eventName, String username) {
-        if (scheduleManager.canSignUpForEvent(eventName)) {
-            scheduleManager.signUpForEvent(username, eventName);
-            return true;
-        }
-        return false;
-    }
-
-    /**
      * Cancels enrolment of current user from event.
      * @param eventName name of event.
      */
@@ -103,7 +88,7 @@ public class EventController {
 
 
     private boolean scheduleConflict(String roomName, Calendar time, int duration) {
-        //TODO finish this method
+        //TODO finish this method, need the method to return filtered ScheduleEntries by roomName
         return true;
     }
 
@@ -153,6 +138,8 @@ public class EventController {
     /**
      *  Signs up attendee for event
      * @param eventName name of the event
+     * @param username username of attendee
+     * @return true if attendee is successfully signed up for event
      *
      */
     public boolean signUpEvent(String username, String eventName) {

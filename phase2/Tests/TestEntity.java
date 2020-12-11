@@ -1,8 +1,9 @@
-import Entities.User;
-import Entities.Room;
+import Entities.*;
 import Util.UserType;
 import org.junit.*;
 
+import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.HashMap;
 
 import static org.junit.Assert.*;
@@ -105,6 +106,127 @@ public class TestEntity {
 
 
     //TODO Test Cases for Message Entity
+
+    @Test(timeout=50)
+    public void testMessageGetSender() {
+        Message message = new Message("United Kingdom", "CSC207", "Hi");
+        assertEquals("United Kingdom", message.getSender());
+
+    }
+
+    @Test(timeout=50)
+    public void testMessageGetRecipient() {
+        Message message = new Message("United Kingdom", "CSC207", "Hi");
+        assertEquals("CSC207", message.getRecipient());
+
+    }
+
+    @Test(timeout=50)
+    public void testMessageGetBody() {
+        Message message = new Message("United Kingdom", "CSC207", "Hi");
+        assertEquals("Hi", message.getBody());
+
+    }
+
+    @Test(timeout=50)
+    public void testMessageArchiveFalse() {
+        Message message = new Message("United Kingdom", "CSC207", "Hi");
+        assertEquals(false, message.getIsArchived());
+
+    }
+
+    @Test(timeout=50)
+    public void testMessageArchiveTrue() {
+        Message message = new Message("United Kingdom", "CSC207", "Hi");
+        message.markAsArchived();
+        assertEquals(true, message.getIsArchived());
+
+    }
+
+
+    @Test(timeout=50)
+    public void testScheduleEntryGetEventName() {
+        Calendar time = Calendar.getInstance();
+        ScheduleEntry scheduleEntry = new ScheduleEntry("Conference", "1", time, 1);
+        assertEquals("Conference", scheduleEntry.getEventName());
+
+    }
+
+    @Test(timeout=50)
+    public void testScheduleEntryGetRoomID() {
+        Calendar time = Calendar.getInstance();
+        ScheduleEntry scheduleEntry = new ScheduleEntry("Conference", "1", time, 1);
+        assertEquals("1", scheduleEntry.getRoomID());
+
+    }
+
+    @Test(timeout=50)
+    public void testScheduleEntryGetStartTime() {
+        Calendar time = Calendar.getInstance();
+        ScheduleEntry scheduleEntry = new ScheduleEntry("Conference", "1", time, 1);
+        assertEquals(time, scheduleEntry.getStartTime());
+
+    }
+
+    @Test(timeout=50)
+    public void testScheduleEntryGetDuration() {
+        Calendar time = Calendar.getInstance();
+        ScheduleEntry scheduleEntry = new ScheduleEntry("Conference", "1", time, 1);
+        assertEquals(1, scheduleEntry.getDuration());
+
+    }
+
+    @Test(timeout=50)
+    public void testScheduleEntrySetRoomID() {
+        Calendar time = Calendar.getInstance();
+        ScheduleEntry scheduleEntry = new ScheduleEntry("Conference", "1", time, 1);
+        scheduleEntry.setRoomID("2");
+        assertEquals("2", scheduleEntry.getRoomID());
+
+    }
+
+    @Test(timeout=50)
+    public void testScheduleEntrySetDuration() {
+        Calendar time = Calendar.getInstance();
+        ScheduleEntry scheduleEntry = new ScheduleEntry("Conference", "1", time, 1);
+        scheduleEntry.setDuration(2);
+        assertEquals(2, scheduleEntry.getDuration());
+
+    }
+
+    @Test(timeout=50)
+    public void testScheduleEntrySetStartTime() {
+        Calendar time = Calendar.getInstance();
+        Calendar time2 = (Calendar) time.clone();
+        ScheduleEntry scheduleEntry = new ScheduleEntry("Conference", "1", time, 1);
+        time.add(Calendar.DATE,-1);
+        scheduleEntry.setStartTime(time);
+        assertEquals(false, time2.equals(time));
+
+    }
+
+    @Test(timeout=50)
+    public void testScheduleEntrySetStartTime2() {
+        Calendar time = Calendar.getInstance();
+        Calendar time2 = (Calendar) time.clone();
+        ScheduleEntry scheduleEntry = new ScheduleEntry("Conference", "1", time, 1);
+        time.add(Calendar.DATE,-1);
+        time2.add(Calendar.DATE,-1);
+        scheduleEntry.setStartTime(time);
+        assertEquals(time2, scheduleEntry.getStartTime());
+
+    }
+
+    @Test(timeout=50)
+    public void testConversationAddMessage() {
+        Conversation conversation = new Conversation("United Kingdom", "CSC207");
+        Message message = new Message("United Kingdom", "CSC207", "Hi");
+        ArrayList <Message> messagesList = new ArrayList<>();
+        messagesList.add(message);
+        conversation.addMessage(message);
+        assertEquals(messagesList, conversation.getMessages());
+
+    }
 
 
     //TODO Test Cases for Event Entity
