@@ -23,7 +23,7 @@ public class TestEventController {
                 Calendar.getInstance(), 5);
         accountController.createUser("Jafar", "JJ", "pass", "pass", UserType.ATTENDEE);
 
-        eventController.enrolAttendee("Event1", "JJ");
+        eventController.signUpEvent("Event1", "JJ");
         assertTrue(scheduleManager.getEvent("Event1").getAttendees().contains("JJ"));
 
     }
