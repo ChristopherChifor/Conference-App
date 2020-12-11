@@ -129,35 +129,6 @@ public class MessageManager implements Serializable {
         return getConversation(user1, user2).getMessages();
     }
 
-
-//    /** todo remove
-//     * Returns of a list of usernames this person can message.
-//     *
-//     * @param user username
-//     * @return list of usernames; empty list if user not in database
-//     */
-//    public ArrayList<String> getMyInbox(String thisUser) {
-////        System.out.println("------------------------this was called");
-////        List<String> conversations = messageDatabase.getIds();
-//
-////        System.out.println(conversations);
-////        for (String c : conversations) {
-////            System.out.println("------------------------1");
-////            if (c.contains(user))  {
-////                String otherUser = c;
-////                otherUser.replace(user,"");
-////                otherUser.replace("-","");
-////                System.out.println("OTHER USER IS : "+ otherUser);
-////                myInbox.add(otherUser);
-////            }
-////        }
-//        ArrayList<String> myInbox = new ArrayList<>();
-//        Set<String> allUsernames = accountManager.getUsernames().stream().filter(u->u!=thisUser).filter(u->)
-//        // foreach user, canMessage
-//
-//        return myInbox;
-//    }
-
     /**
      * Creates a conversation between two users and puts it in the list of their conversations.
      *
@@ -231,6 +202,13 @@ public class MessageManager implements Serializable {
         }
     }
 
+    /**
+     * Gets the Archived messages btween two users
+     *
+     * @param sender sender of the messages
+     * @param recipient recipient of the messages
+     * @return ArrayList of messages
+     */
     public ArrayList<Message> getArchivedMessages(String sender, String recipient) {
         ArrayList<Message> conversation = getConversation(sender, recipient).getMessages();
         ArrayList<Message> archived = new ArrayList<>();
@@ -242,6 +220,12 @@ public class MessageManager implements Serializable {
         return archived;
     }
 
+    /**
+     * Gets the conversation id between two users
+     * @param user1 user one
+     * @param user2 user two
+     * @return string of the conversation id
+     */
     public String getConvoID(String user1, String user2) {
         List<String> allIDs = messageDatabase.getIds();
         for (String id : allIDs) {

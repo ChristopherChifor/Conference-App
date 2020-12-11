@@ -1,9 +1,11 @@
 package ui;
 
 import Presenters.MainPresenter;
+import sun.invoke.empty.Empty;
 import ui.view.View;
 
 import javax.swing.*;
+import javax.swing.border.EmptyBorder;
 import javax.swing.plaf.basic.BasicLookAndFeel;
 import javax.swing.plaf.nimbus.NimbusLookAndFeel;
 import java.awt.*;
@@ -25,6 +27,7 @@ public class AppWindow extends JDialog {
     public AppWindow(MainPresenter mainPresenter) {
         this.mainPresenter = mainPresenter;
         panel = new JPanel(new BorderLayout(20, 20));
+        panel.setBorder(new EmptyBorder(5,5,5,5));
         backButton.addActionListener(e -> goBack());
         toggleDark.addActionListener(e ->toggleDark());
 

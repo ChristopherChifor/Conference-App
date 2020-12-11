@@ -1,6 +1,6 @@
 {
   "name": "Alex",
   "username": "alex",
-  "password": "password",
-  "userType": "SPEAKER"
+  "password": "a",
+  "userType": "ATTENDEE"
 }

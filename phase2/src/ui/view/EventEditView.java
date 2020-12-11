@@ -136,11 +136,19 @@ public class EventEditView extends JPanel implements View {
         cst.gridx = 1;
         add(timeField, cst);
         cst.gridy++;
+
         cst.gridx = 0;
         add(new JLabel("Date:"), cst);
         cst.gridx = 1;
         add(dateField, cst);
         cst.gridy++;
+
+        cst.gridx = 0;
+        add(new JLabel("Duration:"), cst);
+        cst.gridx = 1;
+        add(durationField, cst);
+        cst.gridy++;
+
         cst.gridx = 0;
         add(new JLabel("Room:"), cst);
         cst.gridx = 1;

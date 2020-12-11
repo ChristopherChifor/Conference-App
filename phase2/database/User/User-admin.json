@@ -1,1 +1,6 @@
-{"name":"admin","username":"admin","password":"admin","userType":"ORGANIZER"}
+{
+  "name": "Admin",
+  "username": "admin",
+  "password": "admin",
+  "userType": "ORGANIZER"
+}

@@ -38,12 +38,12 @@ public class EventEditPresenter implements Presenter {
 
 
         if (eventName == null) {
-            this.bundle = new EventEditBundle(speakerOptions, roomOptions);
+            this.bundle = new EventEditBundle(roomOptions, speakerOptions);
         } else {
             EventBundle bundle = null;
             //TODO ASSEMBLE EVENTBUNDLE (above) BUNDLE FROM CONTROLLERS (ASSUME THIS EVENT EXISTS)
 
-            this.bundle = new EventEditBundle(bundle, speakerOptions, roomOptions);
+            this.bundle = new EventEditBundle(bundle, roomOptions, speakerOptions);
         }
     }
 
