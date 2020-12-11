@@ -88,7 +88,7 @@ public class EventController {
 
 
     private boolean scheduleConflict(String roomName, Calendar time, int duration) {
-        //TODO finish this method
+        //TODO finish this method, need the method to return filtered ScheduleEntries by roomName
         return true;
     }
 
