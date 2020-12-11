@@ -65,9 +65,11 @@ public class JsonDatabase<T> implements IGateway<T> {
 
         try (PrintWriter writer = new PrintWriter(file)) {
             writer.print(asJson);
-        } catch (FileNotFoundException e) {
+            Thread.sleep(30); // gives time for OS to do what it needs to do
+        } catch (FileNotFoundException | InterruptedException e) {
             e.printStackTrace();
         }
+
 
     }
 
@@ -116,7 +118,8 @@ public class JsonDatabase<T> implements IGateway<T> {
 
         try {
             file.delete();
-        } catch (SecurityException e) {
+            Thread.sleep(30); // gives time for OS to do what it needs to do
+        } catch (SecurityException | InterruptedException e) {
             e.printStackTrace();
         }
 
