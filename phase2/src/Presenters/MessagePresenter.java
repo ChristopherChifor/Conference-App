@@ -5,7 +5,6 @@ import Entities.Message;
 import ui.view.MessageView;
 import ui.view.View;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -71,7 +70,7 @@ public class MessagePresenter implements Presenter{
 
     /**
      * Marks a conversation as read
-     * @param otheruser other user in conversation
+     * @param otherUser other user in conversation
      */
     public void markAsRead(String otherUser) {
         messageController.markAsRead(username, otherUser);
@@ -83,7 +82,6 @@ public class MessagePresenter implements Presenter{
      * @param messageBody body of the message
      */
     public void sendMessage(String recipient, String messageBody) {
-        //TODO change how the recipients are displayed
         String otherUser = recipient.replace(username,"");
         otherUser.replace("-","");
         messageController.sendMessage(username, otherUser, messageBody);

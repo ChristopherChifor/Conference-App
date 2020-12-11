@@ -28,8 +28,9 @@ public class UserSettingsPresenter implements Presenter{
      * @return user's real name
      */
     public String getUserRealName(){
+
         // TODO DO THIS!
-        return "John Smith";
+        return accountController.getUserRealName(username);
     }
 
     /**

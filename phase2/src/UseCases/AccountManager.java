@@ -103,4 +103,8 @@ public class AccountManager implements Serializable {
                 .map(User::getUsername)
                 .collect(Collectors.toList());
     }
+
+    public String getName(String username) {
+        return userJsonDatabase.read(username).getName();
+    }
 }

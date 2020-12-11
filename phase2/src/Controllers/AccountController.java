@@ -83,4 +83,8 @@ public class AccountController {
     public List<String> getUsernamesOfType(UserType type) {
         return accountManager.getUsernamesOfType(type);
     }
+
+    public String getUserRealName(String username) {
+        return accountManager.getName(username);
+    }
 }
