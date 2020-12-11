@@ -228,6 +228,23 @@ public class TestEntity {
 
     }
 
+    @Test(timeout=50)
+    public void testConversationGetUsers() {
+        Conversation conversation = new Conversation("United Kingdom", "CSC207");
+        assertEquals("United Kingdom", conversation.getUserOne());
+        assertEquals("CSC207", conversation.getUserTwo());
+
+    }
+
+    @Test(timeout=50)
+    public void testConversationRead() {
+        Conversation conversation = new Conversation("United Kingdom", "CSC207");
+        assertEquals(false, conversation.getIsRead());
+        conversation.markAsRead();
+        assertEquals(true, conversation.getIsRead());
+
+    }
+
 
     //TODO Test Cases for Event Entity
 
