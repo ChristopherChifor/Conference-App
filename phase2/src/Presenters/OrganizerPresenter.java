@@ -1,5 +1,6 @@
 package Presenters;
 
+import Controllers.AccountController;
 import UseCases.AccountManager;
 import Util.UserType;
 import ui.view.OrganizerView;
@@ -13,10 +14,11 @@ import java.util.List;
  */
 public class OrganizerPresenter implements Presenter {
     private MainPresenter mainPresenter;
-    private AccountManager accountManager = new AccountManager();
+    private AccountController accountController;
 
     public OrganizerPresenter(MainPresenter presenter) {
         this.mainPresenter = presenter;
+        this.accountController = new AccountController();
     }
 
     /**
@@ -25,7 +27,7 @@ public class OrganizerPresenter implements Presenter {
      * @return list of all usernames of attendees
      */
     public List<String> getAttendees() {
-        return accountManager.getUsernamesOfType(UserType.ATTENDEE);
+        return accountController.getUsernamesOfType(UserType.ATTENDEE);
     }
 
     /**
@@ -34,7 +36,7 @@ public class OrganizerPresenter implements Presenter {
      * @return list of all usernames of speakers
      */
     public List<String> getSpeakers() {
-        return accountManager.getUsernamesOfType(UserType.SPEAKER);
+        return accountController.getUsernamesOfType(UserType.SPEAKER);
     }
 
     /**
@@ -43,7 +45,7 @@ public class OrganizerPresenter implements Presenter {
      * @return list of all usernames of organizers
      */
     public List<String> getOrganizers() {
-        return accountManager.getUsernamesOfType(UserType.ORGANIZER);
+        return accountController.getUsernamesOfType(UserType.ORGANIZER);
     }
 
     /**
@@ -52,7 +54,7 @@ public class OrganizerPresenter implements Presenter {
      * @return list of all usernames of VIPs
      */
     public List<String> getVips() {
-        return accountManager.getUsernamesOfType(UserType.VIP);
+        return accountController.getUsernamesOfType(UserType.VIP);
     }
 
     /**
