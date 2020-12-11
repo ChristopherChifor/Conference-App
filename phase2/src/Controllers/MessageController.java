@@ -98,6 +98,14 @@ public class MessageController {
     }
 
     /**
+     * Archives a list of messages
+     * @param messageIds the message(s) to be archived
+     */
+    public void archiveMessages(List<Message> messageIds) {
+        messageManager.archiveMessages(messageIds);
+    }
+
+    /**
      * Deletes a message
      * @param messageIds the exact message to delete
      */
@@ -106,11 +114,15 @@ public class MessageController {
     }
 
     /**
-     * Archives a list of messages
-     * @param messageIds the message(s) to be archived
+     * Returns a list of all usernames this user can message.
+     *
+     * @param user user
+     * @return list of usernames
      */
-    public void archiveMessages(List<Message> messageIds) {
-        messageManager.archiveMessages(messageIds);
+    public List<String> getContacts(String user) {
+        return accountManager.getUsernames().stream()
+                .filter(s -> canMessage(user, s) && s != user)
+                .collect(Collectors.toList());
     }
 
     /**
@@ -125,18 +137,6 @@ public class MessageController {
             allArchived.addAll(messageManager.getArchivedMessages(username, person));
         }
         return allArchived;
-    }
-
-    /**
-     * Returns a list of all usernames this user can message.
-     *
-     * @param user user
-     * @return list of usernames
-     */
-    public List<String> getContacts(String user) {
-        return accountManager.getUsernames().stream()
-                .filter(s -> canMessage(user, s) && s != user)
-                .collect(Collectors.toList());
     }
 
     /**
@@ -176,8 +176,4 @@ public class MessageController {
         }
         return true;
     }
-
-
-
-
 }
