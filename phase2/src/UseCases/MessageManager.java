@@ -2,15 +2,13 @@ package UseCases;
 
 import Entities.Conversation;
 import Entities.Message;
-import Entities.User;
 import Gateways.JsonDatabase;
-import Util.UserType;
+
 
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
-import java.util.stream.Collectors;
+
 
 /**
  * The use case class for messaging.
@@ -44,25 +42,16 @@ public class MessageManager implements Serializable {
     public boolean sendMessage(String sender, String recipient, String messageBody) {
         boolean hasMessaged = hasMessaged(sender, recipient);
         if (!hasMessaged) {
-            System.out.println("-------havent messaged before");
             newConversation(sender, recipient);
-        } else {
-            System.out.println("-------HAS messaged before");
         }
         Message message = new Message(sender, recipient, messageBody);
         Conversation c = getConversation(sender, recipient);
-        System.out.println("got the conversation: " + c);
-        System.out.println("got it's messages: " + c.getMessages());
-//        ArrayList<Message> messages = c.getMessages();
-//        messages.add(message);
         c.addMessage(message);
         String convoID = getConvoID(sender, recipient);
-//        String convoID = getIDFromMessages(getConversationThread(sender, recipient));
         if (convoID == null) {
             System.out.println("gotcha!");
             convoID = sender + "-" + recipient;
         }
-        System.out.println("printed convoID as: " + convoID);
         messageDatabase.write(c, convoID);
         return true;
     }
@@ -80,10 +69,8 @@ public class MessageManager implements Serializable {
     }
 
     /**
-     * TODO change this javadoc
      * Gets the messages between user1 and user2 as a list of formatted strings in the format:
      * "[ username ] body"
-     * <p>
      * Note: getMessages(user1, user2) is equivalent to getMessages(user2, user1)
      *
      * @param user1 user 1
@@ -104,19 +91,6 @@ public class MessageManager implements Serializable {
     private Conversation getConversation(String user1, String user2) {
         System.out.println(user1+" "+user2);
         return messageDatabase.read(getConvoID(user1, user2));
-//        for (String c : conversations) {
-//            System.out.println(c);
-//            String u1 = c.substring(0, c.indexOf("-")+1);
-//            if (u1.equals(user1) || u1.equals(user2)){
-//                String u2 = c.substring(c.indexOf("-")+1);
-//                if (u2.equals(user1) || u2.equals(user2)){
-//                    return messageDatabase.read(c);
-//                }
-//            }
-//        }
-//
-//        // if it's made it here, we don't got a conversation, thus we will make one
-//        return newConversation(user1, user2);
     }
 
     /**
@@ -143,7 +117,6 @@ public class MessageManager implements Serializable {
      * @return returns the conversation
      */
     public Conversation newConversation(String user1, String user2) {
-        System.out.println("making a new conversation with " + user1 + " " + user2);
         Conversation conversation = new Conversation(user1, user2);
         messageDatabase.write(conversation, user1 + "-" + user2);
         return conversation;
@@ -169,18 +142,6 @@ public class MessageManager implements Serializable {
         c.markAsRead();
         messageDatabase.write(c, conversationID);
     }
-
-    /**
-     * Gets a conversation between two users and returns as string.
-     *
-     * @param messages list of messages
-     * @return string of a sender and recipient of a message.
-     */
-    private String getIDFromMessages(List<Message> messages) {
-        if (messages.size() == 0) return null;
-        return messages.get(0).getSender() + "-" + messages.get(0).getRecipient();
-    }
-
     /**
      * Deletes a list of messages
      *
@@ -192,21 +153,6 @@ public class MessageManager implements Serializable {
             c.deleteMessage(messageID);
         }
         messageDatabase.write(c, getConvoID(user1, user2));
-
-
-//        c.getMessages().stream().filter(messages::contains).forEach(c.getMessages()::remove);
-//        List<Message> mlist = c.getMessages();
-//        for (Message m: messages) {
-//            for (int i = mlist.size() - 1; i>=0;i--){
-//                if(m.equals(mlist.get(i))) {
-//                    System.out.println("ever??????");
-//                    mlist.remove(i);
-//                }
-//            }
-//        }
-//
-//        Conversation newC = new Conversation(user1, user2, mlist);
-//        messageDatabase.write(newC, getConvoID(user1, user2));
     }
 
     /**
