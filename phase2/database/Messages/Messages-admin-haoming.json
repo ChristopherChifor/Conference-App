@@ -1,0 +1,13 @@
+{
+  "userOne": "admin",
+  "userTwo": "haoming",
+  "messages": [
+    {
+      "sender": "admin",
+      "recipient": "haoming",
+      "body": "yo",
+      "isArchived": false
+    }
+  ],
+  "isRead": true
+}
