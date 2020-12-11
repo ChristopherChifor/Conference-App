@@ -9,12 +9,12 @@ import java.util.Set;
  */
 public class Event implements Serializable {
     private String name;
-    private Set<String> speakers = new HashSet<String>();
+    private Set<String> speakers = new HashSet<>();
     private int eventCapacity;
 
     private boolean VIPOnly;
 
-    private Set<String> attendees = new HashSet<String>();
+    private Set<String> attendees = new HashSet<>();
     public enum EventType { TALK, PARTY, PANEL}
     private EventType eventType;
 
