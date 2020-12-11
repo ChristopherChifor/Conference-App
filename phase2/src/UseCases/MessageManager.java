@@ -71,7 +71,6 @@ public class MessageManager implements Serializable {
             }
         }
         return false;
-
     }
 
     /**

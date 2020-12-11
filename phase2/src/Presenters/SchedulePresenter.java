@@ -1,28 +1,17 @@
 package Presenters;
 
 import Controllers.EventController;
-import Util.UserType;
-import ui.state.EventBundle;
-import ui.view.EventView;
 import ui.view.View;
 
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.List;
-
-public class EventPresenter implements Presenter{
+public class SchedulePresenter implements Presenter {
     private EventController eventController;
     private String username;
     private MainPresenter mainPresenter;
-    private String eventName;
-    private UserType userType;
 
-    public EventPresenter(String eventName, String username, MainPresenter mainPresenter, UserType userType) {
+    public SchedulePresenter(String eventName, String username, MainPresenter mainPresenter) {
         this.eventController = new EventController();
         this.username = username;
         this.mainPresenter = mainPresenter;
-        this.eventName = eventName;
-        this.userType = userType;
     }
 
     /**
@@ -51,11 +40,8 @@ public class EventPresenter implements Presenter{
 
     @Override
     public View makeView() {
-        List<String> speakers = new ArrayList<>();
-        speakers.add("IMPLEMENT SPEAKERRR");
-        Calendar time = Calendar.getInstance();
-        EventBundle eventBundle = new EventBundle(eventName, "TODOOOOO", speakers, "IMPLEMENT ROOOOOm", time, "1:00", 10);
-        return new EventView(eventBundle, userType, this);
+//         return new EventView(); // TODO ALEX WILL DEAL WITH THAT
+        return null;
     }
 
     @Override
