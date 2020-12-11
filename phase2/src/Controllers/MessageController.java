@@ -168,6 +168,7 @@ public class MessageController {
         UserType recipient = accountManager.getUserType(recipientUsername);
 
         switch (sender) {
+            case VIP:
             case ATTENDEE:
                 switch (recipient) {
                     case ATTENDEE:
