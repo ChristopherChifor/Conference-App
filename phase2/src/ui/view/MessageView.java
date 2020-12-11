@@ -7,6 +7,7 @@ import
         ui.panels.MessageDisplayPanel;
 
 import javax.swing.*;
+import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.util.*;
 import java.util.List;
@@ -31,6 +32,7 @@ public class MessageView extends JPanel implements View {
         this.presenter = presenter;
 
         setLayout(new BorderLayout(20, 20));
+        setBorder(new EmptyBorder(20,20,20,20));
 
         messageCards.setLayout(new CardLayout());
         BoxLayout pplLayout = new BoxLayout(pplPanel, BoxLayout.PAGE_AXIS);
@@ -84,7 +86,7 @@ public class MessageView extends JPanel implements View {
         deleteButton.addActionListener(e -> deleteSelected());
         archiveButton.addActionListener(e -> archiveSelected());
 
-        topPanel.add(archiveButton);
+        topPanel.add(deselectButton);
         topPanel.add(deleteButton);
         topPanel.add(archiveButton);
 
@@ -217,7 +219,7 @@ public class MessageView extends JPanel implements View {
 
             buttonUnBold(senderButton);
             selectedUsername = text;
-            selectedUsernameLabel.setText(text);
+            selectedUsernameLabel.setText(String.format("<html><h2>%s</h2></html>",text));
             System.out.println("Selected button: " + text);
         });
 
