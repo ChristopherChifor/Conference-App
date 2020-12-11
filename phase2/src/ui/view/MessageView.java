@@ -137,7 +137,9 @@ public class MessageView extends JPanel implements View {
         }
 
         if(!presenter.canMessage(username)) return;
-        // TODO SEND THE MESSAGE; IF COULDN'T SEND A MESSAGE CALL showIncorrectInputDialog
+        System.out.println("omg no way");
+        presenter.sendMessage(username, message);
+        // TODO IF COULDN'T SEND A MESSAGE CALL showIncorrectInputDialog
 
         List<Message> messages = presenter.getConversation(username);
 

@@ -32,11 +32,29 @@ public class EventController {
     }
 
     /**
+     * Signs up user for event
+     *
+     * @param eventName name of event
+     * @param username usernmae of event
+     * @return true if signed up for event
+     */
+    public boolean enrolAttendee(String eventName, String username) {
+        if (scheduleManager.canSignUpForEvent(eventName)) {
+            scheduleManager.signUpForEvent(username, eventName);
+            return true;
+        }
+        return false;
+    }
+
+    /**
      * Cancels enrolment of current user from event.
      * @param eventName name of event.
      */
-    public void cancelEnrolment(String eventName, String username) {
-            scheduleManager.removeFromEvent(username, eventName);
+    public boolean cancelEnrolment(String eventName, String username) {
+        if (scheduleManager.eventExists(eventName)) {
+            return scheduleManager.removeFromEvent(username, eventName);
+        }
+        return false;
     }
 
     /**
@@ -137,8 +155,11 @@ public class EventController {
      * @param eventName name of the event
      *
      */
-    public void signUpEvent(String username, String eventName) {
-        scheduleManager.signUpForEvent(username, eventName);
+    public boolean signUpEvent(String username, String eventName) {
+        if (scheduleManager.eventExists(eventName)) {
+            return scheduleManager.signUpForEvent(username, eventName);
+        }
+        return false;
     }
 
     public void convertScheduleToPDF(String filepath, String username) {
