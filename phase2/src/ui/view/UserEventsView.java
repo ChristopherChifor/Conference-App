@@ -32,21 +32,15 @@ public class UserEventsView extends JPanel implements View {
     private List<String> myEvents;
 
     private UserType type;
-    private String username = "TODOOOO";
+    private String username;
 
     private UserEventsPresenter presenter;
 
     public UserEventsView(UserEventsPresenter presenter) {
         this.presenter = presenter;
-
-        //TODO FETCH EVENTS OF THIS USER
-        myEvents = new ArrayList<>();
-        myEvents.add("Event 1");
-        myEvents.add("Event 2");
-        myEvents.add("Event 3"); // <-- // TODO DELETE THIS STUFF (was used for testing)
-
-        this.type = UserType.ORGANIZER; // TODO FETCH USERTYPE
-
+        this.username = presenter.getUsername();
+        myEvents = presenter.getUserEvents();
+        this.type = presenter.getUserType();
 
         myEventsList = new JList<>();
         DefaultListModel m = new DefaultListModel<>();
@@ -93,7 +87,7 @@ public class UserEventsView extends JPanel implements View {
             rightPanel.add(message, cst);
             cst.gridy++;
         }
-        if (type == UserType.ATTENDEE) { // TODO ADD VIP TYPE HERE
+        if (type == UserType.ATTENDEE || type == UserType.VIP) {
             rightPanel.add(unenroll, cst);
             cst.gridy++;
             rightPanel.add(addEvent, cst);
