@@ -27,6 +27,8 @@ public class MessageView extends JPanel implements View {
     private JLabel selectedUsernameLabel = new JLabel(selectedUsername);
 
     private MessagePresenter presenter;
+    private JTextField messageField;
+    private JButton sendButton;
 
     public MessageView(MessagePresenter presenter) throws HeadlessException {
         this.presenter = presenter;
@@ -45,26 +47,13 @@ public class MessageView extends JPanel implements View {
         add(pplScroll, BorderLayout.WEST);
 
         JPanel sendMessagePanel = new JPanel(new BorderLayout(20, 20));
-        JTextField messageField = new JTextField("");
-        JButton sendButton = new JButton("Send");
+        messageField = new JTextField("");
+        messageField.addActionListener(e->sendAction());
+        messageField.setEnabled(false);
 
-        sendButton.addActionListener(e -> {
-            String messageText = messageField.getText();
-            messageField.setText("");
-
-            // if no user is selected or archive selected
-            if (selectedUsername.equals("") || selectedUsername.equals("Archived")) {
-                JOptionPane.showMessageDialog(null, "Cannot send message to this address", "Bad Input", JOptionPane.ERROR_MESSAGE);
-            }
-
-            presenter.sendMessage(selectedUsername, messageText);  // not this line
-
-            Message m = new Message(presenter.getUsername(), selectedUsername, messageText);
-            panelMap.get(selectedUsername).addMessages(m);
-
-            repaint();
-            revalidate();
-        });
+        sendButton = new JButton("Send");
+        sendButton.addActionListener(e -> sendAction());
+        sendButton.setEnabled(false);
 
         sendMessagePanel.add(messageField, BorderLayout.CENTER);
         sendMessagePanel.add(sendButton, BorderLayout.EAST);
@@ -97,6 +86,30 @@ public class MessageView extends JPanel implements View {
         CardLayout cards = (CardLayout) messageCards.getLayout();
         cards.show(messageCards, "-BLANK PAGE");
 
+    }
+
+    /**
+     * Event triggered when user presses send button.
+     */
+    private void sendAction(){
+        String messageText = messageField.getText();
+        if(messageText.isEmpty()){
+            return;
+        }
+        messageField.setText("");
+
+        // if no user is selected or archive selected
+        if (selectedUsername.equals("") || selectedUsername.equals("Archived")) {
+            JOptionPane.showMessageDialog(null, "Cannot send message to this address", "Bad Input", JOptionPane.ERROR_MESSAGE);
+        }
+
+        presenter.sendMessage(selectedUsername, messageText);  // not this line
+
+        Message m = new Message(presenter.getUsername(), selectedUsername, messageText);
+        panelMap.get(selectedUsername).addMessages(m);
+
+        repaint();
+        revalidate();
     }
 
     /**
@@ -225,6 +238,9 @@ public class MessageView extends JPanel implements View {
             buttonUnBold(senderButton);
             selectedUsername = text;
             selectedUsernameLabel.setText(String.format("<html><h2>%s</h2></html>",text));
+            messageField.setEnabled(true);
+            sendButton.setEnabled(true);
+
             System.out.println("Selected button: " + text);
         });
 
