@@ -70,7 +70,12 @@ public class ScheduleManager implements Serializable {
      * @return true if event exists
      */
     public boolean eventExists(String eventName) {
+        System.out.println(eventJsonDatabase.getIds());
         return eventJsonDatabase.getIds().contains(eventName);
+    }
+
+    public void setDescription(String description, String eventName) {
+        getEvent(eventName).setDescription(description);
     }
 
     /**
@@ -80,10 +85,10 @@ public class ScheduleManager implements Serializable {
      * @return true if event has already occurred
      */
     public boolean eventHasHappened(String eventName) {
-        if (eventExists(eventName)) {
-            return true;
-        } else return false; //TODO need to account for if event has actually happened
-    }
+        //if (eventExists(eventName)) {
+        //    return true;
+        return false;
+        }  //TODO need to account for if event has actually happened
 
     /**
      * Checks if an event is full
@@ -116,7 +121,7 @@ public class ScheduleManager implements Serializable {
     }
 
     public boolean inEvent(String eventName, String username) {
-        return getEvent(eventName).getAttendees().contains(username);
+        return getEventAttendees(eventName).contains(username);
     }
 
     /**
@@ -127,7 +132,7 @@ public class ScheduleManager implements Serializable {
      * @return true if an event exists and speaker is added
      */
     public boolean assignSpeaker(String speaker, String event) {
-        return getEvent(event).setSpeaker(event);
+        return getEvent(event).setSpeaker(speaker);
     }
 
     /**
@@ -139,8 +144,8 @@ public class ScheduleManager implements Serializable {
      */
     public boolean createEvent(String eventName, int eventCapacity, String roomName, Calendar time, int duration) {
         Event event = new Event(eventName);
+        event.setEventCapacity(eventCapacity);
         eventJsonDatabase.write(event, eventName);
-        setEventCapacity(eventName, eventCapacity);
         return addNewEvent(roomName, eventName, time, duration);
     }
 
@@ -165,7 +170,7 @@ public class ScheduleManager implements Serializable {
      * 3) the event is not full
      */
     public boolean canSignUpForEvent(String eventName) {
-        return !(!eventExists(eventName) || eventHasHappened(eventName) || eventFull(eventName));
+        return !(!eventExists(eventName) || eventHasHappened(eventName) || !eventFull(eventName));
     }
 
     /**
@@ -187,7 +192,15 @@ public class ScheduleManager implements Serializable {
      * @return true if succesfully signed up for event
      */
     public boolean signUpForEvent(String username, String event) {
-        return eventJsonDatabase.read(event).addAttendeeToEvent(username);
+        Event myEvent = eventJsonDatabase.read(event);
+        boolean t = myEvent.addAttendeeToEvent(username);
+        System.out.println("aw");
+        if (t) {
+            System.out.println("yay");
+            eventJsonDatabase.write(myEvent, event);
+            return true;
+        }
+        return false;
     }
 
     /**
