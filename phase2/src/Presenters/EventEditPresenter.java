@@ -44,9 +44,7 @@ public class EventEditPresenter implements Presenter {
         if (eventName == null) {
             this.bundle = new EventEditBundle(roomOptions, speakerOptions);
         } else {
-            //TODO ASSEMBLE EVENTBUNDLE (above) BUNDLE FROM CONTROLLERS (ASSUME THIS EVENT EXISTS)
             EventBundle bundle = eventController.createEventBundle(eventName);
-
             this.bundle = new EventEditBundle(bundle, roomOptions, speakerOptions);
         }
     }
@@ -72,8 +70,8 @@ public class EventEditPresenter implements Presenter {
      * @param view   the view calling this method (used for showing popups)
      */
     public void save(EventBundle bundle, View view) {
-        //TODO DO THIS METHOD
-        //IF THERE ARE ANY ISSUES WITH INPUT, USE view.showErrorDialog() to tell user.
+        eventController.createEvent(bundle.getTitle(), bundle.getCapacity(), bundle.getRoom(), bundle.getTime(), bundle.getDurationAsInt());
+        //TODO IF THERE ARE ANY ISSUES WITH INPUT, USE view.showErrorDialog() to tell user.
     }
 
     /**
