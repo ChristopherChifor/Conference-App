@@ -59,7 +59,7 @@ public class PDFConverter {
     private void addRows(PdfPTable table, List<ScheduleEntry> userSchedule) {
         SimpleDateFormat df = new SimpleDateFormat("h:mm a, yyyy-MM-dd");
         for (ScheduleEntry s : userSchedule) {
-            addElementEntry(table, s.getEventName(), s.getRoomID(), df.format(s.getStartTime()));
+            addElementEntry(table, s.getEventName(), s.getRoomID(), df.format(s.getStartTime().getTime()));
         }
     }
 

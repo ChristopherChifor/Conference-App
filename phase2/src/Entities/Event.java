@@ -59,7 +59,6 @@ public class Event implements Serializable {
      */
     public boolean addAttendeeToEvent(String username) {
         if (isEventFull()) {
-            System.out.println("boop");
             return false;
         }
         return attendees.add(username);
@@ -105,9 +104,7 @@ public class Event implements Serializable {
      * @return true if capacity is positive and is successfully set
      */
     public boolean setEventCapacity(int capacity) {
-        System.out.println(("x"));
         if (capacity>= 1) {
-            System.out.println("po");
             eventCapacity = capacity;
             return true;
         }
@@ -128,7 +125,7 @@ public class Event implements Serializable {
      * @return true if event is full
      */
     public boolean isEventFull() {
-        System.out.println((eventCapacity));
+
         return numberOfAttendeesInEvent() ==  eventCapacity;
     }
     /**

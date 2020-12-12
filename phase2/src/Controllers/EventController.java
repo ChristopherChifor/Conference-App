@@ -2,15 +2,12 @@ package Controllers;
 
 import Entities.Event;
 import Entities.ScheduleEntry;
-import Gateways.IGateway;
-import Gateways.JsonDatabase;
 import UseCases.RoomManager;
 import UseCases.ScheduleManager;
 import Util.PDFConverter;
 import Util.UserType;
 import ui.state.EventBundle;
 
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
@@ -20,7 +17,7 @@ import java.util.List;
 public class EventController {
     private UserType userType;
 
-    private PDFConverter pdfConverter; // TODO make sure this gets set
+    private PDFConverter pdfConverter;
 
     private ScheduleManager scheduleManager;
     private RoomManager roomManager;
@@ -100,16 +97,16 @@ public class EventController {
      * @param eventCapacity Capacity of Event that is to be created
      * @return true if no other event has that name and capacity is positive and new Event is created
      */
-    public boolean createEvent(String eventName, int eventCapacity, String roomName, Calendar time, int duration, List<String> speakers) {
-        System.out.println("c");
-        if (eventCapacity < 1) return false;
-        System.out.println("p");
-        if (roomManager.getRoomCapacity(roomName) < eventCapacity) return false;
-        System.out.println("r");
-        if (scheduleConflict(roomName, time, duration)) return false;
-        System.out.println("q");
+    public boolean createEvent(String eventName, int eventCapacity, String roomName, Calendar time, int duration, List<String> speakers, boolean isVIP) {
 
-        return scheduleManager.createEvent(eventName, eventCapacity, roomName, time, duration, speakers);
+        if (eventCapacity < 1) return false;
+
+        if (roomManager.getRoomCapacity(roomName) < eventCapacity) return false;
+
+        if (scheduleConflict(roomName, time, duration)) return false;
+
+
+        return scheduleManager.createEvent(eventName, eventCapacity, roomName, time, duration, speakers, isVIP);
     }
 
 
