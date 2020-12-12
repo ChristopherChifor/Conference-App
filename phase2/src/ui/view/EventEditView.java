@@ -9,9 +9,7 @@ import ui.state.EventEditBundle;
 
 import javax.swing.*;
 import javax.swing.JFormattedTextField.AbstractFormatter;
-import java.awt.GridBagLayout;
-import java.awt.GridBagConstraints;
-import java.awt.Insets;
+import java.awt.*;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -103,6 +101,7 @@ public class EventEditView extends JPanel implements View {
         speakerField.setSelectedIndices(selectedIndeces);
 
         titleField.setText(bundle.getTitle());
+        titleField.setPreferredSize(new Dimension(120,20));
         descField.setText(bundle.getDescription());
         durationField.setText(bundle.getDuration());
         capacityField.setText(Integer.toString(bundle.getCapacity()));
@@ -127,7 +126,9 @@ public class EventEditView extends JPanel implements View {
         add(new JLabel("Speaker:"), cst);
         cst.gridy++;
         cst.gridheight=3; cst.gridwidth=2;
-        add(new JScrollPane(speakerField), cst);
+        JScrollPane scroll = new JScrollPane(speakerField);
+        scroll.setMinimumSize(new Dimension(400,50));
+        add(scroll, cst);
         cst.gridheight=1;
         cst.gridwidth=1;
         cst.gridy+=3;
@@ -172,6 +173,7 @@ public class EventEditView extends JPanel implements View {
         add(new JLabel("Description"), cst);
         cst.gridy++;
         cst.gridheight = 2;
+        descField.setMinimumSize(new Dimension(20,50));
         add(descField, cst);
         cst.gridy++;
         cst.gridy++;
