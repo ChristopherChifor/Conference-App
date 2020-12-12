@@ -179,8 +179,15 @@ public class MessageController {
                         return false;
                 }
             case SPEAKER:
+                switch (recipient){
+                    case ATTENDEE:
+                        return true;
+                    case SPEAKER:
+                    case ORGANIZER:
+                        return false;
+                }
             case ORGANIZER:
-                break;
+                return true;
         }
         return true;
     }
