@@ -1,4 +1,4 @@
-package TestUseCase;
+package TestController;
 
 import Controllers.AccountController;
 import Controllers.MessageController;
@@ -6,7 +6,7 @@ import Util.UserType;
 import org.junit.*;
 import static org.junit.Assert.*;
 
-public class TestMessaging {
+public class TestMessageController {
 
 
     @Test
