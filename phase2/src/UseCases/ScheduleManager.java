@@ -85,7 +85,7 @@ public class ScheduleManager implements Serializable {
         //if (eventExists(eventName)) {
         //    return true;
         return false;
-        }  //TODO need to account for if event has actually happened
+    }  //TODO need to account for if event has actually happened
 
     /**
      * Checks if an event is full
@@ -221,6 +221,7 @@ public class ScheduleManager implements Serializable {
 
     /**
      * Returns a list of names of VIP events
+     *
      * @return list of vip event names.
      */
     public List<String> getVIPEventNames() {
@@ -233,9 +234,8 @@ public class ScheduleManager implements Serializable {
      * @param roomID id of the room
      * @return a list of events occurring in that room
      */
-    // todo
     public List<ScheduleEntry> getRoomEvents(String roomID) {
-        return null;
+        return scheduleEntryJsonDatabase.filterList(e -> e.getRoomID().equals(roomID));
     }
 
     public ScheduleEntry getScheduleEntry(String eventName) {
