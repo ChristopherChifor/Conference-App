@@ -46,7 +46,7 @@ public class PDFConverter {
 
     private void addRows(PdfPTable table, List<ScheduleEntry> userSchedule) {
         for (ScheduleEntry s : userSchedule) {
-            addElementEntry(table, s.getEventName(), s.getRoomID(), s.getStartTime().toString());
+            addElementEntry(table, s.getEventName(), s.getRoomID(), s.getStartTime().toString()); //TODO ALEX
         }
     }
 
