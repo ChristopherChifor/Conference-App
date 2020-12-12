@@ -184,4 +184,9 @@ public class EventController {
         return roomManager.getRoomNames();
     }
 
+    public Event getEvent(String eventName) {
+    }
+
+    public ScheduleEntry getScheduleEntry(String eventName) {
+    }
 }
