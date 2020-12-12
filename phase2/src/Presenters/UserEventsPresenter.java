@@ -13,9 +13,9 @@ import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
 /**
- *  @author parssa
+ * @author parssa
  */
-public class UserEventsPresenter implements Presenter{
+public class UserEventsPresenter implements Presenter {
 
 
     private EventController eventController;
@@ -63,13 +63,14 @@ public class UserEventsPresenter implements Presenter{
     /**
      * Opens list of all events (vip filter if user is vip)
      */
-    public void goToEventsList(){
-        EventListPresenter list = new EventListPresenter(userType==UserType.VIP,mainPresenter);
+    public void goToEventsList() {
+        EventListPresenter list = new EventListPresenter(userType == UserType.VIP, mainPresenter);
         mainPresenter.addPresenter(list);
     }
 
     /**
      * Getter for the user type of the user to whom this presenter belongs.
+     *
      * @return usertype
      */
     public UserType getUserType() {
@@ -78,27 +79,30 @@ public class UserEventsPresenter implements Presenter{
 
     /**
      * Sends message to event names. (Assumes the user can perform this action)
+     *
      * @param eventNames list of names of events being messaged
-     * @param message  message being sent
+     * @param message    message being sent
      */
-    public void messageEvents(List<String> eventNames, String message){
+    public void messageEvents(List<String> eventNames, String message) {
         //TODO IMPLEMENT
     }
 
     /**
      * Takes user to eventname's EventPresenter
+     *
      * @param eventName the name of the event
      */
-    public void goToEvent(String eventName){
-        EventPresenter ep = new EventPresenter(eventName,username, mainPresenter, userType);
+    public void goToEvent(String eventName) {
+        EventPresenter ep = new EventPresenter(eventName, username, mainPresenter, userType);
         mainPresenter.addPresenter(ep);
     }
 
     /**
      * Unenrolls the user (assumes attendee) from the list of events (user is enrolled in these events)
+     *
      * @param eventNames events being unerolled from
      */
-    public void unenroll(List<String> eventNames){
-        //TODO UNEROLL FROM THESE EVENTS.
+    public void unenroll(List<String> eventNames) {
+        eventNames.stream().forEach(name -> eventController.cancelEnrolment(name, username));
     }
 }

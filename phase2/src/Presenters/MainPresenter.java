@@ -25,7 +25,6 @@ public class MainPresenter implements Presenter{
      * @param presenter presenter being added.
      */
     public void addPresenter(Presenter presenter){
-        System.out.println("Adding presenter");
         history.push(presenter);
         window.showView(presenter.makeView());
     }
