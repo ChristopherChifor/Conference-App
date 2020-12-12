@@ -2,12 +2,16 @@ package Presenters;
 
 import Controllers.AccountController;
 import Controllers.EventController;
+import Entities.Event;
+import Entities.ScheduleEntry;
 import Util.UserType;
 import ui.state.EventBundle;
 import ui.state.EventEditBundle;
 import ui.view.EventEditView;
 import ui.view.View;
 
+import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 /**
@@ -19,7 +23,7 @@ public class EventEditPresenter implements Presenter {
     private String eventName;
     private MainPresenter mainPresenter;
     private boolean newEventMode = false;
-
+    private EventController eventController;
 
     /**
      * Constructor when an existing event is being edited.
@@ -32,7 +36,7 @@ public class EventEditPresenter implements Presenter {
         this.mainPresenter = mainPresenter;
 
         AccountController accountController = new AccountController();
-        EventController eventController = new EventController();
+        eventController = new EventController();
         List<String> speakerOptions = accountController.getUsernamesOfType(UserType.SPEAKER);
         List<String> roomOptions = eventController.getRoomNames();
 
@@ -40,9 +44,13 @@ public class EventEditPresenter implements Presenter {
         if (eventName == null) {
             this.bundle = new EventEditBundle(roomOptions, speakerOptions);
         } else {
-            EventBundle bundle = null;
-            //TODO ASSEMBLE EVENTBUNDLE (above) BUNDLE FROM CONTROLLERS (ASSUME THIS EVENT EXISTS)
 
+
+            //TODO ASSEMBLE EVENTBUNDLE (above) BUNDLE FROM CONTROLLERS (ASSUME THIS EVENT EXISTS)
+            Event e = eventController.getEvent(eventName);
+            List<String> speakers = new ArrayList<>(e.getSpeakers());
+            ScheduleEntry sched = eventController.getScheduleEntry(eventName);
+            EventBundle bundle = new EventBundle(e.getName(), "implement description", speakers, "implement room", Calendar.getInstance(), "10", 10, false);
             this.bundle = new EventEditBundle(bundle, roomOptions, speakerOptions);
         }
     }
@@ -88,4 +96,5 @@ public class EventEditPresenter implements Presenter {
     public MainPresenter getMainPresenter() {
         return mainPresenter;
     }
+
 }
