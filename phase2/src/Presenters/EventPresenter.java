@@ -2,10 +2,13 @@ package Presenters;
 
 import Controllers.EventController;
 import Controllers.MessageController;
+import Entities.Message;
 import Util.UserType;
 import ui.state.EventBundle;
 import ui.view.EventView;
 import ui.view.View;
+
+import java.util.List;
 
 
 public class EventPresenter implements Presenter{
@@ -78,7 +81,9 @@ public class EventPresenter implements Presenter{
      * @param message message being sent
      */
     public void messageSpeakers(String message){
-        //TODO SEND MESSAGE TO SPEAKERS
+        for(String speaker: eventController.createEventBundle(eventName).getSpeaker()){
+            messageController.sendMessage(username, speaker, message);
+        }
     }
 
     /**
