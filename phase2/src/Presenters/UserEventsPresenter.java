@@ -88,7 +88,10 @@ public class UserEventsPresenter implements Presenter {
      * @param message    message being sent
      */
     public void messageEvents(List<String> eventNames, String message) {
-        //TODO IMPLEMENT
+        for (String event: eventNames){
+            messageController.messageAll(event, message, username);
+        }
+
     }
 
     /**
