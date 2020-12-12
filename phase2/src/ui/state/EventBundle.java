@@ -110,4 +110,12 @@ public class EventBundle {
     public int getCapacity() {
         return capacity;
     }
+
+    /**
+     * Returns the duration as minutes. Assumes that
+     * @return
+     */
+    public int getDurationAsInt(){
+        //todo alex
+    }
 }
