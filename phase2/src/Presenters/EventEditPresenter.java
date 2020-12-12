@@ -44,13 +44,9 @@ public class EventEditPresenter implements Presenter {
         if (eventName == null) {
             this.bundle = new EventEditBundle(roomOptions, speakerOptions);
         } else {
-
-
             //TODO ASSEMBLE EVENTBUNDLE (above) BUNDLE FROM CONTROLLERS (ASSUME THIS EVENT EXISTS)
-            Event e = eventController.getEvent(eventName);
-            List<String> speakers = new ArrayList<>(e.getSpeakers());
-            ScheduleEntry sched = eventController.getScheduleEntry(eventName);
-            EventBundle bundle = new EventBundle(e.getName(), "implement description", speakers, "implement room", Calendar.getInstance(), "10", 10, false);
+            EventBundle bundle = eventController.createEventBundle(eventName);
+
             this.bundle = new EventEditBundle(bundle, roomOptions, speakerOptions);
         }
     }

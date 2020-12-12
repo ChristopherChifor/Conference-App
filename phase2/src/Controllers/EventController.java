@@ -8,6 +8,7 @@ import UseCases.RoomManager;
 import UseCases.ScheduleManager;
 import Util.PDFConverter;
 import Util.UserType;
+import ui.state.EventBundle;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -190,5 +191,9 @@ public class EventController {
 
     public ScheduleEntry getScheduleEntry(String eventName) {
         return scheduleManager.getScheduleEntry(eventName);
+    }
+
+    public EventBundle createEventBundle(String eventName) {
+        return scheduleManager.createEventBundle(eventName);
     }
 }

@@ -4,6 +4,7 @@ import Entities.Event;
 import Entities.ScheduleEntry;
 import Gateways.IGateway;
 import Gateways.JsonDatabase;
+import ui.state.EventBundle;
 
 import java.io.Serializable;
 import java.util.*;
@@ -239,5 +240,12 @@ public class ScheduleManager implements Serializable {
 
     public ScheduleEntry getScheduleEntry(String eventName) {
         return scheduleEntryJsonDatabase.read(eventName);
+    }
+
+    public EventBundle createEventBundle(String eventName) {
+        Event e = getEvent(eventName);
+        List<String> speakers = new ArrayList<>(e.getSpeakers());
+        ScheduleEntry sched = getScheduleEntry(eventName);
+        return new EventBundle(e.getName(), e.getDescription(), speakers, sched.getRoomID(), sched.getStartTime(), "1:00", 10, false);
     }
 }
