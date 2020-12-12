@@ -235,7 +235,8 @@ public class ScheduleManager implements Serializable {
      * @return a list of events occurring in that room
      */
     public List<ScheduleEntry> getRoomEvents(String roomID) {
-        return scheduleEntryJsonDatabase.filterList(e -> e.getRoomID().equals(roomID));
+        List<ScheduleEntry> lst = scheduleEntryJsonDatabase.filterList(e -> e.getRoomID().equals(roomID));
+        return null;
     }
 
     public ScheduleEntry getScheduleEntry(String eventName) {
