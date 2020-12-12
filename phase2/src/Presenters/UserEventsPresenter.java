@@ -33,10 +33,6 @@ public class UserEventsPresenter implements Presenter {
         messageController = new MessageController();
     }
 
-    public UserEventsPresenter(EventController eventController) {
-        this.eventController = eventController;
-    }
-
     public void userScheduleToPDF(String filepath) {
         eventController.convertScheduleToPDF(filepath, username);
     }
