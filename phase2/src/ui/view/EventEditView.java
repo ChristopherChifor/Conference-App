@@ -251,10 +251,15 @@ public class EventEditView extends JPanel implements View {
 
         String timeString = timeField.getText();
         Date timeNoDate = df.parse(timeString); // throws if improper
-        Calendar dateTime = (Calendar) dateField.getModel().getValue();
-        dateTime.setTime(timeNoDate);
 
-        return new EventBundle(title, description, speaker, room, dateTime, duration, capacity, vipOnly);
+        Calendar calTime = Calendar.getInstance();
+        calTime.setTime(timeNoDate);
+        Calendar date = (Calendar) dateField.getModel().getValue();
+        date.set(Calendar.HOUR_OF_DAY, calTime.get(Calendar.HOUR_OF_DAY));
+        date.set(Calendar.MINUTE, calTime.get(Calendar.MINUTE));
+
+
+        return new EventBundle(title, description, speaker, room, date, duration, capacity, vipOnly);
     }
 
     @Override
