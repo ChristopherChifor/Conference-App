@@ -115,7 +115,7 @@ public class EventBundle {
      * Returns the duration as minutes. Assumes that
      * @return
      */
-    public int getDurationAsInt(){
+    //public int getDurationAsInt(){
         //todo alex
-    }
+    //}
 }

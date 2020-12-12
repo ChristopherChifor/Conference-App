@@ -175,7 +175,7 @@ public class ScheduleManager implements Serializable {
      *
      * @param username the user being checked.
      * @param event    name of event
-     * @return true if succesfully removed from event
+     * @return true if successfully removed from event
      */
     public boolean removeFromEvent(String username, String event) {
         Event myEvent = eventJsonDatabase.read(event);
