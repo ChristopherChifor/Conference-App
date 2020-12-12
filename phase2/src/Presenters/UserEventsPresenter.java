@@ -25,7 +25,6 @@ public class UserEventsPresenter implements Presenter {
     private MessageController messageController;
 
     public UserEventsPresenter(String username, MainPresenter mainPresenter, UserType userType) {
-        System.out.println("created a new presenter");
         this.username = username;
         this.mainPresenter = mainPresenter;
         this.userType = userType;
