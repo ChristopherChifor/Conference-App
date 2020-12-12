@@ -2,12 +2,10 @@ package Presenters;
 
 import Controllers.AccountController;
 import Controllers.RoomController;
-import UseCases.AccountManager;
 import Util.UserType;
 import ui.view.OrganizerView;
 import ui.view.View;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**

@@ -69,6 +69,10 @@ public class User implements Serializable {
         this.userType = userType;
     }
 
+    /**
+     * Sets a password for a user
+     * @param newPassword new password
+     */
     public void setPassword(String newPassword) {
         this.password = newPassword;
     }

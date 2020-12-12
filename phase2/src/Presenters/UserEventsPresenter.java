@@ -9,7 +9,6 @@ import ui.view.View;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
 /**
@@ -26,16 +25,11 @@ public class UserEventsPresenter implements Presenter {
     private MessageController messageController;
 
     public UserEventsPresenter(String username, MainPresenter mainPresenter, UserType userType) {
-        System.out.println("created a new presenter");
         this.username = username;
         this.mainPresenter = mainPresenter;
         this.userType = userType;
         eventController = new EventController();
         messageController = new MessageController();
-    }
-
-    public UserEventsPresenter(EventController eventController) {
-        this.eventController = eventController;
     }
 
     public void userScheduleToPDF(String filepath) {

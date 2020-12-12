@@ -1,4 +1,4 @@
-package TestUseCase;
+package TestController;
 
 import Controllers.AccountController;
 import Controllers.MessageController;
@@ -6,7 +6,7 @@ import Util.UserType;
 import org.junit.*;
 import static org.junit.Assert.*;
 
-public class TestMessaging {
+public class TestMessageController {
 
 
     @Test
@@ -83,7 +83,7 @@ public class TestMessaging {
                 UserType.ORGANIZER);
         assertTrue(messageController.sendMessage("United Kingdom", "CSC207", "Hello"));
         assertTrue(messageController.sendMessage("United Kingdom", "Computer", "Hello"));
-        assertTrue(messageController.sendMessage("United Kingdom", "Toronto", "Hello"));
+        assertFalse(messageController.sendMessage("United Kingdom", "Toronto", "Hello"));
         assertTrue(messageController.sendMessage("United Kingdom", "baba", "Hello"));
     }
 

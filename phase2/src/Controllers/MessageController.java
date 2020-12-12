@@ -1,5 +1,6 @@
 package Controllers;
 
+import Entities.Event;
 import Entities.Message;
 import UseCases.AccountManager;
 import UseCases.MessageManager;
@@ -25,6 +26,7 @@ public class MessageController {
     public MessageController() {
         messageManager = new MessageManager();
         accountManager = new AccountManager();
+        scheduleManager = new ScheduleManager();
     }
 
     /**
@@ -119,7 +121,6 @@ public class MessageController {
     }
 
     /**
-     * TODO DEPRECATE
      *
      * Returns a list of all usernames this user can message.
      *
@@ -168,6 +169,7 @@ public class MessageController {
         UserType sender = accountManager.getUserType(senderUsername);
         UserType recipient = accountManager.getUserType(recipientUsername);
 
+        if (sender.equals(UserType.ORGANIZER) && (recipient.equals(UserType.ATTENDEE) || (recipient.equals(UserType.SPEAKER)))) return true;
         switch (sender) {
             case VIP:
             case ATTENDEE:
@@ -199,9 +201,17 @@ public class MessageController {
      * @param sender the sender
      */
     public void messageAll(String eventName, String message, String sender){
+        System.out.println("->>>>>>>>>>>>>>1entered");
+        System.out.println(eventName);
+        System.out.println(scheduleManager.eventExists(eventName));
+        Event e = scheduleManager.getEvent(eventName);
+
+        System.out.println(e);
         for (String recipient : scheduleManager.getEventAttendees(eventName)){
+            System.out.println("->>>>>>>>>>>>>>2entered");
             messageManager.sendMessage(sender, recipient, message);
         }
+        System.out.println("->>>>>>>>>>>>>>3entered");
     }
 }
 
