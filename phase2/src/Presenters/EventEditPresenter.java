@@ -71,7 +71,7 @@ public class EventEditPresenter implements Presenter {
      */
     public void save(EventBundle bundle, View view) {
         eventController.createEvent(bundle.getTitle(), bundle.getCapacity(), bundle.getRoom(), bundle.getTime(), bundle.getDurationAsInt(), bundle.getSpeaker());
-        //TODO IF THERE ARE ANY ISSUES WITH INPUT, USE view.showErrorDialog() to tell user.
+        mainPresenter.back();
     }
 
     /**

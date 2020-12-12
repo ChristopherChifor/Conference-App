@@ -67,8 +67,11 @@ public class EventView extends JPanel implements View {
         p.setLayout(new BorderLayout(10, 10));
         String speakers = event.getSpeaker().toString();
         speakers = speakers.substring(1, speakers.length() - 1);
+        speakers = speakers.isEmpty() ? "No Speakers" : speakers;
         p.add(new JLabel(speakers), BorderLayout.CENTER);
-        p.add(messageSpeakerButton, BorderLayout.EAST);
+        if(!speakers.equals("No Speakers")){
+            p.add(messageSpeakerButton, BorderLayout.EAST);
+        }
         add(p, cst);
 
         cst.gridwidth = 1;
