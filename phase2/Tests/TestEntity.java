@@ -249,6 +249,26 @@ public class TestEntity {
         assertFalse(event.getEventType() == Event.EventType.PARTY);
     }
 
+    @Test
+    public void testRemoveAttendeeFromEvent() {
+        Event event = new Event("baba");
+        event.setEventCapacity(50);
+        event.addAttendeeToEvent("Jafar");
+        assertTrue(event.getAttendees().contains("Jafar"));
+        event.removeAttendeeFromEvent("Jafar");
+        assertFalse(event.getAttendees().contains("Jafar"));
+    }
+
+    @Test
+    public void testGetSpeakers() {
+        Event event = new Event("BABA");
+        event.setEventCapacity(50);
+        event.setSpeaker("Speaker1");
+        event.setSpeaker("Speaker2");
+        assertTrue(event.getSpeakers().contains("Speaker1"));
+        assertFalse(event.getSpeakers().contains("Speaker3"));
+    }
+
 
 
 

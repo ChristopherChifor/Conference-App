@@ -36,14 +36,14 @@ public class TestEventController {
         ScheduleManager scheduleManager = new ScheduleManager();
         RoomController roomController = new RoomController();
 
-        roomController.createRoom("Room1", 50);
-        eventController.createEvent("Event1", 50, "Room1",
+        roomController.createRoom("Room2", 50);
+        eventController.createEvent("Event2", 50, "Room2",
                 Calendar.getInstance(), 5);
         accountController.createUser("Jafar", "JJ", "pass", "pass", UserType.ATTENDEE);
 
-        eventController.signUpEvent("Event1", "JJ");
-        eventController.cancelEnrolment("Event1", "JJ");
-        assertFalse(scheduleManager.getEvent("Event1").getAttendees().contains("JJ"));
+        eventController.signUpEvent("Event2", "JJ");
+        eventController.cancelEnrolment("Event2", "JJ");
+        assertFalse(scheduleManager.getEvent("Event2").getAttendees().contains("JJ"));
     }
 
 }
