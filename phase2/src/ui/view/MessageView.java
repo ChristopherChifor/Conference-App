@@ -167,9 +167,7 @@ public class MessageView extends JPanel implements View {
         }
 
         if (!presenter.canMessage(username)) return;
-        System.out.println("omg no way");
         presenter.sendMessage(username, message);
-        // TODO IF COULDN'T SEND A MESSAGE CALL showIncorrectInputDialog
 
         List<Message> messages = presenter.getConversation(username);
 
@@ -189,7 +187,7 @@ public class MessageView extends JPanel implements View {
     private void initMessages() {
         // Populate the inbox with actual information
 
-        List<String> inbox = presenter.getInbox(); //TODO  change this to not output IDS
+        List<String> inbox = presenter.getInbox();
 
         for (String person : inbox) {
             List<Message> messages = presenter.getConversation(person);
@@ -231,7 +229,6 @@ public class MessageView extends JPanel implements View {
             cards.show(messageCards, text);
 
             if (!text.equals("Archived")) {
-                //todo this is weird
                 presenter.markAsRead(text);
             }
 
