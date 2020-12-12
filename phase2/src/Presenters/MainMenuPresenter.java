@@ -25,10 +25,18 @@ public class MainMenuPresenter implements Presenter {
         this.mainPresenter = mainPresenter;
     }
 
+    /**
+     * Gets type
+     * @return usertype
+     */
     public UserType getType() {
         return type;
     }
 
+    /**
+     * gets username
+     * @return username
+     */
     public String getUsername() {
         return username;
     }

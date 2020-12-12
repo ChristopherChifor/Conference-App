@@ -24,6 +24,12 @@ public class UserEventsPresenter implements Presenter {
     private UserType userType;
     private MessageController messageController;
 
+    /**
+     *  Constructor
+     * @param username username of user
+     * @param mainPresenter main presenter
+     * @param userType user type
+     */
     public UserEventsPresenter(String username, MainPresenter mainPresenter, UserType userType) {
         this.username = username;
         this.mainPresenter = mainPresenter;
@@ -32,8 +38,12 @@ public class UserEventsPresenter implements Presenter {
         messageController = new MessageController();
     }
 
+    /**
+     * sends user schedule to path as pdf
+     * @param filepath
+     */
     public void userScheduleToPDF(String filepath) {
-        eventController.convertScheduleToPDF(filepath, username);
+        eventController.convertScheduleToPDF(filepath, username, userType);
     }
 
     @Override
@@ -46,10 +56,18 @@ public class UserEventsPresenter implements Presenter {
         return mainPresenter;
     }
 
+    /**
+     * gets username of user
+     * @return usernmae
+     */
     public String getUsername() {
         return username;
     }
 
+    /**
+     * gets user events
+     * @return a list of user event names
+     */
     public List<String> getUserEvents() {
         if(userType == UserType.ATTENDEE || userType == UserType.VIP)
             return eventController.getAttendeeEvents(username).stream().map(ScheduleEntry::getEventName).collect(Collectors.toList());

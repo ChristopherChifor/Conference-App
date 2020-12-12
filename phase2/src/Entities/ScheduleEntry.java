@@ -61,20 +61,4 @@ public class ScheduleEntry {
     public void setRoomID(String roomID) {
         this.roomID = roomID;
     }
-
-    /**
-     * Sets the starting time of an event
-     * @param startTime time that the event starts
-     */
-    public void setStartTime(Calendar startTime) {
-        this.startTime = startTime;
-    }
-
-    /**
-     * Sets the length of the event
-     * @param duration length of event
-     */
-    public void setDuration(int duration) {
-        this.duration = duration;
-    }
 }

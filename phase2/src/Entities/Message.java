@@ -63,6 +63,10 @@ public class Message implements Serializable {
         return isArchived;
     }
 
+    /**
+     * gets the id of the message
+     * @return id of the message, as int
+     */
     public int getId() {
         return id;
     }

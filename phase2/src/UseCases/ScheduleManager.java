@@ -126,16 +126,18 @@ public class ScheduleManager implements Serializable {
      *
      * @param eventName     Name of Event that is to be created
      * @param eventCapacity Capacity of Event that is to be created
+     * @param description
      * @return true if no other event has that name and capacity is positive and new Event is created
      */
     public boolean createEvent(String eventName, int eventCapacity, String roomName,
-                               Calendar time, int duration, List<String> speakers, boolean isVIP) {
+                               Calendar time, int duration, List<String> speakers, boolean isVIP, String description) {
         Event event = new Event(eventName);
         for (String speaker : speakers) {
             event.setSpeaker(speaker);    
         }
         event.setVIPOnly(isVIP);
         event.setEventCapacity(eventCapacity);
+        event.setDescription(description);
         eventJsonDatabase.write(event, eventName);
         return addNewEvent(roomName, eventName, time, duration);
     }

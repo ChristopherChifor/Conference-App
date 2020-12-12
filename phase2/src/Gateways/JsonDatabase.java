@@ -37,7 +37,6 @@ public class JsonDatabase<T> implements IGateway<T> {
         this.objectName = objectName;
         this.type = type;
         gson = new GsonBuilder().setPrettyPrinting().create();
-
         // creates the directory if it does not exist
         if (!this.directory.exists()) {
             this.directory.mkdirs();
@@ -71,8 +70,6 @@ public class JsonDatabase<T> implements IGateway<T> {
         } catch (FileNotFoundException | InterruptedException e) {
             e.printStackTrace();
         }
-
-
     }
 
     /**

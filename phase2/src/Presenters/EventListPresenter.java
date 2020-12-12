@@ -14,6 +14,12 @@ public class EventListPresenter implements Presenter {
     private String username;
     private UserType type;
 
+    /**
+     *  Constructor
+     * @param username username
+     * @param type type of user
+     * @param mainPresenter main presenter
+     */
     public EventListPresenter(String username, UserType type, MainPresenter mainPresenter) {
         this.mainPresenter = mainPresenter;
         this.username = username;
@@ -24,6 +30,10 @@ public class EventListPresenter implements Presenter {
         vipEvents = ec.getVIPEventNames();
     }
 
+    /**
+     * gets event names
+     * @return event names
+     */
     public List<String> getEventNames() {
         return eventNames;
     }
@@ -48,11 +58,19 @@ public class EventListPresenter implements Presenter {
         mainPresenter.addPresenter(ep);
     }
 
+    /**
+     * Makes a view
+     * @return view it makes
+     */
     @Override
     public View makeView() {
         return new EventListView(this);
     }
 
+    /**
+     * gets main presenter
+     * @return main presenter
+     */
     @Override
     public MainPresenter getMainPresenter() {
         return mainPresenter;

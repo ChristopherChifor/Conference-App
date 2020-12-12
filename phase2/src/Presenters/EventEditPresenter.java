@@ -16,9 +16,7 @@ import java.util.List;
  */
 public class EventEditPresenter implements Presenter {
     private EventEditBundle bundle;
-    private String eventName;
     private MainPresenter mainPresenter;
-    private boolean newEventMode = false;
     private EventController eventController;
 
     /**
@@ -28,7 +26,6 @@ public class EventEditPresenter implements Presenter {
      * @param mainPresenter main presenter
      */
     public EventEditPresenter(String eventName, MainPresenter mainPresenter) {
-        this.eventName = eventName;
         this.mainPresenter = mainPresenter;
 
         AccountController accountController = new AccountController();
@@ -52,7 +49,6 @@ public class EventEditPresenter implements Presenter {
      */
     public EventEditPresenter(MainPresenter mainPresenter) {
         this(null, mainPresenter);
-        this.newEventMode = true;
     }
 
     public EventEditBundle getBundle() {
@@ -66,7 +62,16 @@ public class EventEditPresenter implements Presenter {
      * @param view   the view calling this method (used for showing popups)
      */
     public void save(EventBundle bundle, View view) {
-        eventController.createEvent(bundle.getTitle(), bundle.getCapacity(), bundle.getRoom(), bundle.getTime(), bundle.getDurationAsInt(), bundle.getSpeaker(), bundle.isVipOnly());
+        if (!eventController.createEvent(bundle.getTitle(),
+                bundle.getCapacity(),
+                bundle.getRoom(),
+                bundle.getTime(),
+                bundle.getDurationAsInt(),
+                bundle.getSpeaker(),
+                bundle.isVipOnly(),
+                bundle.getDescription())) {
+            view.showIncorrectInputDialog("Sorry, event couldn't be made, maybe there is a conflict between your values?");
+        }
         mainPresenter.back();
     }
 
@@ -77,11 +82,19 @@ public class EventEditPresenter implements Presenter {
         mainPresenter.back();
     }
 
+    /**
+     * Makes a view
+     * @return view it makes
+     */
     @Override
     public View makeView() {
         return new EventEditView(this);
     }
 
+    /**
+     * gets main presenter
+     * @return main presenter
+     */
     @Override
     public MainPresenter getMainPresenter() {
         return mainPresenter;

@@ -4,6 +4,10 @@ import java.util.List;
 import java.util.function.Predicate;
 import java.util.stream.Stream;
 
+/**
+ * Interface for JSONgateway stuff
+ * @param <T> Class this is a gateway for
+ */
 public interface IGateway<T> {
     void write(T obj, String id);
 

@@ -1,16 +1,12 @@
 package Controllers;
 
-import Entities.Event;
 import Entities.ScheduleEntry;
-import Gateways.IGateway;
-import Gateways.JsonDatabase;
 import UseCases.RoomManager;
 import UseCases.ScheduleManager;
 import Util.PDFConverter;
 import Util.UserType;
 import ui.state.EventBundle;
 
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 import java.util.*;
@@ -19,9 +15,7 @@ import java.util.*;
  * @author parssa
  */
 public class EventController {
-    private UserType userType;
-
-    private PDFConverter pdfConverter; // TODO make sure this gets set
+    private PDFConverter pdfConverter;
 
     private ScheduleManager scheduleManager;
     private RoomManager roomManager;
@@ -83,9 +77,10 @@ public class EventController {
      *
      * @param eventName Name of Event that is to be created
      * @param eventCapacity Capacity of Event that is to be created
+     * @param description
      * @return true if no other event has that name and capacity is positive and new Event is created
      */
-    public boolean createEvent(String eventName, int eventCapacity, String roomName, Calendar time, int duration, List<String> speakers, boolean isVIP) {
+    public boolean createEvent(String eventName, int eventCapacity, String roomName, Calendar time, int duration, List<String> speakers, boolean isVIP, String description) {
         System.out.println("c");
         if (eventCapacity < 1) return false;
         System.out.println("p");
@@ -94,7 +89,7 @@ public class EventController {
         if (scheduleConflict(roomName, time, duration)) return false;
         System.out.println("q");
 
-        return scheduleManager.createEvent(eventName, eventCapacity, roomName, time, duration, speakers, isVIP);
+        return scheduleManager.createEvent(eventName, eventCapacity, roomName, time, duration, speakers, isVIP, description);
     }
 
     public boolean attendeeInEvent(String eventName, String username) {
@@ -129,8 +124,9 @@ public class EventController {
         return false;
     }
 
-    public void convertScheduleToPDF(String filepath, String username) {
-        pdfConverter.convertToPDF(filepath, username, scheduleManager.getAttendeeEvents(username));
+    public void convertScheduleToPDF(String filepath, String username, UserType userType) {
+        List<ScheduleEntry> events = userType.equals(UserType.ATTENDEE) ? scheduleManager.getAttendeeEvents(username) : scheduleManager.getSpeakerEvents(username);
+        pdfConverter.convertToPDF(filepath, username, events);
     }
 
     /**
@@ -158,15 +154,11 @@ public class EventController {
         return roomManager.getRoomNames();
     }
 
-    public Event getEvent(String eventName) {
-        return scheduleManager.getEvent(eventName);
-    }
-
-    public ScheduleEntry getScheduleEntry(String eventName) {
-        return scheduleManager.getScheduleEntry(eventName);
-    }
-
     public EventBundle createEventBundle(String eventName) {
         return scheduleManager.createEventBundle(eventName);
+    }
+
+    public boolean eventHasHappened(String eventName) {
+        return scheduleManager.eventHasHappened(eventName);
     }
 }

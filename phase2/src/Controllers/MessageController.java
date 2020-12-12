@@ -1,11 +1,9 @@
 package Controllers;
 
-import Entities.Event;
 import Entities.Message;
 import UseCases.AccountManager;
 import UseCases.MessageManager;
 import UseCases.ScheduleManager;
-import Util.UserType;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -166,7 +164,6 @@ public class MessageController {
         if (senderUsername == null || recipientUsername == null || senderUsername.equals(recipientUsername)) {
             return false;
         }
-
         return true;
     }
 
@@ -177,17 +174,9 @@ public class MessageController {
      * @param sender the sender
      */
     public void messageAll(String eventName, String message, String sender){
-        System.out.println("->>>>>>>>>>>>>>1entered");
-        System.out.println(eventName);
-        System.out.println(scheduleManager.eventExists(eventName));
-        Event e = scheduleManager.getEvent(eventName);
-
-        System.out.println(e);
         for (String recipient : scheduleManager.getEventAttendees(eventName)){
-            System.out.println("->>>>>>>>>>>>>>2entered");
             messageManager.sendMessage(sender, recipient, message);
         }
-        System.out.println("->>>>>>>>>>>>>>3entered");
     }
 }
 

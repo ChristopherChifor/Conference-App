@@ -24,12 +24,19 @@ public class LoginPresenter implements Presenter{
     public UserType tryLogin(String username, String password) {
         return accountController.authenticateUser(username, password);
     }
-
+    /**
+     * makes a new
+     * @return view.
+     */
     @Override
     public View makeView() {
         return new LoginView(this);
     }
 
+    /**
+     * gets main presenter
+     * @return main presenter
+     */
     @Override
     public MainPresenter getMainPresenter() {
         return mainPresenter;

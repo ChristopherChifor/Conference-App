@@ -16,16 +16,6 @@ public class Event implements Serializable {
     private boolean VIPOnly;
 
     private Set<String> attendees = new HashSet<>();
-    public enum EventType { TALK, PARTY, PANEL}
-    private EventType eventType;
-
-    /**
-     * Sets the event type of the event
-     * @param eventType: event type of the event
-     */
-    public void setEventType(EventType eventType) {
-        this.eventType = eventType;
-    }
 
     /**
      * Creates new event (Event constructor)
@@ -72,15 +62,7 @@ public class Event implements Serializable {
     public boolean setSpeaker(String username) {
         return speakers.add(username);
     }
-    /**
-     * Removes specified speaker to event
-     *
-     * @param username: username of speaker
-     * @return true if speaker isn't already added and speaker is added to this event
-     */
-    public boolean removeSpeaker(String username) {
-        return speakers.remove(username);
-    }
+
     /**
      * Getter for name
      * @return name of event
@@ -110,14 +92,6 @@ public class Event implements Serializable {
         }
         return false;
     }
-    /**
-     * Getter for the capacity of events
-     *
-     * @return capacity of event
-     */
-    public int getEventCapacity() {
-        return eventCapacity;
-    }
 
     /**
      * Checks if event is full
@@ -125,7 +99,6 @@ public class Event implements Serializable {
      * @return true if event is full
      */
     public boolean isEventFull() {
-
         return numberOfAttendeesInEvent() ==  eventCapacity;
     }
     /**
@@ -162,11 +135,4 @@ public class Event implements Serializable {
         this.VIPOnly = VIPOnly;
     }
 
-    /**
-     * Getter for eventType
-     * @return the type of event
-     */
-    public EventType getEventType() {
-        return eventType;
-    }
 }
