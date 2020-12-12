@@ -98,13 +98,13 @@ public class EventController {
      * @return true if no other event has that name and capacity is positive and new Event is created
      */
     public boolean createEvent(String eventName, int eventCapacity, String roomName, Calendar time, int duration, List<String> speakers) {
-        System.out.println("c");
+
         if (eventCapacity < 1) return false;
-        System.out.println("p");
+
         if (roomManager.getRoomCapacity(roomName) < eventCapacity) return false;
-        System.out.println("r");
+
         if (scheduleConflict(roomName, time, duration)) return false;
-        System.out.println("q");
+
 
         return scheduleManager.createEvent(eventName, eventCapacity, roomName, time, duration, speakers);
     }
