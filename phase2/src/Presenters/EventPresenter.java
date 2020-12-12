@@ -2,13 +2,11 @@ package Presenters;
 
 import Controllers.EventController;
 import Controllers.MessageController;
-import Entities.Message;
 import Util.UserType;
 import ui.state.EventBundle;
 import ui.view.EventView;
 import ui.view.View;
 
-import java.util.List;
 
 
 public class EventPresenter implements Presenter{
@@ -64,7 +62,7 @@ public class EventPresenter implements Presenter{
     }
 
     public void eventEdit(View view){
-        //TODO CHECK IF EVENT CAN BE EDITED
+
         boolean canEdit = true; // CHANGE THIS VALUE
 
         if(!canEdit){

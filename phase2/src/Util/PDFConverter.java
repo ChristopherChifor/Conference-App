@@ -68,7 +68,7 @@ public class PDFConverter {
      * @param table table
      */
     private void addScheduleHeader(PdfPTable table) {
-        Stream.of("Time", "Event", "Room")
+        Stream.of("Event", "Room", "Time")
                 .forEach(columnTitle -> {
                     PdfPCell header = new PdfPCell();
                     header.setBackgroundColor(BaseColor.LIGHT_GRAY);
