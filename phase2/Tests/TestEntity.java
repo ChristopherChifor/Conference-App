@@ -245,8 +245,11 @@ public class TestEntity {
     public void testSetEventType() {
         Event event = new Event("Event");
         event.setEventType(Event.EventType.TALK);
-
+        assertTrue(event.getEventType() == Event.EventType.TALK);
+        assertFalse(event.getEventType() == Event.EventType.PARTY);
     }
+
+
 
 
 }
