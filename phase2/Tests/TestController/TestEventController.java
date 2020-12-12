@@ -21,8 +21,8 @@ public class TestEventController {
         RoomController roomController = new RoomController();
 
         roomController.createRoom("Room1", 50); //What if capacity of event is more than room
-//        eventController.createEvent("Event1", 50, "Room1",
-//                Calendar.getInstance(), 5);
+        eventController.createEvent("Event1", 50, "Room1",
+                Calendar.getInstance(), 5, null);
         accountController.createUser("Jafar", "JJ", "pass", "pass", UserType.ATTENDEE);
 
         eventController.signUpEvent("JJ", "Event1");
@@ -37,8 +37,8 @@ public class TestEventController {
         RoomController roomController = new RoomController();
 
         roomController.createRoom("Room2", 50);
-//        eventController.createEvent("Event2", 50, "Room2",
-//                Calendar.getInstance(), 5);
+        eventController.createEvent("Event2", 50, "Room2",
+                Calendar.getInstance(), 5, null);
         accountController.createUser("Jafar", "JJ", "pass", "pass", UserType.ATTENDEE);
 
         eventController.signUpEvent("Event2", "JJ");
