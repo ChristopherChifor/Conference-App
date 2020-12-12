@@ -73,7 +73,6 @@ public class AppWindow extends JDialog {
             panel.remove(currentView);
         }
 
-        System.out.println("Show view run");
         panel.add((JPanel) view, BorderLayout.CENTER);
         currentView = (JPanel) view;
 

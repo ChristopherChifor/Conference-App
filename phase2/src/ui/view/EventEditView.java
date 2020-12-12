@@ -101,7 +101,7 @@ public class EventEditView extends JPanel implements View {
         speakerField.setSelectedIndices(selectedIndeces);
 
         titleField.setText(bundle.getTitle());
-        titleField.setPreferredSize(new Dimension(120,20));
+        titleField.setPreferredSize(new Dimension(120, 20));
         descField.setText(bundle.getDescription());
         durationField.setText(bundle.getDuration());
         capacityField.setText(Integer.toString(bundle.getCapacity()));
@@ -121,17 +121,21 @@ public class EventEditView extends JPanel implements View {
         add(new JLabel("Title:"), cst);
         cst.gridx = 1;
         add(titleField, cst);
+        if (!titleField.getText().equals("")) {
+            titleField.setEnabled(false);
+        }
         cst.gridy++;
         cst.gridx = 0;
         add(new JLabel("Speaker:"), cst);
         cst.gridy++;
-        cst.gridheight=3; cst.gridwidth=2;
+        cst.gridheight = 3;
+        cst.gridwidth = 2;
         JScrollPane scroll = new JScrollPane(speakerField);
-        scroll.setMinimumSize(new Dimension(400,50));
+        scroll.setMinimumSize(new Dimension(400, 50));
         add(scroll, cst);
-        cst.gridheight=1;
-        cst.gridwidth=1;
-        cst.gridy+=3;
+        cst.gridheight = 1;
+        cst.gridwidth = 1;
+        cst.gridy += 3;
         cst.gridx = 0;
         add(new JLabel("Time:"), cst);
         cst.gridx = 1;
@@ -173,7 +177,7 @@ public class EventEditView extends JPanel implements View {
         add(new JLabel("Description"), cst);
         cst.gridy++;
         cst.gridheight = 2;
-        descField.setMinimumSize(new Dimension(20,50));
+        descField.setMinimumSize(new Dimension(20, 50));
         add(descField, cst);
         cst.gridy++;
         cst.gridy++;
