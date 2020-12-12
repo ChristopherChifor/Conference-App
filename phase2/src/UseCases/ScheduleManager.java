@@ -82,10 +82,9 @@ public class ScheduleManager implements Serializable {
      * @return true if event has already occurred
      */
     public boolean eventHasHappened(String eventName) {
-        //if (eventExists(eventName)) {
-        //    return true;
-        return false;
-    }  //TODO need to account for if event has actually happened
+        Calendar time = scheduleEntryJsonDatabase.read(eventName).getStartTime();
+        return time.after(Calendar.getInstance());
+    }
 
     /**
      * Checks if an event is full
@@ -145,11 +144,12 @@ public class ScheduleManager implements Serializable {
      * @param eventCapacity Capacity of Event that is to be created
      * @return true if no other event has that name and capacity is positive and new Event is created
      */
-    public boolean createEvent(String eventName, int eventCapacity, String roomName, Calendar time, int duration, List<String> speakers) {
+    public boolean createEvent(String eventName, int eventCapacity, String roomName, Calendar time, int duration, List<String> speakers, boolean isVIP) {
         Event event = new Event(eventName);
         for (String speaker : speakers) {
             event.setSpeaker(speaker);    
         }
+        event.setVIPOnly(isVIP);
         event.setEventCapacity(eventCapacity);
         eventJsonDatabase.write(event, eventName);
         return addNewEvent(roomName, eventName, time, duration);

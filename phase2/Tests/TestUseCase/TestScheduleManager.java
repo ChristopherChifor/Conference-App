@@ -13,8 +13,8 @@ public class TestScheduleManager {
     public void testGetEventAttendees() {
         EventController eventController = new EventController();
         ScheduleManager scheduleManager = new ScheduleManager();
-        eventController.createEvent("EVENT", 50, "Room 3", Calendar.getInstance(),
-                50, null);
+//        eventController.createEvent("EVENT", 50, "Room 3", Calendar.getInstance(),
+//                50, null);
         eventController.signUpEvent("Jafar", "EVENT");
         eventController.signUpEvent("Jafar2", "EVENT");
 
