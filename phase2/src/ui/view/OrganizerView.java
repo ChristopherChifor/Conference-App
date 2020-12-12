@@ -2,6 +2,7 @@ package ui.view;
 
 import Presenters.EventListPresenter;
 import Presenters.OrganizerPresenter;
+import Util.UserType;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
@@ -55,7 +56,7 @@ public class OrganizerView extends JPanel implements View {
         add(usersScroll, BorderLayout.WEST);
 
         JPanel panel = new JPanel(new BorderLayout(20, 20));
-        EventListPresenter listPresenter = new EventListPresenter(true, presenter.getMainPresenter());
+        EventListPresenter listPresenter = new EventListPresenter(presenter.getUsername(), UserType.ORGANIZER, presenter.getMainPresenter());
         EventListView eventsPanel = new EventListView(listPresenter);
         JScrollPane scroll = new JScrollPane(eventsPanel);
         scroll.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);

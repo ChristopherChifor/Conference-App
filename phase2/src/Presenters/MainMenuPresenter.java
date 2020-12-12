@@ -54,7 +54,7 @@ public class MainMenuPresenter implements Presenter {
      * This method only gets called if this user can do this action.
      */
     public void goOrganizer(){
-        OrganizerPresenter op = new OrganizerPresenter(mainPresenter);
+        OrganizerPresenter op = new OrganizerPresenter(username, mainPresenter);
         mainPresenter.addPresenter(op);
     }
 

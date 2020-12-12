@@ -64,7 +64,7 @@ public class UserEventsPresenter implements Presenter {
      * Opens list of all events (vip filter if user is vip)
      */
     public void goToEventsList() {
-        EventListPresenter list = new EventListPresenter(userType == UserType.VIP, mainPresenter);
+        EventListPresenter list = new EventListPresenter(username, userType, mainPresenter);
         mainPresenter.addPresenter(list);
     }
 
