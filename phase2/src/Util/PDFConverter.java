@@ -15,8 +15,14 @@ import java.util.stream.Stream;
 /**
  * @author parssa
  */
-//TODO MAKE JAVA DOCS PARSSA ;)
 public class PDFConverter {
+
+    /**
+     * Converts a user's schedule into a pdf
+     * @param filepath the file path
+     * @param username username of the user who is making a pdf
+     * @param userSchedule that user's schedule
+     */
     public void convertToPDF(String filepath, String username, List<ScheduleEntry> userSchedule) {
         Document document = new Document();
         Font titleFont = FontFactory.getFont(FontFactory.HELVETICA_BOLD, 25, BaseColor.BLACK);
@@ -45,6 +51,11 @@ public class PDFConverter {
         }
     }
 
+    /**
+     * Adds rows to the pdf and splits up the events to be read easily
+     * @param table table
+     * @param userSchedule schedule of the user
+     */
     private void addRows(PdfPTable table, List<ScheduleEntry> userSchedule) {
         SimpleDateFormat df = new SimpleDateFormat("h:mm a, yyyy-MM-dd");
         for (ScheduleEntry s : userSchedule) {
@@ -52,6 +63,10 @@ public class PDFConverter {
         }
     }
 
+    /**
+     * Adds a header on top of the table
+     * @param table table
+     */
     private void addScheduleHeader(PdfPTable table) {
         Stream.of("Time", "Event", "Room")
                 .forEach(columnTitle -> {
@@ -63,13 +78,24 @@ public class PDFConverter {
                 });
     }
 
-
+    /**
+     * Adds an empty line
+     * @param paragraph paragraph
+     * @param number an int
+     */
     private static void addEmptyLine(Paragraph paragraph, int number) {
         for (int i = 0; i < number; i++) {
             paragraph.add(new Paragraph(" "));
         }
     }
 
+    /**
+     * Adds an event element into the pdf
+     * @param table table
+     * @param eventName name of the event
+     * @param roomID id of the room
+     * @param startTime start time of the event
+     */
     private void addElementEntry(PdfPTable table, String eventName, String roomID, String startTime) {
         table.addCell(eventName);
         table.addCell(roomID);
