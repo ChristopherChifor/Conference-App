@@ -171,7 +171,7 @@ public class ScheduleManager implements Serializable {
      * 3) the event is not full
      */
     public boolean canSignUpForEvent(String eventName) {
-        return !(!eventExists(eventName) || eventHasHappened(eventName) || !eventFull(eventName));
+        return !(!eventExists(eventName) || eventHasHappened(eventName) || eventFull(eventName));
     }
 
     /**
@@ -195,9 +195,7 @@ public class ScheduleManager implements Serializable {
     public boolean signUpForEvent(String username, String event) {
         Event myEvent = eventJsonDatabase.read(event);
         boolean t = myEvent.addAttendeeToEvent(username);
-        System.out.println("aw");
         if (t) {
-            System.out.println("yay");
             eventJsonDatabase.write(myEvent, event);
             return true;
         }
