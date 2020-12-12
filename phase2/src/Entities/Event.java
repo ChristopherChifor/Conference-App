@@ -151,4 +151,12 @@ public class Event implements Serializable {
     public void setVIPOnly(boolean VIPOnly) {
         this.VIPOnly = VIPOnly;
     }
+
+    /**
+     * Getter for eventType
+     * @return the type of event
+     */
+    public EventType getEventType() {
+        return eventType;
+    }
 }
