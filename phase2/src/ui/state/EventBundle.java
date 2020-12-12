@@ -42,6 +42,7 @@ public class EventBundle {
 
     /**
      * Getter for VIP-Only status
+     *
      * @return true iff vip only
      */
     public boolean isVipOnly() {
@@ -112,10 +113,14 @@ public class EventBundle {
     }
 
     /**
-     * Returns the duration as minutes. Assumes that
-     * @return
+     * Returns the duration as minutes. Assumes that duration is properly formatted
+     *
+     * @return duration as minutes
      */
-    public int getDurationAsInt(){
-        //todo alex
+    public int getDurationAsInt() {
+        int indexOfColon = duration.indexOf(":");
+        String hour = duration.substring(0, indexOfColon);
+        String minute = duration.substring(indexOfColon + 1);
+        return Integer.parseInt(minute) + Integer.parseInt(hour) * 60;
     }
 }
