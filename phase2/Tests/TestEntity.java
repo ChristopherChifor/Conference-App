@@ -4,15 +4,13 @@ import org.junit.*;
 
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.HashMap;
 
 import static org.junit.Assert.*;
 public class TestEntity {
 
 
-    //TODO Test Cases for User Entity
 
-    @Test(timeout=50)
+    @Test
     public void testGetNameUser() {
         User user = new User("David","CSC207","123", UserType.ATTENDEE);
         assertEquals("David", user.getName());
@@ -22,7 +20,7 @@ public class TestEntity {
         assertEquals("John", user3.getName());
     }
 
-    @Test(timeout=50)
+    @Test
     public void testGetUsername() {
         User user = new User("David","CSC207","123", UserType.ATTENDEE);
         assertEquals("CSC207", user.getUsername());
@@ -32,7 +30,7 @@ public class TestEntity {
         assertEquals("Toronto", user3.getUsername());
     }
 
-    @Test(timeout=50)
+    @Test
     public void testGetPassword() {
         User user = new User("David","CSC207","123", UserType.ATTENDEE);
         assertEquals("123", user.getPassword());
@@ -46,7 +44,7 @@ public class TestEntity {
         assertEquals("boss", user5.getPassword());
     }
 
-    @Test(timeout=50)
+    @Test
     public void testGetUserType() {
         User user = new User("David","CSC207","123", UserType.ATTENDEE);
         assertEquals(UserType.ATTENDEE, user.getUserType());
@@ -56,7 +54,7 @@ public class TestEntity {
         assertEquals(UserType.ORGANIZER, user3.getUserType());
     }
 
-    @Test(timeout=50)
+    @Test
     public void testSetUserType() {
         User user = new User("David","CSC207","123", UserType.ATTENDEE);
         user.setUserType(UserType.SPEAKER);
@@ -65,23 +63,20 @@ public class TestEntity {
         assertEquals(UserType.ORGANIZER, user.getUserType());
     }
 
-    //TODO Test Cases for Room Entity
-
-    @Test(timeout=50)
+    @Test
     public void testGetNameRoom() {
         Room room = new Room("Room 207");
         assertEquals("Room 207", room.getName());
 
     }
 
-    @Test(timeout=50)
+    @Test
     public void testGetStringRoom() {
         Room room = new Room("Room 207");
         assertEquals("Room 207", room.getName());
     }
 
-
-    @Test(timeout=50)
+    @Test
     public void testSetAndGetRoomCapacity() {
         Room room = new Room("Room 207");
         room.setRoomCapacity(20);
@@ -89,7 +84,7 @@ public class TestEntity {
 
     }
 
-    @Test(timeout=50)
+    @Test
     public void testSetAndGetRoomCapacityVersion2() {
         Room room = new Room("Room 207");
         room.setRoomCapacity(20);
@@ -98,48 +93,42 @@ public class TestEntity {
 
     }
 
-    @Test(timeout=50)
+    @Test
     public void testSetAndGetRoomCapacityNegative() {
         Room room = new Room("Room 207");
         assertEquals(false, room.setRoomCapacity(-20));
 
     }
 
-
-    //TODO Test Cases for Conversation Entity
-
-
-    //TODO Test Cases for Message Entity
-
-    @Test(timeout=50)
+    @Test
     public void testMessageGetSender() {
         Message message = new Message("United Kingdom", "CSC207", "Hi");
         assertEquals("United Kingdom", message.getSender());
 
     }
 
-    @Test(timeout=50)
+    @Test
     public void testMessageGetRecipient() {
         Message message = new Message("United Kingdom", "CSC207", "Hi");
         assertEquals("CSC207", message.getRecipient());
 
     }
 
-    @Test(timeout=50)
+    @Test
     public void testMessageGetBody() {
         Message message = new Message("United Kingdom", "CSC207", "Hi");
         assertEquals("Hi", message.getBody());
 
     }
 
-    @Test(timeout=50)
+    @Test
     public void testMessageArchiveFalse() {
         Message message = new Message("United Kingdom", "CSC207", "Hi");
         assertEquals(false, message.getIsArchived());
 
     }
 
-    @Test(timeout=50)
+    @Test
     public void testMessageArchiveTrue() {
         Message message = new Message("United Kingdom", "CSC207", "Hi");
         message.markAsArchived();
@@ -148,7 +137,7 @@ public class TestEntity {
     }
 
 
-    @Test(timeout=50)
+    @Test
     public void testScheduleEntryGetEventName() {
         Calendar time = Calendar.getInstance();
         ScheduleEntry scheduleEntry = new ScheduleEntry("Conference", "1", time, 1);
@@ -156,7 +145,7 @@ public class TestEntity {
 
     }
 
-    @Test(timeout=50)
+    @Test
     public void testScheduleEntryGetRoomID() {
         Calendar time = Calendar.getInstance();
         ScheduleEntry scheduleEntry = new ScheduleEntry("Conference", "1", time, 1);
@@ -164,7 +153,7 @@ public class TestEntity {
 
     }
 
-    @Test(timeout=50)
+    @Test
     public void testScheduleEntryGetStartTime() {
         Calendar time = Calendar.getInstance();
         ScheduleEntry scheduleEntry = new ScheduleEntry("Conference", "1", time, 1);
@@ -172,7 +161,7 @@ public class TestEntity {
 
     }
 
-    @Test(timeout=50)
+    @Test
     public void testScheduleEntryGetDuration() {
         Calendar time = Calendar.getInstance();
         ScheduleEntry scheduleEntry = new ScheduleEntry("Conference", "1", time, 1);
@@ -180,7 +169,7 @@ public class TestEntity {
 
     }
 
-    @Test(timeout=50)
+    @Test
     public void testScheduleEntrySetRoomID() {
         Calendar time = Calendar.getInstance();
         ScheduleEntry scheduleEntry = new ScheduleEntry("Conference", "1", time, 1);
@@ -189,7 +178,7 @@ public class TestEntity {
 
     }
 
-    @Test(timeout=50)
+    @Test
     public void testScheduleEntrySetDuration() {
         Calendar time = Calendar.getInstance();
         ScheduleEntry scheduleEntry = new ScheduleEntry("Conference", "1", time, 1);
@@ -198,7 +187,7 @@ public class TestEntity {
 
     }
 
-    @Test(timeout=50)
+    @Test
     public void testScheduleEntrySetStartTime() {
         Calendar time = Calendar.getInstance();
         Calendar time2 = (Calendar) time.clone();
@@ -209,7 +198,7 @@ public class TestEntity {
 
     }
 
-    @Test(timeout=50)
+    @Test
     public void testScheduleEntrySetStartTime2() {
         Calendar time = Calendar.getInstance();
         Calendar time2 = (Calendar) time.clone();
@@ -221,7 +210,7 @@ public class TestEntity {
 
     }
 
-    @Test(timeout=50)
+    @Test
     public void testConversationAddMessage() {
         Conversation conversation = new Conversation("United Kingdom", "CSC207");
         Message message = new Message("United Kingdom", "CSC207", "Hi");
@@ -232,7 +221,7 @@ public class TestEntity {
 
     }
 
-    @Test(timeout=50)
+    @Test
     public void testConversationGetUsers() {
         Conversation conversation = new Conversation("United Kingdom", "CSC207");
         assertEquals("United Kingdom", conversation.getUserOne());
@@ -240,7 +229,7 @@ public class TestEntity {
 
     }
 
-    @Test(timeout=50)
+    @Test
     public void testConversationRead() {
         Conversation conversation = new Conversation("United Kingdom", "CSC207");
         assertEquals(false, conversation.getIsRead());

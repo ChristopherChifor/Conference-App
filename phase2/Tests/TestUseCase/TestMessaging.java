@@ -15,7 +15,7 @@ import static org.junit.Assert.*;
 public class TestMessaging {
 
 
-    //TODO Test Cases for the MessageManager Use Case Class
+    //TODO Test Cases for Messaging
 
     @Test
     public void testSendMessageNull() {
@@ -24,11 +24,18 @@ public class TestMessaging {
         accountController.createUser("David","CSC207","123", "123", UserType.ATTENDEE);
         accountController.createUser("Sam","United Kingdom","java program", "java program",
                 UserType.SPEAKER);
+        accountController.createUser("John","Toronto","Clean Architecture", "Clean Architecture",
+                UserType.ORGANIZER);
+        accountController.createUser("Alex","Computer","100", "100", UserType.VIP);
         assertEquals(false, messageController.sendMessage(null, "CSC207", "Hello"));
         assertEquals(false, messageController.sendMessage(null, null, "Hello"));
         assertEquals(false, messageController.sendMessage(null, null, null));
         assertEquals(false, messageController.sendMessage("United Kingdom",null, null));
         assertEquals(false, messageController.sendMessage("United Kingdom",null, "Hi"));
+        assertEquals(false, messageController.sendMessage("Computer",null, "Hi"));
+        assertEquals(false, messageController.sendMessage(null,"Computer", "Hi"));
+        assertEquals(false, messageController.sendMessage("Toronto",null, "Hi"));
+        assertEquals(false, messageController.sendMessage(null,"Toronto", "Hi"));
     }
 
     @Test
@@ -37,6 +44,8 @@ public class TestMessaging {
         AccountController accountController = new AccountController();
         accountController.createUser("David","CSC207","123", "123", UserType.ATTENDEE);
         accountController.createUser("Alex","Computer","100", "100", UserType.ATTENDEE);
+        accountController.createUser("Chris","baba","789", "789",
+                UserType.VIP);
         accountController.createUser("Sam","United Kingdom","java program", "java program",
                 UserType.SPEAKER);
         accountController.createUser("John","Toronto","Clean Architecture", "Clean Architecture",
@@ -44,6 +53,27 @@ public class TestMessaging {
         assertEquals(true, messageController.sendMessage("CSC207", "United Kingdom", "Hello"));
         assertEquals(true, messageController.sendMessage("CSC207", "Computer", "Hello"));
         assertEquals(false, messageController.sendMessage("CSC207", "Toronto", "Hello"));
+        assertEquals(true, messageController.sendMessage("CSC207", "baba", "Hello"));
+
+    }
+
+    @Test
+    public void testSendMessageFromVIP() {
+        MessageController messageController = new MessageController();
+        AccountController accountController = new AccountController();
+        accountController.createUser("David","CSC207","123", "123", UserType.ATTENDEE);
+        accountController.createUser("Sam","United Kingdom","java program", "java program",
+                UserType.SPEAKER);
+        accountController.createUser("John","Toronto","Clean Architecture", "Clean Architecture",
+                UserType.ORGANIZER);
+        accountController.createUser("Chris","baba","789", "789",
+                UserType.VIP);
+        accountController.createUser("Alex","Computer","100", "100", UserType.VIP);
+        assertEquals(true, messageController.sendMessage("Computer", "United Kingdom", "Hello"));
+        assertEquals(true, messageController.sendMessage("Computer", "CSC207", "Hello"));
+        assertEquals(true, messageController.sendMessage("Computer", "baba", "Hello"));
+        assertEquals(false, messageController.sendMessage("Computer", "Toronto", "Hello"));
+
 
     }
 
@@ -52,6 +82,8 @@ public class TestMessaging {
         MessageController messageController = new MessageController();
         AccountController accountController = new AccountController();
         accountController.createUser("David","CSC207","123", "123", UserType.ATTENDEE);
+        accountController.createUser("Chris","baba","789", "789",
+                UserType.VIP);
         accountController.createUser("Sam","United Kingdom","java program", "java program",
                 UserType.SPEAKER);
         accountController.createUser("Alex","Computer","100", "100", UserType.SPEAKER);
@@ -60,6 +92,7 @@ public class TestMessaging {
         assertEquals(true, messageController.sendMessage("United Kingdom", "CSC207", "Hello"));
         assertEquals(true, messageController.sendMessage("United Kingdom", "Computer", "Hello"));
         assertEquals(true, messageController.sendMessage("United Kingdom", "Toronto", "Hello"));
+        assertEquals(true, messageController.sendMessage("United Kingdom", "baba", "Hello"));
 
 
     }
@@ -69,6 +102,8 @@ public class TestMessaging {
         MessageController messageController = new MessageController();
         AccountController accountController = new AccountController();
         accountController.createUser("David","CSC207","123", "123", UserType.ATTENDEE);
+        accountController.createUser("Chris","baba","789", "789",
+                UserType.VIP);
         accountController.createUser("Sam","United Kingdom","java program", "java program",
                 UserType.SPEAKER);
         accountController.createUser("John","Toronto","Clean Architecture", "Clean Architecture",
@@ -77,6 +112,50 @@ public class TestMessaging {
         assertEquals(true, messageController.sendMessage("Toronto", "United Kingdom", "Hello"));
         assertEquals(true, messageController.sendMessage("Toronto", "CSC207", "Hello"));
         assertEquals(true, messageController.sendMessage("Toronto", "Computer", "Hello"));
+        assertEquals(true, messageController.sendMessage("Toronto", "baba", "Hello"));
+
+
+
+    }
+
+
+    @Test
+    public void testSendMessageToThemself() {
+        MessageController messageController = new MessageController();
+        AccountController accountController = new AccountController();
+        accountController.createUser("David","CSC207","123", "123", UserType.ATTENDEE);
+        accountController.createUser("Sam","United Kingdom","java program", "java program",
+                UserType.SPEAKER);
+        accountController.createUser("John","Toronto","Clean Architecture", "Clean Architecture",
+                UserType.ORGANIZER);
+        accountController.createUser("Alex","Computer","100", "100", UserType.VIP);
+        assertEquals(false, messageController.sendMessage("United Kingdom", "United Kingdom", "Hello"));
+        assertEquals(false, messageController.sendMessage("CSC207", "CSC207", "Hello"));
+        assertEquals(false, messageController.sendMessage("Toronto", "Toronto", "Hello"));
+        assertEquals(false, messageController.sendMessage("Computer", "Computer", "Hello"));
+
+
+
+
+    }
+
+
+    @Test
+    public void testSendMessageFromAndToInvalidUsernames() {
+        MessageController messageController = new MessageController();
+        AccountController accountController = new AccountController();
+        accountController.createUser("David","CSC207","123", "123", UserType.ATTENDEE);
+        accountController.createUser("Sam","United Kingdom","java program", "java program",
+                UserType.SPEAKER);
+        accountController.createUser("John","Toronto","Clean Architecture", "Clean Architecture",
+                UserType.ORGANIZER);
+        accountController.createUser("Alex","Computer","100", "100", UserType.VIP);
+        assertNull(messageController.sendMessage("United Kingdom", "a", "Hello"));
+        assertNull(messageController.sendMessage("CSC207", "b", "Hello"));
+        assertNull(messageController.sendMessage("Toronto", "c", "Hello"));
+        assertNull(messageController.sendMessage("Computer", "d", "Hello"));
+
+
 
 
     }
@@ -135,14 +214,14 @@ public class TestMessaging {
 
 
     @Test
-    public void testGetContacts() {
+    public void testGetInbox() {
         MessageController messageController = new MessageController();
         AccountController accountController = new AccountController();
         accountController.createUser("Bob","bob","123", "123", UserType.ATTENDEE);
         accountController.createUser("Baba","baba","java program", "java program",
                 UserType.ATTENDEE);
-        assertNotNull(messageController.getContacts("bob"));
-        assertNotNull(messageController.getContacts("baba"));
+        assertNotNull(messageController.getInbox("bob"));
+        assertNotNull(messageController.getInbox("baba"));
 
     }
 
