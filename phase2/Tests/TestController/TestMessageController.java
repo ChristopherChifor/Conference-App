@@ -83,7 +83,7 @@ public class TestMessageController {
                 UserType.ORGANIZER);
         assertTrue(messageController.sendMessage("United Kingdom", "CSC207", "Hello"));
         assertTrue(messageController.sendMessage("United Kingdom", "Computer", "Hello"));
-        assertTrue(messageController.sendMessage("United Kingdom", "Toronto", "Hello"));
+        assertFalse(messageController.sendMessage("United Kingdom", "Toronto", "Hello"));
         assertTrue(messageController.sendMessage("United Kingdom", "baba", "Hello"));
     }
 
