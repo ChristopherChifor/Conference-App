@@ -13,6 +13,7 @@ import ui.state.EventBundle;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
+import java.util.*;
 
 /**
  * @author parssa
@@ -89,7 +90,16 @@ public class EventController {
 
 
     private boolean scheduleConflict(String roomName, Calendar time, int duration) {
-        //TODO finish this method, need the method to return filtered ScheduleEntries by roomName
+        HashMap<Calendar, Calendar> map = scheduleManager.getRoomEvents(roomName);
+        Calendar t = (Calendar) time.clone();
+        t.add(Calendar.MINUTE, duration);
+        for (Map.Entry<Calendar, Calendar> entry : map.entrySet()) {
+            Calendar a = entry.getKey();
+            Calendar b = entry.getValue();
+            if (!((a.compareTo(t)>=0 && a.compareTo(time) > 0) || (b.compareTo(t)<0 && b.compareTo(time)<=0))) {
+                return true;
+            }
+        }
         return false;
     }
 
