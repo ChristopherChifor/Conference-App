@@ -57,7 +57,11 @@ public class UserEventsPresenter implements Presenter {
     }
 
     public List<String> getUserEvents() {
-        return eventController.getAttendeeEvents(username).stream().map(ScheduleEntry::getEventName).collect(Collectors.toList());
+        if(userType == UserType.ATTENDEE || userType == UserType.VIP)
+            return eventController.getAttendeeEvents(username).stream().map(ScheduleEntry::getEventName).collect(Collectors.toList());
+        if(userType == UserType.SPEAKER)
+            return eventController.getSpeakerEvents(username).stream().map(ScheduleEntry::getEventName).collect(Collectors.toList());
+        return new ArrayList<>();
     }
 
     /**

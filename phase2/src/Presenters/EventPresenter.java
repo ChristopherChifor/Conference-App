@@ -1,14 +1,12 @@
 package Presenters;
 
 import Controllers.EventController;
+import Controllers.MessageController;
 import Util.UserType;
 import ui.state.EventBundle;
 import ui.view.EventView;
 import ui.view.View;
 
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.List;
 
 public class EventPresenter implements Presenter{
     private EventController eventController;
@@ -16,6 +14,7 @@ public class EventPresenter implements Presenter{
     private MainPresenter mainPresenter;
     private String eventName;
     private UserType userType;
+    private MessageController messageController;
 
     public EventPresenter(String eventName, String username, MainPresenter mainPresenter, UserType userType) {
         this.eventController = new EventController();
@@ -23,6 +22,7 @@ public class EventPresenter implements Presenter{
         this.mainPresenter = mainPresenter;
         this.eventName = eventName;
         this.userType = userType;
+        this.messageController = new MessageController();
     }
 
     /**
@@ -86,6 +86,6 @@ public class EventPresenter implements Presenter{
      * @param message message being sent
      */
     public void messageEvent(String message){
-        //TODO SEND MESSAGE TO EVENT.
+        messageController.messageAll(eventName, message, username);
     }
 }
