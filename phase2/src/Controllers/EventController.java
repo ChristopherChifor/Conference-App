@@ -109,17 +109,6 @@ public class EventController {
         return scheduleManager.createEvent(eventName, eventCapacity, roomName, time, duration, speakers, isVIP);
     }
 
-
-    /**
-     * Checks if an event is full
-     *
-     * @param eventName Event that is being checked
-     * @return true if the event is full
-     */
-    public boolean eventFull(String eventName) {
-        return scheduleManager.eventFull(eventName);
-    }
-
     public boolean attendeeInEvent(String eventName, String username) {
         return scheduleManager.inEvent(eventName, username);
     }
