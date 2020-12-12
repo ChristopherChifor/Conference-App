@@ -102,8 +102,6 @@ public class EventController {
      */
     public boolean createEvent(String eventName, int eventCapacity, String roomName, Calendar time, int duration, List<String> speakers) {
         System.out.println("c");
-        if (scheduleManager.eventExists(eventName)) return false;
-        System.out.println("poop");
         if (eventCapacity < 1) return false;
         System.out.println("p");
         if (roomManager.getRoomCapacity(roomName) < eventCapacity) return false;

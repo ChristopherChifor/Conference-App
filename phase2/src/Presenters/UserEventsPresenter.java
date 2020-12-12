@@ -57,7 +57,11 @@ public class UserEventsPresenter implements Presenter {
     }
 
     public List<String> getUserEvents() {
-        return eventController.getAttendeeEvents(username).stream().map(ScheduleEntry::getEventName).collect(Collectors.toList());
+        if(userType == UserType.ATTENDEE || userType == UserType.VIP)
+            return eventController.getAttendeeEvents(username).stream().map(ScheduleEntry::getEventName).collect(Collectors.toList());
+        if(userType == UserType.SPEAKER)
+            return eventController.getSpeakerEvents(username).stream().map(ScheduleEntry::getEventName).collect(Collectors.toList());
+        return new ArrayList<>();
     }
 
     /**
@@ -84,7 +88,10 @@ public class UserEventsPresenter implements Presenter {
      * @param message    message being sent
      */
     public void messageEvents(List<String> eventNames, String message) {
-        //TODO IMPLEMENT
+        for (String event: eventNames){
+            messageController.messageAll(event, message, username);
+        }
+
     }
 
     /**

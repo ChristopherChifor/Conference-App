@@ -75,6 +75,10 @@ public class Conversation implements Serializable {
         return isRead;
     }
 
+    /**
+     * Deletes messages
+     * @param messageID message id
+     */
     public void deleteMessage(int messageID) {
         for (int a = 0; a < messages.size(); a++) {
             if (messages.get(a).getId() == (messageID)) {

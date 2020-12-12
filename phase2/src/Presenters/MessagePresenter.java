@@ -52,7 +52,6 @@ public class MessagePresenter implements Presenter{
     }
 
     /**
-     * TODO DEPRECATE
      *
      * Gets the contacts and returns them as a String
      * @return List of Strings of the contacts

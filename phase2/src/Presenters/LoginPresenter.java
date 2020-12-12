@@ -17,9 +17,9 @@ public class LoginPresenter implements Presenter{
 
     /**
      *  Logs in user
-     * @param username
-     * @param password
-     * @return
+     * @param username username
+     * @param password password
+     * @return user type
      */
     public UserType tryLogin(String username, String password) {
         return accountController.authenticateUser(username, password);
