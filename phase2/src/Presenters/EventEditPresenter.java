@@ -70,7 +70,7 @@ public class EventEditPresenter implements Presenter {
      * @param view   the view calling this method (used for showing popups)
      */
     public void save(EventBundle bundle, View view) {
-        eventController.createEvent(bundle.getTitle(), bundle.getCapacity(), bundle.getRoom(), bundle.getTime(), bundle.getDurationAsInt(), bundle.getSpeaker());
+        eventController.createEvent(bundle.getTitle(), bundle.getCapacity(), bundle.getRoom(), bundle.getTime(), bundle.getDurationAsInt(), bundle.getSpeaker(), bundle.isVipOnly());
         mainPresenter.back();
     }
 
