@@ -2,14 +2,18 @@ package Controllers;
 
 import Entities.Event;
 import Entities.ScheduleEntry;
+import Gateways.IGateway;
+import Gateways.JsonDatabase;
 import UseCases.RoomManager;
 import UseCases.ScheduleManager;
 import Util.PDFConverter;
 import Util.UserType;
 import ui.state.EventBundle;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
+import java.util.*;
 
 /**
  * @author parssa
@@ -17,7 +21,7 @@ import java.util.List;
 public class EventController {
     private UserType userType;
 
-    private PDFConverter pdfConverter;
+    private PDFConverter pdfConverter; // TODO make sure this gets set
 
     private ScheduleManager scheduleManager;
     private RoomManager roomManager;
@@ -86,7 +90,16 @@ public class EventController {
 
 
     private boolean scheduleConflict(String roomName, Calendar time, int duration) {
-        //TODO finish this method, need the method to return filtered ScheduleEntries by roomName
+        HashMap<Calendar, Calendar> map = scheduleManager.getRoomEvents(roomName);
+        Calendar t = (Calendar) time.clone();
+        t.add(Calendar.MINUTE, duration);
+        for (Map.Entry<Calendar, Calendar> entry : map.entrySet()) {
+            Calendar a = entry.getKey();
+            Calendar b = entry.getValue();
+            if (!((a.compareTo(t)>=0 && a.compareTo(time) > 0) || (b.compareTo(t)<0 && b.compareTo(time)<=0))) {
+                return true;
+            }
+        }
         return false;
     }
 
@@ -97,27 +110,16 @@ public class EventController {
      * @param eventCapacity Capacity of Event that is to be created
      * @return true if no other event has that name and capacity is positive and new Event is created
      */
-    public boolean createEvent(String eventName, int eventCapacity, String roomName, Calendar time, int duration, List<String> speakers, boolean isVIP) {
-
+    public boolean createEvent(String eventName, int eventCapacity, String roomName, Calendar time, int duration, List<String> speakers) {
+        System.out.println("c");
         if (eventCapacity < 1) return false;
-
+        System.out.println("p");
         if (roomManager.getRoomCapacity(roomName) < eventCapacity) return false;
-
+        System.out.println("r");
         if (scheduleConflict(roomName, time, duration)) return false;
+        System.out.println("q");
 
-
-        return scheduleManager.createEvent(eventName, eventCapacity, roomName, time, duration, speakers, isVIP);
-    }
-
-
-    /**
-     * Checks if an event is full
-     *
-     * @param eventName Event that is being checked
-     * @return true if the event is full
-     */
-    public boolean eventFull(String eventName) {
-        return scheduleManager.eventFull(eventName);
+        return scheduleManager.createEvent(eventName, eventCapacity, roomName, time, duration, speakers);
     }
 
     public boolean attendeeInEvent(String eventName, String username) {
