@@ -54,6 +54,10 @@ public interface View {
         return false;
     }
 
+    /**
+     * A method for getting the name of this view.
+     *
+     * @return the title for this view
+     */
     String getViewName();
-    // void refresh();
 }
