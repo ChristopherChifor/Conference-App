@@ -17,8 +17,11 @@ public class OrganizerPresenter implements Presenter {
     private RoomController roomController;
     private MainPresenter mainPresenter;
     private AccountController accountController;
+    private String username;
 
-    public OrganizerPresenter(MainPresenter presenter) {
+
+    public OrganizerPresenter(String username, MainPresenter presenter) {
+        this.username = username;
         this.roomController = new RoomController();
         this.mainPresenter = presenter;
         this.accountController = new AccountController();
@@ -100,5 +103,13 @@ public class OrganizerPresenter implements Presenter {
     @Override
     public MainPresenter getMainPresenter() {
         return mainPresenter;
+    }
+
+    /**
+     * Username getter
+     * @return username
+     */
+    public String getUsername() {
+        return username;
     }
 }

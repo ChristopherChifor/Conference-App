@@ -190,8 +190,8 @@ public class EventEditView extends JPanel implements View {
         saveButton.addActionListener(e -> save());
         cancelButton.addActionListener(e -> cancel());
 
-        timeField.setText(df.format(bundle.getTime().getTime())); // todo check this
-        calModel.setValue(bundle.getTime()); // todo and this
+        timeField.setText(df.format(bundle.getTime().getTime()));
+        calModel.setValue(bundle.getTime());
 
         repaint();
         revalidate();
@@ -249,7 +249,6 @@ public class EventEditView extends JPanel implements View {
         }
 
 
-        // todo mega sus stuff:
         String timeString = timeField.getText();
         Date timeNoDate = df.parse(timeString); // throws if improper
         Calendar dateTime = (Calendar) dateField.getModel().getValue();

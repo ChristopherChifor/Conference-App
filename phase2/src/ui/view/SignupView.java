@@ -65,8 +65,6 @@ public class SignupView extends JPanel implements View{
         String password = new String(passwordField.getPassword());
         String confirmPassword = new String(confirmPasswordField.getPassword());
 
-        //todo delete print when done:
-        System.out.println(String.format("sign up attempt%nusername: %s%nname: %s%npassword: %s%nconfirm: %s%n", username, name, password, confirmPassword));
 
         boolean success = presenter.signUp(name, username, password, confirmPassword);
         if(!success){

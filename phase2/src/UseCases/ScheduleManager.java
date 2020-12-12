@@ -4,6 +4,7 @@ import Entities.Event;
 import Entities.ScheduleEntry;
 import Gateways.IGateway;
 import Gateways.JsonDatabase;
+import ui.state.EventBundle;
 
 import java.io.Serializable;
 import java.util.*;
@@ -70,6 +71,7 @@ public class ScheduleManager implements Serializable {
      * @return true if event exists
      */
     public boolean eventExists(String eventName) {
+        System.out.println(eventJsonDatabase.getIds());
         return eventJsonDatabase.getIds().contains(eventName);
     }
 
@@ -80,10 +82,10 @@ public class ScheduleManager implements Serializable {
      * @return true if event has already occurred
      */
     public boolean eventHasHappened(String eventName) {
-        if (eventExists(eventName)) {
-            return true;
-        } else return false; //TODO need to account for if event has actually happened
-    }
+        //if (eventExists(eventName)) {
+        //    return true;
+        return false;
+    }  //TODO need to account for if event has actually happened
 
     /**
      * Checks if an event is full
@@ -116,7 +118,7 @@ public class ScheduleManager implements Serializable {
     }
 
     public boolean inEvent(String eventName, String username) {
-        return getEvent(eventName).getAttendees().contains(username);
+        return getEventAttendees(eventName).contains(username);
     }
 
     /**
@@ -127,7 +129,7 @@ public class ScheduleManager implements Serializable {
      * @return true if an event exists and speaker is added
      */
     public boolean assignSpeaker(String speaker, String event) {
-        return getEvent(event).setSpeaker(event);
+        return getEvent(event).setSpeaker(speaker);
     }
 
     /**
@@ -139,8 +141,8 @@ public class ScheduleManager implements Serializable {
      */
     public boolean createEvent(String eventName, int eventCapacity, String roomName, Calendar time, int duration) {
         Event event = new Event(eventName);
+        event.setEventCapacity(eventCapacity);
         eventJsonDatabase.write(event, eventName);
-        setEventCapacity(eventName, eventCapacity);
         return addNewEvent(roomName, eventName, time, duration);
     }
 
@@ -176,7 +178,13 @@ public class ScheduleManager implements Serializable {
      * @return true if succesfully removed from event
      */
     public boolean removeFromEvent(String username, String event) {
-        return eventJsonDatabase.read(event).removeAttendeeFromEvent(username);
+        Event myEvent = eventJsonDatabase.read(event);
+        boolean t = myEvent.removeAttendeeFromEvent(username);
+        if (t) {
+            eventJsonDatabase.write(myEvent, event);
+            return true;
+        }
+        return false;
     }
 
     /**
@@ -187,7 +195,13 @@ public class ScheduleManager implements Serializable {
      * @return true if succesfully signed up for event
      */
     public boolean signUpForEvent(String username, String event) {
-        return eventJsonDatabase.read(event).addAttendeeToEvent(username);
+        Event myEvent = eventJsonDatabase.read(event);
+        boolean t = myEvent.addAttendeeToEvent(username);
+        if (t) {
+            eventJsonDatabase.write(myEvent, event);
+            return true;
+        }
+        return false;
     }
 
     /**
@@ -207,6 +221,7 @@ public class ScheduleManager implements Serializable {
 
     /**
      * Returns a list of names of VIP events
+     *
      * @return list of vip event names.
      */
     public List<String> getVIPEventNames() {
@@ -219,8 +234,18 @@ public class ScheduleManager implements Serializable {
      * @param roomID id of the room
      * @return a list of events occurring in that room
      */
-    // todo
     public List<ScheduleEntry> getRoomEvents(String roomID) {
-        return null;
+        return scheduleEntryJsonDatabase.filterList(e -> e.getRoomID().equals(roomID));
+    }
+
+    public ScheduleEntry getScheduleEntry(String eventName) {
+        return scheduleEntryJsonDatabase.read(eventName);
+    }
+
+    public EventBundle createEventBundle(String eventName) {
+        Event e = getEvent(eventName);
+        List<String> speakers = new ArrayList<>(e.getSpeakers());
+        ScheduleEntry sched = getScheduleEntry(eventName);
+        return new EventBundle(e.getName(), e.getDescription(), speakers, sched.getRoomID(), sched.getStartTime(), "1:00", 10, false);
     }
 }

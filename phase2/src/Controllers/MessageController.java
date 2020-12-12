@@ -119,6 +119,8 @@ public class MessageController {
     }
 
     /**
+     * TODO DEPRECATE
+     *
      * Returns a list of all usernames this user can message.
      *
      * @param user user

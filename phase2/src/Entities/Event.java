@@ -11,6 +11,7 @@ public class Event implements Serializable {
     private String name;
     private Set<String> speakers = new HashSet<>();
     private int eventCapacity;
+    private String description;
 
     private boolean VIPOnly;
 
@@ -34,6 +35,14 @@ public class Event implements Serializable {
         this.name = name;
     }
 
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
     /**
      * Removes specified attendee from event
      * @param username: username of user
@@ -50,6 +59,7 @@ public class Event implements Serializable {
      */
     public boolean addAttendeeToEvent(String username) {
         if (isEventFull()) {
+            System.out.println("boop");
             return false;
         }
         return attendees.add(username);
@@ -95,7 +105,9 @@ public class Event implements Serializable {
      * @return true if capacity is positive and is successfully set
      */
     public boolean setEventCapacity(int capacity) {
+        System.out.println(("x"));
         if (capacity>= 1) {
+            System.out.println("po");
             eventCapacity = capacity;
             return true;
         }
@@ -116,6 +128,7 @@ public class Event implements Serializable {
      * @return true if event is full
      */
     public boolean isEventFull() {
+        System.out.println((eventCapacity));
         return numberOfAttendeesInEvent() ==  eventCapacity;
     }
     /**
@@ -150,5 +163,13 @@ public class Event implements Serializable {
      */
     public void setVIPOnly(boolean VIPOnly) {
         this.VIPOnly = VIPOnly;
+    }
+
+    /**
+     * Getter for eventType
+     * @return the type of event
+     */
+    public EventType getEventType() {
+        return eventType;
     }
 }
