@@ -2,6 +2,7 @@ package TestController;
 
 import Controllers.AccountController;
 import Controllers.EventController;
+import Controllers.RoomController;
 import UseCases.AccountManager;
 import UseCases.ScheduleManager;
 import Util.UserType;
@@ -18,8 +19,9 @@ public class TestEventController {
         EventController eventController = new EventController();
         AccountController accountController = new AccountController();
         ScheduleManager scheduleManager = new ScheduleManager();
+        RoomController roomController = new RoomController();
 
-
+        roomController.createRoom("Room1", 50); //What if capacity of event is more than room
         eventController.createEvent("Event1", 50, "Room 1",
                 Calendar.getInstance(), 5);
         accountController.createUser("Jafar", "JJ", "pass", "pass", UserType.ATTENDEE);
@@ -33,7 +35,9 @@ public class TestEventController {
         EventController eventController = new EventController();
         AccountController accountController = new AccountController();
         ScheduleManager scheduleManager = new ScheduleManager();
+        RoomController roomController = new RoomController();
 
+        roomController.createRoom("Room1", 50);
         eventController.createEvent("Event1", 50, "Room 1",
                 Calendar.getInstance(), 5);
         accountController.createUser("Jafar", "JJ", "pass", "pass", UserType.ATTENDEE);
