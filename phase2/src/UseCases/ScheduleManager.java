@@ -223,4 +223,8 @@ public class ScheduleManager implements Serializable {
     public List<ScheduleEntry> getRoomEvents(String roomID) {
         return null;
     }
+
+    public void getScheduleEntry(String eventName) {
+        // TODO
+    }
 }

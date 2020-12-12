@@ -100,10 +100,12 @@ public class EventController {
      * @return true if no other event has that name and capacity is positive and new Event is created
      */
     public boolean createEvent(String eventName, int eventCapacity, String roomName, Calendar time, int duration) {
+        System.out.println("entererrrred");
         if (scheduleManager.eventExists(eventName)) return false;
         if (eventCapacity < 1) return false;
         if (roomManager.getRoomCapacity(roomName) < eventCapacity) return false;
         if (scheduleConflict(roomName, time, duration)) return false;
+        System.out.println("created event!!");
         return scheduleManager.createEvent(eventName, eventCapacity, roomName, time, duration);
     }
 
@@ -178,4 +180,11 @@ public class EventController {
         return roomManager.getRoomNames();
     }
 
+    public Event getEvent(String eventName) {
+        scheduleManager.getEvent(eventName);
+    }
+
+    public ScheduleEntry getScheduleEntry(String eventName) {
+        scheduleManager.getScheduleEntry(eventName);
+    }
 }
