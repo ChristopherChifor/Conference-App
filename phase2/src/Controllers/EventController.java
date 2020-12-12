@@ -185,8 +185,10 @@ public class EventController {
     }
 
     public Event getEvent(String eventName) {
+        return scheduleManager.getEvent(eventName);
     }
 
     public ScheduleEntry getScheduleEntry(String eventName) {
+        return scheduleManager.getScheduleEntry(eventName);
     }
 }

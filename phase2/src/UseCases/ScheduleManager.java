@@ -237,7 +237,7 @@ public class ScheduleManager implements Serializable {
         return null;
     }
 
-    public void getScheduleEntry(String eventName) {
-        // TODO
+    public ScheduleEntry getScheduleEntry(String eventName) {
+        return scheduleEntryJsonDatabase.read(eventName);
     }
 }
