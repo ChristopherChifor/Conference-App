@@ -120,22 +120,6 @@ public class ScheduleManager implements Serializable {
         return getEventAttendees(eventName).contains(username);
     }
 
-    /**
-     * Assigns speaker to an event
-     *
-     * @param speaker Name of Speaker to be added
-     * @param event   Name of event
-     * @return true if an event exists and speaker is added
-     */
-    public boolean assignSpeaker(String speaker, String event) {
-        Event myEvent = eventJsonDatabase.read(event);
-        boolean t = myEvent.setSpeaker(speaker);
-        if (t) {
-            eventJsonDatabase.write(myEvent, event);
-            return true;
-        }
-        return false;
-    }
 
     /**
      * Creates a new Event
@@ -154,17 +138,6 @@ public class ScheduleManager implements Serializable {
         eventJsonDatabase.write(event, eventName);
         return addNewEvent(roomName, eventName, time, duration);
     }
-
-    /**
-     * Setter for the capacity of events
-     *
-     * @param capacity: capacity of event
-     * @return true if capacity is positive and is successfully set
-     */
-    public boolean setEventCapacity(String event, int capacity) {
-        return getEvent(event).setEventCapacity(capacity);
-    }
-
 
     /**
      * Method for checking if user can sign up for an event.
