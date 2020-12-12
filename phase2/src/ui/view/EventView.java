@@ -13,8 +13,7 @@ import java.text.SimpleDateFormat;
  * A view for displaying (read-only) details of an event. Allows attendees to enroll/unenroll,
  * organizers and speakers to message event, and organizers to open EditEventView. Also has
  * button for messaging speakers.
- *
- * //todo issue with the window sizing!
+ * <p>
  */
 public class EventView extends JPanel implements View {
     private final EventBundle event;
@@ -32,19 +31,19 @@ public class EventView extends JPanel implements View {
     private final EventPresenter eventPresenter;
 
     public EventView(EventBundle event, UserType type, EventPresenter eventPresenter) {
-        
+
         this.eventPresenter = eventPresenter;
         this.event = event;
         this.type = type;
 
         messageSpeakerButton.addActionListener(e -> messageSpeaker());
-        enrollButton.addActionListener(e->enroll());
-        unenrollButton.addActionListener(e->unenroll());
-        editButton.addActionListener(e->edit());
-        messageEvent.addActionListener(e->messageEvent());
+        enrollButton.addActionListener(e -> enroll());
+        unenrollButton.addActionListener(e -> unenroll());
+        editButton.addActionListener(e -> edit());
+        messageEvent.addActionListener(e -> messageEvent());
 
         setLayout(new GridBagLayout());
-        setBorder(new EmptyBorder(10,10,10,10));
+        setBorder(new EmptyBorder(10, 10, 10, 10));
         cst.gridx = 0;
         cst.gridy = 0;
         cst.fill = GridBagConstraints.BOTH;
@@ -59,7 +58,7 @@ public class EventView extends JPanel implements View {
         ep.setEditable(false);
         add(ep, cst);
         cst.gridheight = 1;
-        cst.gridy+=2;
+        cst.gridy += 2;
         cst.gridwidth = 1;
         add(new JLabel("Speaker(s):"), cst);
         cst.gridwidth = 2;
@@ -70,7 +69,7 @@ public class EventView extends JPanel implements View {
         speakers = speakers.substring(1, speakers.length() - 1);
         p.add(new JLabel(speakers), BorderLayout.CENTER);
         p.add(messageSpeakerButton, BorderLayout.EAST);
-        add(p,cst);
+        add(p, cst);
 
         cst.gridwidth = 1;
         cst.gridx = 2;
@@ -123,12 +122,12 @@ public class EventView extends JPanel implements View {
      */
     private void messageSpeaker() {
         String message = JOptionPane.showInputDialog(null, "What is your messages?", "Message Speaker", JOptionPane.INFORMATION_MESSAGE);
-        if(message == null || message.isEmpty()){
+        if (message == null || message.isEmpty()) {
             showErrorDialog("You did not enter a message; nothing was sent");
             return;
         }
 
-        //TODO SEND MESSAGE TO SPEAKER(S)
+        eventPresenter.messageSpeakers(message);
     }
 
     /**
@@ -168,19 +167,19 @@ public class EventView extends JPanel implements View {
      */
     private void messageEvent() {
         String message = JOptionPane.showInputDialog(null, "What is your messages?", "Message Event", JOptionPane.INFORMATION_MESSAGE);
-        if(message == null || message.isEmpty()){
+        if (message == null || message.isEmpty()) {
             showErrorDialog("You did not enter a message; nothing was sent");
             return;
         }
 
-        //TODO SEND MESSAGE TO THE EVENT
+        eventPresenter.messageEvent(message);
     }
 
     /**
      * Triggered when user presses edit button. Assumes the user is allowed to edit the event.
      */
     private void edit() {
-        //todo open eventeditview
+        eventPresenter.eventEdit(this);
     }
 
     @Override

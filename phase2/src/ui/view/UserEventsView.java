@@ -1,6 +1,5 @@
 package ui.view;
 
-import Presenters.EventListPresenter;
 import Util.UserType;
 import Presenters.UserEventsPresenter;
 
@@ -10,7 +9,6 @@ import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.File;
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -109,8 +107,7 @@ public class UserEventsView extends JPanel implements View {
      * @param eventName
      */
     private void goToEvent(String eventName) {
-        System.out.println("User wants to go to: " + eventName);
-        //todo take user to event info
+        presenter.goToEvent(eventName);
     }
 
     /**
@@ -131,12 +128,12 @@ public class UserEventsView extends JPanel implements View {
         }
 
         String message = JOptionPane.showInputDialog(null, "What would you like to send?", "Message Events", JOptionPane.INFORMATION_MESSAGE);
-        if (message == null||message.isEmpty()) {
+        if (message == null || message.isEmpty()) {
             showErrorDialog("You didn't enter a message; nothing was sent");
             return;
         }
 
-        //TODO SEND MESSAGE TO EVENTS
+        presenter.messageEvents(events, message);
     }
 
     /**
@@ -149,14 +146,13 @@ public class UserEventsView extends JPanel implements View {
             return;
         }
         int[] ix = myEventsList.getSelectedIndices();
-        DefaultListModel<String> model = (DefaultListModel)myEventsList.getModel();
+        DefaultListModel<String> model = (DefaultListModel) myEventsList.getModel();
 
-        for (int i=(ix.length-1);i>=0; i--){
+        for (int i = (ix.length - 1); i >= 0; i--) {
             model.remove(ix[i]);
         }
         myEvents.removeAll(events);
-
-        //TODO UNENROLL THIS USER FROM EVENTS
+        presenter.unenroll(events);
     }
 
     /**
@@ -177,9 +173,9 @@ public class UserEventsView extends JPanel implements View {
         if (val != JFileChooser.APPROVE_OPTION) return;
 
         File file = fc.getSelectedFile();
-        System.out.println("User wants to save to: " + file.toString()+".pdf");
+        System.out.println("User wants to save to: " + file.toString() + ".pdf");
 
-        presenter.userScheduleToPDF(file.toString()+".pdf"); // Converts user schedule to pdf
+        presenter.userScheduleToPDF(file.toString() + ".pdf"); // Converts user schedule to pdf
 
     }
 
