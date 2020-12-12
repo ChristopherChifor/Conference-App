@@ -3,6 +3,7 @@ package Controllers;
 import Entities.Message;
 import UseCases.AccountManager;
 import UseCases.MessageManager;
+import UseCases.ScheduleManager;
 import Util.UserType;
 
 import java.util.ArrayList;
@@ -16,6 +17,7 @@ public class MessageController {
 
     private MessageManager messageManager;
     private AccountManager accountManager;
+    private ScheduleManager scheduleManager;
 
     /**
      * Controller for the Messages.
@@ -71,7 +73,6 @@ public class MessageController {
      */
     public void markAsRead(String thisUser, String otherUser) {
         String convoID = messageManager.getConvoID(thisUser, otherUser);
-        System.out.println("found conversation ID: " + convoID);
         messageManager.markAsRead(convoID);
     }
 
@@ -88,7 +89,6 @@ public class MessageController {
      * @return boolean if sent
      */
     public boolean sendMessage(String sender, String recipient, String messageText) {
-        System.out.println("OGGGGGGG made it here!!!!!!!!!!!!!!");
         if (sender == null || recipient == null || messageText == null) return false;
         if (!canMessage(sender, recipient)) {
             return false;
@@ -115,7 +115,6 @@ public class MessageController {
         for (Message msg : messages) {
             messageIds.add(msg.getId());
         }
-        System.out.println("the list of message ids is: " + messageIds);
         messageManager.deleteMessages(messageIds, messages.get(0).getSender(), messages.get(0).getRecipient());
     }
 
@@ -183,4 +182,15 @@ public class MessageController {
         }
         return true;
     }
+
+    /**
+     * A message to send to all of the attendees attending an event
+     * @param eventName Name of an event
+     * @param message a message to send to all attendees
+     */
+    public void messageAll(String eventName, Message message){
+        scheduleManager.getEventAttendees(eventName);
+    }
 }
+
+
