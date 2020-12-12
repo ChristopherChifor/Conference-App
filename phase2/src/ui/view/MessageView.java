@@ -62,9 +62,6 @@ public class MessageView extends JPanel implements View {
 
 
         JPanel topPanel = new JPanel(new FlowLayout());
-        JButton newConversationButton = new JButton("New Conversation");
-        newConversationButton.addActionListener(e -> newConversation());
-        topPanel.add(newConversationButton);
         topPanel.add(selectedUsernameLabel);
 
         JButton deselectButton = new JButton("Deselect");
@@ -143,39 +140,6 @@ public class MessageView extends JPanel implements View {
         archivePanel.addMessageList(messages);
     }
 
-    /**
-     * Action that happens when new conversation button is pressed. Dialog pops up to ask for
-     * username that user wants to message. Then another asks for message.
-     */
-    private void newConversation() {
-        String username = JOptionPane.showInputDialog(null,
-                "Who do you want to message?",
-                "New Conversation",
-                JOptionPane.INFORMATION_MESSAGE);
-        if (username == null || username.isEmpty()) {
-            // should catch if user presses cancel button
-            return;
-        }
-
-        String message = JOptionPane.showInputDialog(null,
-                "What do you want to say to " + username + "?",
-                "New Conversation",
-                JOptionPane.INFORMATION_MESSAGE);
-        if (message == null || message.isEmpty()) {
-            // should catch if user presses cancel button
-            return;
-        }
-
-        if (!presenter.canMessage(username)) return;
-        presenter.sendMessage(username, message);
-
-        List<Message> messages = presenter.getConversation(username);
-
-        // this code should only run if message was sent!
-        if (conversations.contains(username)) return;
-        // creates a new button for this user if it does not exist.
-        addMessageToggleButton(username, messages);
-    }
 
     private void deselectMessages() {
         if (selectedUsername.equals("")) return;
@@ -234,7 +198,7 @@ public class MessageView extends JPanel implements View {
 
             buttonUnBold(senderButton);
             selectedUsername = text;
-            selectedUsernameLabel.setText(String.format("<html><h2>%s</h2></html>",text));
+            selectedUsernameLabel.setText(String.format("<html><h1>%s</h1></html>",text));
             messageField.setEnabled(true);
             sendButton.setEnabled(true);
 
