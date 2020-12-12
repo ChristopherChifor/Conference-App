@@ -75,10 +75,6 @@ public class ScheduleManager implements Serializable {
         return eventJsonDatabase.getIds().contains(eventName);
     }
 
-    public void setDescription(String description, String eventName) {
-        getEvent(eventName).setDescription(description);
-    }
-
     /**
      * Checks if event has already happened
      *
