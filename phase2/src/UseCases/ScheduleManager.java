@@ -129,7 +129,13 @@ public class ScheduleManager implements Serializable {
      * @return true if an event exists and speaker is added
      */
     public boolean assignSpeaker(String speaker, String event) {
-        return getEvent(event).setSpeaker(speaker);
+        Event myEvent = eventJsonDatabase.read(event);
+        boolean t = myEvent.setSpeaker(speaker);
+        if (t) {
+            eventJsonDatabase.write(myEvent, event);
+            return true;
+        }
+        return false;
     }
 
     /**
@@ -237,9 +243,15 @@ public class ScheduleManager implements Serializable {
      * @param roomID id of the room
      * @return a list of events occurring in that room
      */
-    public List<ScheduleEntry> getRoomEvents(String roomID) {
+    public HashMap<Calendar, Calendar> getRoomEvents(String roomID) {
         List<ScheduleEntry> lst = scheduleEntryJsonDatabase.filterList(e -> e.getRoomID().equals(roomID));
-        return null;
+        HashMap<Calendar, Calendar> map = new HashMap<>();
+        for (ScheduleEntry entry : lst) {
+            Calendar a = (Calendar) entry.getStartTime().clone();
+            a.add(Calendar.MINUTE, entry.getDuration());
+            map.put(entry.getStartTime(), a);
+        }
+        return map;
     }
 
     public ScheduleEntry getScheduleEntry(String eventName) {
