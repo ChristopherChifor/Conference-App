@@ -85,7 +85,7 @@ public class ScheduleManager implements Serializable {
         //if (eventExists(eventName)) {
         //    return true;
         return false;
-        }  //TODO need to account for if event has actually happened
+    }  //TODO need to account for if event has actually happened
 
     /**
      * Checks if an event is full
@@ -139,8 +139,11 @@ public class ScheduleManager implements Serializable {
      * @param eventCapacity Capacity of Event that is to be created
      * @return true if no other event has that name and capacity is positive and new Event is created
      */
-    public boolean createEvent(String eventName, int eventCapacity, String roomName, Calendar time, int duration) {
+    public boolean createEvent(String eventName, int eventCapacity, String roomName, Calendar time, int duration, List<String> speakers) {
         Event event = new Event(eventName);
+        for (String speaker : speakers) {
+            event.setSpeaker(speaker);    
+        }
         event.setEventCapacity(eventCapacity);
         eventJsonDatabase.write(event, eventName);
         return addNewEvent(roomName, eventName, time, duration);
@@ -175,7 +178,7 @@ public class ScheduleManager implements Serializable {
      *
      * @param username the user being checked.
      * @param event    name of event
-     * @return true if succesfully removed from event
+     * @return true if successfully removed from event
      */
     public boolean removeFromEvent(String username, String event) {
         Event myEvent = eventJsonDatabase.read(event);
@@ -221,6 +224,7 @@ public class ScheduleManager implements Serializable {
 
     /**
      * Returns a list of names of VIP events
+     *
      * @return list of vip event names.
      */
     public List<String> getVIPEventNames() {
@@ -233,8 +237,8 @@ public class ScheduleManager implements Serializable {
      * @param roomID id of the room
      * @return a list of events occurring in that room
      */
-    // todo
     public List<ScheduleEntry> getRoomEvents(String roomID) {
+        List<ScheduleEntry> lst = scheduleEntryJsonDatabase.filterList(e -> e.getRoomID().equals(roomID));
         return null;
     }
 

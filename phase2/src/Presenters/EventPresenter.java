@@ -51,10 +51,7 @@ public class EventPresenter implements Presenter{
 
     @Override
     public View makeView() {
-        List<String> speakers = new ArrayList<>();
-        speakers.add("IMPLEMENT SPEAKERRR");
-        Calendar time = Calendar.getInstance();
-        EventBundle eventBundle = new EventBundle(eventName, "TODOOOOO", speakers, "IMPLEMENT ROOOOOm", time, "1:00", 10, false); //todo get vip status
+        EventBundle eventBundle = eventController.createEventBundle(eventName);
         return new EventView(eventBundle, userType, this);
     }
 
