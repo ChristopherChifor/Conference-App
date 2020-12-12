@@ -100,7 +100,7 @@ public class EventController {
      * @param eventCapacity Capacity of Event that is to be created
      * @return true if no other event has that name and capacity is positive and new Event is created
      */
-    public boolean createEvent(String eventName, int eventCapacity, String roomName, Calendar time, int duration) {
+    public boolean createEvent(String eventName, int eventCapacity, String roomName, Calendar time, int duration, List<String> speakers) {
         System.out.println("c");
         if (scheduleManager.eventExists(eventName)) return false;
         System.out.println("poop");
@@ -110,7 +110,8 @@ public class EventController {
         System.out.println("r");
         if (scheduleConflict(roomName, time, duration)) return false;
         System.out.println("q");
-        return scheduleManager.createEvent(eventName, eventCapacity, roomName, time, duration);
+
+        return scheduleManager.createEvent(eventName, eventCapacity, roomName, time, duration, speakers);
     }
 
 
