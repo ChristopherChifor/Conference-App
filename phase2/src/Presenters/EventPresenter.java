@@ -62,7 +62,7 @@ public class EventPresenter implements Presenter{
     }
 
     public void eventEdit(View view){
-        //TODO CHECK IF EVENT CAN BE EDITED
+
         boolean canEdit = true; // CHANGE THIS VALUE
 
         if(!canEdit){

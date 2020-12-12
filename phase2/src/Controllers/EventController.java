@@ -64,31 +64,6 @@ public class EventController {
         return scheduleManager.getSpeakerEvents(username);
     }
 
-    /**
-     * Checks if an event exists
-     *
-     * @param eventName Name of event that is being checked
-     * @return true if event exists
-     */
-    public boolean eventExists(String eventName) {
-        return scheduleManager.eventExists(eventName);
-    }
-
-    /**
-     * Assigns speaker to an event
-     *
-     * @param speaker Name of Speaker to be added
-     * @param event Name of event
-     * @return true if an event exists and speaker is added
-     */
-    public boolean assignSpeaker(String speaker, String event) {
-        if (scheduleManager.eventExists(event)) {
-            return scheduleManager.assignSpeaker(speaker, event);
-        }
-        return false;
-    }
-
-
     private boolean scheduleConflict(String roomName, Calendar time, int duration) {
         HashMap<Calendar, Calendar> map = scheduleManager.getRoomEvents(roomName);
         Calendar t = (Calendar) time.clone();
@@ -110,7 +85,7 @@ public class EventController {
      * @param eventCapacity Capacity of Event that is to be created
      * @return true if no other event has that name and capacity is positive and new Event is created
      */
-    public boolean createEvent(String eventName, int eventCapacity, String roomName, Calendar time, int duration, List<String> speakers) {
+    public boolean createEvent(String eventName, int eventCapacity, String roomName, Calendar time, int duration, List<String> speakers, boolean isVIP) {
         System.out.println("c");
         if (eventCapacity < 1) return false;
         System.out.println("p");
@@ -119,7 +94,7 @@ public class EventController {
         if (scheduleConflict(roomName, time, duration)) return false;
         System.out.println("q");
 
-        return scheduleManager.createEvent(eventName, eventCapacity, roomName, time, duration, speakers);
+        return scheduleManager.createEvent(eventName, eventCapacity, roomName, time, duration, speakers, isVIP);
     }
 
     public boolean attendeeInEvent(String eventName, String username) {
