@@ -2,15 +2,12 @@ package Controllers;
 
 import Entities.Event;
 import Entities.ScheduleEntry;
-import Gateways.IGateway;
-import Gateways.JsonDatabase;
 import UseCases.RoomManager;
 import UseCases.ScheduleManager;
 import Util.PDFConverter;
 import Util.UserType;
 import ui.state.EventBundle;
 
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
@@ -20,7 +17,7 @@ import java.util.List;
 public class EventController {
     private UserType userType;
 
-    private PDFConverter pdfConverter; // TODO make sure this gets set
+    private PDFConverter pdfConverter;
 
     private ScheduleManager scheduleManager;
     private RoomManager roomManager;

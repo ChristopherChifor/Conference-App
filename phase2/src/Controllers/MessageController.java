@@ -25,6 +25,7 @@ public class MessageController {
     public MessageController() {
         messageManager = new MessageManager();
         accountManager = new AccountManager();
+        scheduleManager = new ScheduleManager();
     }
 
     /**
