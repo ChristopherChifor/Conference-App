@@ -2,16 +2,12 @@ package Presenters;
 
 import Controllers.AccountController;
 import Controllers.EventController;
-import Entities.Event;
-import Entities.ScheduleEntry;
 import Util.UserType;
 import ui.state.EventBundle;
 import ui.state.EventEditBundle;
 import ui.view.EventEditView;
 import ui.view.View;
 
-import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.List;
 
 /**

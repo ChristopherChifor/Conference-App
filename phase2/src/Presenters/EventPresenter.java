@@ -2,13 +2,11 @@ package Presenters;
 
 import Controllers.EventController;
 import Controllers.MessageController;
-import Entities.Message;
 import Util.UserType;
 import ui.state.EventBundle;
 import ui.view.EventView;
 import ui.view.View;
 
-import java.util.List;
 
 
 public class EventPresenter implements Presenter{
