@@ -16,8 +16,8 @@ public class TestAccountController {
         AccountManager accountManager = new AccountManager();
         accountManager.createUser("Jafar", "Jafar_baba", "jafar123", UserType.ORGANIZER);
         assertEquals(UserType.ORGANIZER, accountController.authenticateUser("Jafar_baba", "jafar123"));
-        assertEquals(null, accountController.authenticateUser("Jafar_baba", "jafar321"));
-        assertEquals(null, accountController.authenticateUser("Jafar", "jafar123"));
+        assertNull(accountController.authenticateUser("Jafar_baba", "jafar321"));
+        assertNull(accountController.authenticateUser("Jafar", "jafar123"));
     }
 
     @Test
@@ -45,7 +45,6 @@ public class TestAccountController {
     @Test
     public void getUsernamesOfType() {
         AccountController accountController = new AccountController();
-        AccountManager accountManager = new AccountManager();
         accountController.createUser("VIP1", "VIP1", "password",
                 "password", UserType.VIP);
         accountController.createUser("VIP2", "VIP2", "password",

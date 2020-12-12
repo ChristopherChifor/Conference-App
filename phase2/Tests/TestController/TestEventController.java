@@ -3,7 +3,6 @@ package TestController;
 import Controllers.AccountController;
 import Controllers.EventController;
 import Controllers.RoomController;
-import UseCases.AccountManager;
 import UseCases.ScheduleManager;
 import Util.UserType;
 import org.junit.Test;
