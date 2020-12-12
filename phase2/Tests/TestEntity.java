@@ -96,7 +96,7 @@ public class TestEntity {
     @Test
     public void testSetAndGetRoomCapacityNegative() {
         Room room = new Room("Room 207");
-        assertEquals(false, room.setRoomCapacity(-20));
+        assertFalse(room.setRoomCapacity(-20));
 
     }
 
@@ -124,7 +124,7 @@ public class TestEntity {
     @Test
     public void testMessageArchiveFalse() {
         Message message = new Message("United Kingdom", "CSC207", "Hi");
-        assertEquals(false, message.getIsArchived());
+        assertFalse(message.getIsArchived());
 
     }
 
@@ -132,7 +132,7 @@ public class TestEntity {
     public void testMessageArchiveTrue() {
         Message message = new Message("United Kingdom", "CSC207", "Hi");
         message.markAsArchived();
-        assertEquals(true, message.getIsArchived());
+        assertTrue(message.getIsArchived());
 
     }
 
@@ -194,7 +194,7 @@ public class TestEntity {
         ScheduleEntry scheduleEntry = new ScheduleEntry("Conference", "1", time, 1);
         time.add(Calendar.DATE,-1);
         scheduleEntry.setStartTime(time);
-        assertEquals(false, time2.equals(time));
+        assertNotEquals(time2, time);
 
     }
 
@@ -232,9 +232,9 @@ public class TestEntity {
     @Test
     public void testConversationRead() {
         Conversation conversation = new Conversation("United Kingdom", "CSC207");
-        assertEquals(false, conversation.getIsRead());
+        assertFalse(conversation.getIsRead());
         conversation.markAsRead();
-        assertEquals(true, conversation.getIsRead());
+        assertTrue(conversation.getIsRead());
 
     }
 
