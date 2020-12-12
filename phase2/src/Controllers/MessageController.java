@@ -187,11 +187,14 @@ public class MessageController {
 
     /**
      * A message to send to all of the attendees attending an event
-     * @param eventName Name of an event
-     * @param message a message to send to all attendees
+     * @param eventName name of the event
+     * @param message the message being sent
+     * @param sender the sender
      */
-    public void messageAll(String eventName, Message message){
-        scheduleManager.getEventAttendees(eventName);
+    public void messageAll(String eventName, String message, String sender){
+        for (String recipient : scheduleManager.getEventAttendees(eventName)){
+            messageManager.sendMessage(sender, recipient, message);
+        }
     }
 }
 
