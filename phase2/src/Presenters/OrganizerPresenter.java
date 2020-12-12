@@ -81,10 +81,6 @@ public class OrganizerPresenter implements Presenter {
      */
     public void newRoom(String roomName, int roomCapacity, View view){
         roomController.createRoom(roomName, roomCapacity);
-//    }
-//        if (!) {
-//            view.showIncorrectInputDialog("Invalid input.");
-//        }
     }
 
     /**
