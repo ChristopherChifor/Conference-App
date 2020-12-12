@@ -8,6 +8,7 @@ import com.itextpdf.text.pdf.PdfWriter;
 
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.stream.Stream;
 
@@ -45,8 +46,9 @@ public class PDFConverter {
     }
 
     private void addRows(PdfPTable table, List<ScheduleEntry> userSchedule) {
+        SimpleDateFormat df = new SimpleDateFormat("h:mm a, yyyy-MM-dd");
         for (ScheduleEntry s : userSchedule) {
-            addElementEntry(table, s.getEventName(), s.getRoomID(), s.getStartTime().toString()); //TODO ALEX
+            addElementEntry(table, s.getEventName(), s.getRoomID(), df.format(s.getStartTime()));
         }
     }
 
