@@ -82,10 +82,9 @@ public class ScheduleManager implements Serializable {
      * @return true if event has already occurred
      */
     public boolean eventHasHappened(String eventName) {
-        //if (eventExists(eventName)) {
-        //    return true;
-        return false;
-    }  //TODO need to account for if event has actually happened
+        Calendar time = scheduleEntryJsonDatabase.read(eventName).getStartTime();
+        return time.after(Calendar.getInstance());
+    }
 
     /**
      * Checks if an event is full

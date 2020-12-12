@@ -166,31 +166,7 @@ public class MessageController {
         if (senderUsername == null || recipientUsername == null || senderUsername.equals(recipientUsername)) {
             return false;
         }
-        UserType sender = accountManager.getUserType(senderUsername);
-        UserType recipient = accountManager.getUserType(recipientUsername);
 
-        if (sender.equals(UserType.ORGANIZER) && (recipient.equals(UserType.ATTENDEE) || (recipient.equals(UserType.SPEAKER)))) return true;
-        switch (sender) {
-            case VIP:
-            case ATTENDEE:
-                switch (recipient) {
-                    case ATTENDEE:
-                    case SPEAKER:
-                        return true;
-                    default:
-                        return false;
-                }
-            case SPEAKER:
-                switch (recipient){
-                    case ATTENDEE:
-                        return true;
-                    case SPEAKER:
-                    case ORGANIZER:
-                        return false;
-                }
-            case ORGANIZER:
-                return true;
-        }
         return true;
     }
 
