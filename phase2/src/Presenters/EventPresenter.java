@@ -62,4 +62,33 @@ public class EventPresenter implements Presenter{
     public MainPresenter getMainPresenter() {
         return mainPresenter;
     }
+
+    public void eventEdit(View view){
+        //TODO CHECK IF EVENT CAN BE EDITED
+        boolean canEdit = true; // CHANGE THIS VALUE
+
+        if(!canEdit){
+            view.showErrorDialog("Can't Edit This Event! (Event in the past)");
+            return;
+        }
+
+        EventEditPresenter ep = new EventEditPresenter(eventName, mainPresenter);
+        mainPresenter.addPresenter(ep);
+    }
+
+    /**
+     * Calls controller to send message to speakers
+     * @param message message being sent
+     */
+    public void messageSpeakers(String message){
+        //TODO SEND MESSAGE TO SPEAKERS
+    }
+
+    /**
+     * Calls controller to message this event (assumes this user can message the event)
+     * @param message message being sent
+     */
+    public void messageEvent(String message){
+        //TODO SEND MESSAGE TO EVENT.
+    }
 }

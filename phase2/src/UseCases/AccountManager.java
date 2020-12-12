@@ -19,6 +19,9 @@ import java.util.stream.Collectors;
 public class AccountManager implements Serializable {
     private JsonDatabase<User> userJsonDatabase;
 
+    /**
+     * Constructor for AccountManager
+     */
     public AccountManager() {
         userJsonDatabase = new JsonDatabase<>("User", User.class);
     }
@@ -122,6 +125,11 @@ public class AccountManager implements Serializable {
         return userJsonDatabase.read(username).getPassword();
     }
 
+    /**
+     * Change the password of a user
+     * @param username the username of that user
+     * @param newPassword the password to change to
+     */
     public void changeUserPassword(String username, String newPassword) {
         User currentUser = userJsonDatabase.read(username);
         currentUser.setPassword(newPassword);
