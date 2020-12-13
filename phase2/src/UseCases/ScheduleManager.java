@@ -83,7 +83,7 @@ public class ScheduleManager implements Serializable {
      */
     public boolean eventHasHappened(String eventName) {
         Calendar time = scheduleEntryJsonDatabase.read(eventName).getStartTime();
-        return time.after(Calendar.getInstance());
+        return Calendar.getInstance().after(time);
     }
 
     /**
